@@ -876,3 +876,151 @@ footer {
     color: white;
     transform: scale(1.05);
  }
+ /* ===================== */
+/* 📢 ANUNCIOS */
+/* ===================== */
+
+.anuncios {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 50px;
+}
+
+.anuncio-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+}
+
+.anuncio-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.anuncio-info {
+    padding: 18px;
+    text-align: center;
+}
+
+.anuncio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-dark);
+}
+
+
+/* ===================== */
+/* 🖼️ GALERÍA */
+/* ===================== */
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.gallery-grid img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-dark);
+}
+
+
+/* ===================== */
+/* 📱 TABLET */
+/* ===================== */
+
+@media (max-width: 992px) {
+
+    .anuncio-card img {
+        height: 180px;
+    }
+
+    .gallery-grid img {
+        height: 220px;
+    }
+}
+
+
+/* ===================== */
+/* 📱 CELULARES */
+/* ===================== */
+
+@media (max-width: 768px) {
+
+    .anuncios {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .anuncio-card img {
+        height: 160px;
+    }
+
+    .gallery-grid img {
+        height: 200px;
+    }
+
+    .anuncio-info {
+        padding: 15px;
+    }
+}
+
+
+/* ===================== */
+/* 📱 CELULARES PEQUEÑOS */
+/* ===================== */
+
+@media (max-width: 480px) {
+
+    .anuncio-card img {
+        height: 140px;
+    }
+
+    .gallery-grid img {
+        height: 180px;
+    }
+}
+
+/* 🔥 FIX FORZADO RESPONSIVE */
+
+.anuncios {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    gap: 20px !important;
+}
+
+.gallery-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+    gap: 20px !important;
+}
+
+.gallery-grid img,
+.anuncio-card img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+}
+
+/* 📱 CELULAR */
+@media (max-width: 768px) {
+    .anuncios,
+    .gallery-grid {
+        grid-template-columns: 1fr !important;
+    }
+}

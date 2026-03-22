@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galería | Shop Ofe Trujillo</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body>
+<header>
+       <div class="container">
+    <div class="logo">
+        <a href="#">Shop Ofe Trujillo</a>
+    </div>
+
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <nav>
+        <ul>
+             <li><a href="index.html">Inicio</a></li>
+            <li><a href="index.html#productos">Productos</a></li>
+            <li><a href="index.html#accesorios">Accesorios</a></li>
+            <li><a href="index.html#envios">Envíos</a></li>
+            <li><a href="index.html#novedades">Nosotros</a></li>
+              <li><a href="#anuncios">Anuncios</a></li>
+            <li><a href="galeria.html">Galeria de imagenes</a></li>
+          
+            <li><a href="index.html#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+</div>
+    </header>
+    
+<section id="anuncios" class="gallery-section container">
+    <h2>Anuncios</h2>
+    <div class="anuncios">
+
+    <div class="anuncio-card">
+        <img src="img/maq1.jpg" alt="anuncio">
+        <div class="anuncio-info">
+            <h3>¿Por que tu maquillaje no dura?</h3>
+            <p>Checa esta imagen 💖</p>
+        </div>
+    </div>
+
+    <div class="anuncio-card">
+        <img src="img/rec1.jpg" alt="anuncio">
+        <div class="anuncio-info">
+            <h3>Recordatorio</h3>
+            <p>Desmaquillate antes de dormir 🚚</p>
+        </div>
+    </div>
+
+    <div class="anuncio-card">
+        <img src="img/deb.jpg" alt="anuncio">
+        <div class="anuncio-info">
+            <h3>Dios es Bueno</h3>
+            <p>Salmo 100:5: <br> "Porque Jehová es bueno; para siempre es su misericordia, y su verdad por todas las generaciones".</p>
+        </div>
+    </div>
+
+</div>
+
+    <h2>Galería</h2>
+
+<div class="gallery-grid" id="galeria">
+    <img src="img/of1.jpg">
+    <img src="img/eq1.jpg">
+    <img src="img/of2.jpg">
+    <img src="img/of3.jpg">
+    <img src="img/g1.jpg">
+     <img src="img/env1.jpg">
+      <img src="img/en2.jpg">
+    
+</div>
+
+</section>
+
+<!-- LIGHTBOX -->
+
+<div id="lightbox" class="lightbox">
+    <img id="lightbox-img">
+</div>
+
+<footer>
+    <p style="text-align:center; padding:20px;">© 2026 Shop Ofe Trujillo</p>
+</footer>
+
+<script>
+
+const images = document.querySelectorAll('.gallery-grid img');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+
+images.forEach(img => {
+    img.addEventListener('click', () => {
+        lightbox.classList.add('active');
+        lightboxImg.src = img.src;
+    });
+});
+
+lightbox.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+});
+
+</script>
+
+</body>
+</html>
