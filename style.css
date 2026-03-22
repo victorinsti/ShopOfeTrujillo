@@ -856,3 +856,6 @@ header nav.active {
 footer {
     background-color:rgba(225, 93, 168, 0.892) !important;
 }
+.section{
+    text-align: center;
+}
