@@ -96,24 +96,7 @@
     <p style="text-align:center; padding:20px;">© 2026 Shop Ofe Trujillo</p>
 </footer>
 
-<script>
 
-const images = document.querySelectorAll('.gallery-grid img');
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
-
-images.forEach(img => {
-    img.addEventListener('click', () => {
-        lightbox.classList.add('active');
-        lightboxImg.src = img.src;
-    });
-});
-
-lightbox.addEventListener('click', () => {
-    lightbox.classList.remove('active');
-});
-
-</script>
-
+<script src="a.js"></script>
 </body>
 </html>

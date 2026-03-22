@@ -1024,3 +1024,48 @@ footer {
         grid-template-columns: 1fr !important;
     }
 }
+/* ===================== */
+/* 📢 ANUNCIOS LIMPIOS */
+/* ===================== */
+
+.anuncios {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.anuncio-card {
+    text-align: center;
+}
+
+.anuncio-card img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 15px;
+    display: block;
+    margin: 0 auto;
+}
+
+.anuncio-card p {
+    margin-top: 10px;
+    font-size: 0.95em;
+    color: #555;
+}
+
+
+/* ===================== */
+/* 🖼️ GALERÍA FIX */
+/* ===================== */
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.gallery-grid img {
+    width: 100%;
+    border-radius: 15px;
+    display: block;
+}

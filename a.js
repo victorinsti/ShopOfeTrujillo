@@ -82,3 +82,18 @@ document.addEventListener('DOMContentLoaded', function() {
 function toggleMenu() {
     document.querySelector("header nav").classList.toggle("active");
 }
+
+const images = document.querySelectorAll('.gallery-grid img');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+
+images.forEach(img => {
+    img.addEventListener('click', () => {
+        lightbox.classList.add('active');
+        lightboxImg.src = img.src;
+    });
+});
+
+lightbox.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+});
