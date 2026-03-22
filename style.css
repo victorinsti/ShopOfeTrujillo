@@ -1069,3 +1069,34 @@ footer {
     border-radius: 15px;
     display: block;
 }
+/* ===================== */
+/* 🍎 FIX SAFARI IMÁGENES */
+/* ===================== */
+
+.gallery-grid img,
+.anuncio-card img {
+    width: 100%;
+    height: auto !important;
+    display: block; /* 🔥 elimina espacios raros */
+    object-fit: cover;
+}
+
+/* evita deformaciones en safari */
+.gallery-grid,
+.anuncios {
+    align-items: stretch;
+}
+
+/* fix extra safari (renderizado) */
+img {
+    max-width: 100%;
+    height: auto;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+/* 🔥 evita bugs con contenedores */
+.anuncio-card,
+.gallery-grid img {
+    overflow: hidden;
+}
