@@ -1100,3 +1100,31 @@ img {
 .gallery-grid img {
     overflow: hidden;
 }
+/* CONTENEDOR DE RESEÑAS */
+.reviews-section {
+    padding: 60px 20px;
+    text-align: center;
+    background: #fff5f8; /* rosita suave */
+}
+
+/* TÍTULO */
+.reviews-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #c2185b;
+}
+
+/* WIDGET */
+.review-widget_net {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* ESPACIADO ENTRE WIDGETS (si dejas dos) */
+.review-widget_net + .review-widget_net {
+    margin-top: 30px;
+}
