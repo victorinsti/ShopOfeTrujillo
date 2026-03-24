@@ -1135,13 +1135,22 @@ img {
     right: 20px;
     background: #25D366;
     color: white;
-    font-size: 24px;
+    font-size: 22px;
     padding: 15px;
     border-radius: 50%;
-    z-index: 999;
+    z-index: 9999; /* 🔥 MUY IMPORTANTE */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* 🔥 BARRA SUPERIOR */
+/* 🔥 PARA CELULAR */
+@media (max-width: 768px) {
+    .whatsapp-float {
+        bottom: 15px;
+        right: 15px;
+        font-size: 20px;
+        padding: 14px;
+    }
+}
 .top-bar {
     width: 100%;
     background: linear-gradient(90deg, #ff4da6, #ff80bf);
@@ -1149,45 +1158,26 @@ img {
     overflow: hidden;
     white-space: nowrap;
     position: relative;
+    z-index: 9999;
 }
 
-/* TEXTO ANIMADO */
 .top-bar p {
     display: inline-block;
     padding: 10px 0;
     animation: moverTexto 12s linear infinite;
     font-weight: 600;
-    font-size: 14px;
 }
 
 /* ANIMACIÓN */
 @keyframes moverTexto {
-    0% {
-        transform: translateX(100%);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
 }
 
+/* 🔥 FIX CELULAR */
 @media (max-width: 768px) {
     .top-bar p {
         font-size: 12px;
-        animation-duration: 18s; /* más lento en celular */
-    }
-}
-
-.product-item {
-    animation: fadeUp 0.6s ease;
-}
-
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+        animation-duration: 18s;
     }
 }
