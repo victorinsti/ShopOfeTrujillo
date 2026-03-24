@@ -1128,3 +1128,66 @@ img {
 .review-widget_net + .review-widget_net {
     margin-top: 30px;
 }
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #25D366;
+    color: white;
+    font-size: 24px;
+    padding: 15px;
+    border-radius: 50%;
+    z-index: 999;
+}
+
+/* 🔥 BARRA SUPERIOR */
+.top-bar {
+    width: 100%;
+    background: linear-gradient(90deg, #ff4da6, #ff80bf);
+    color: white;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+/* TEXTO ANIMADO */
+.top-bar p {
+    display: inline-block;
+    padding: 10px 0;
+    animation: moverTexto 12s linear infinite;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* ANIMACIÓN */
+@keyframes moverTexto {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@media (max-width: 768px) {
+    .top-bar p {
+        font-size: 12px;
+        animation-duration: 18s; /* más lento en celular */
+    }
+}
+
+.product-item {
+    animation: fadeUp 0.6s ease;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
