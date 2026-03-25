@@ -89,6 +89,27 @@ if(acceso !== "ok") {
     <p id="puesto"></p>
 </div>
 
+<div class="card" id="adminPanel" style="display:none;">
+    <h2>⚙️ Asignar tareas / notificaciones</h2>
+
+    <select id="usuarioSelect">
+        <option value="sol">Sol</option>
+        <option value="pao">Paola</option>
+        <option value="angy">Angy</option>
+        <option value="jun">Jun</option>
+        <option value="nao">Naomi</option>
+        <option value="paty">Paty</option>
+        <option value="lety">Lety</option>
+        <option value="samm">Sammy</option>
+    </select>
+
+    <input type="text" id="nuevaTarea" placeholder="Nueva tarea">
+    <button onclick="agregarTarea()">Agregar tarea</button>
+
+    <input type="text" id="nuevaNoti" placeholder="Nueva notificación">
+    <button onclick="agregarNotificacion()">Agregar notificación</button>
+</div>
+
 <!-- Rol de limpieza -->
 <div class="card">
     <h2>🧹 Rol de Limpieza Abril</h2>
@@ -134,46 +155,118 @@ if(acceso !== "ok") {
 
 </div>
 
+
+
 <script>
-// 🔥 CARGAR EMPLEADO
-let emp = JSON.parse(sessionStorage.getItem("empleado"));
+document.addEventListener("DOMContentLoaded", function () {
 
-document.getElementById("nombre").innerText = "Nombre: " + emp.nombre;
-document.getElementById("puesto").innerText = "Puesto: " + emp.puesto;
-document.getElementById("usuario").innerText = "Usuario: " + emp.user;
-document.getElementById("telefono").innerText = "Teléfono: " + emp.telefono;
-document.getElementById("horario").innerText = "Horario: " + emp.horario;
-document.getElementById("area").innerText = "Área: " + emp.area;
-document.getElementById("estado").innerText = "Estado: " + emp.estado;
-document.getElementById("id").innerText = "ID: " + emp.id;
+    // 🔐 OBTENER EMPLEADO
+    let emp = JSON.parse(sessionStorage.getItem("empleado"));
 
-// 🔥 CARGAR LISTAS
-let lista = document.getElementById("tareas");
-let notificaciones = document.getElementById("notificaciones");
+    if (!emp) {
+        window.location.href = "acceso.html";
+        return;
+    }
 
-// VALIDAR QUE EXISTAN
-if (lista && emp.tareas) {
-    emp.tareas.forEach(t => {
-        let li = document.createElement("li");
-        li.textContent = "✔ " + t;
-        lista.appendChild(li);
-    });
-}
+    // 🔥 DATOS EMPLEADO
+    document.getElementById("nombre").innerText = "Nombre: " + emp.nombre;
+    document.getElementById("puesto").innerText = "Puesto: " + emp.puesto;
+    document.getElementById("usuario").innerText = "Usuario: " + emp.user;
+    document.getElementById("telefono").innerText = "Teléfono: " + emp.telefono;
+    document.getElementById("horario").innerText = "Horario: " + emp.horario;
+    document.getElementById("area").innerText = "Área: " + emp.area;
+    document.getElementById("estado").innerText = "Estado: " + emp.estado;
+    document.getElementById("id").innerText = "ID: " + emp.id;
 
-if (notificaciones && emp.notificaciones) {
-    emp.notificaciones.forEach(n => {
-        let li = document.createElement("li");
-        li.textContent = "🔔 " + n;
-        notificaciones.appendChild(li);
-    });
-}
+    // 🔥 ELEMENTOS
+    let lista = document.getElementById("tareas");
+    let notificaciones = document.getElementById("notificaciones");
 
-// LOGOUT
+    // 🔥 BASE DE DATOS
+    let tareasDB = JSON.parse(localStorage.getItem("tareas")) || {};
+    let notiDB = JSON.parse(localStorage.getItem("notificaciones")) || {};
+
+    // 🔥 MOSTRAR TAREAS
+    if (lista) {
+        lista.innerHTML = "";
+
+        if (tareasDB[emp.user] && tareasDB[emp.user].length > 0) {
+            tareasDB[emp.user].forEach(t => {
+                let li = document.createElement("li");
+                li.textContent = "✔ " + t;
+                lista.appendChild(li);
+            });
+        } else {
+            let li = document.createElement("li");
+            li.textContent = "Sin tareas";
+            lista.appendChild(li);
+        }
+    }
+
+    // 🔔 MOSTRAR NOTIFICACIONES
+    if (notificaciones) {
+        notificaciones.innerHTML = "";
+
+        if (notiDB[emp.user] && notiDB[emp.user].length > 0) {
+            notiDB[emp.user].forEach(n => {
+                let li = document.createElement("li");
+                li.textContent = "🔔 " + n;
+                notificaciones.appendChild(li);
+            });
+        } else {
+            let li = document.createElement("li");
+            li.textContent = "Sin notificaciones";
+            notificaciones.appendChild(li);
+        }
+    }
+
+    // 🔐 MOSTRAR PANEL SOLO ADMIN
+    if (emp.user === "ofe" || emp.user === "samm") {
+        let panel = document.getElementById("adminPanel");
+        if (panel) panel.style.display = "block";
+    }
+
+    // ➕ AGREGAR TAREA
+    window.agregarTarea = function () {
+        let user = document.getElementById("usuarioSelect").value;
+        let tarea = document.getElementById("nuevaTarea").value;
+
+        if (!tarea) return alert("Escribe una tarea");
+
+        if (!tareasDB[user]) tareasDB[user] = [];
+
+        tareasDB[user].push(tarea);
+        localStorage.setItem("tareas", JSON.stringify(tareasDB));
+
+        alert("✅ Tarea asignada");
+        location.reload();
+    };
+
+    // ➕ AGREGAR NOTIFICACIÓN
+    window.agregarNotificacion = function () {
+        let user = document.getElementById("usuarioSelect").value;
+        let noti = document.getElementById("nuevaNoti").value;
+
+        if (!noti) return alert("Escribe una notificación");
+
+        if (!notiDB[user]) notiDB[user] = [];
+
+        notiDB[user].push(noti);
+        localStorage.setItem("notificaciones", JSON.stringify(notiDB));
+
+        alert("🔔 Notificación enviada");
+        location.reload();
+    };
+
+});
+
+// 🔴 LOGOUT (fuera para que funcione siempre)
 function logout() {
     sessionStorage.clear();
     window.location.href = "acceso.html";
 }
 </script>
+
 
 </body>
 </html>
