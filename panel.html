@@ -156,11 +156,28 @@ if(acceso !== "ok") {
 </div>
 
 
+<script type="module">
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-    // 🔐 OBTENER EMPLEADO
+// 🔥 CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
+  authDomain: "trujillo-digital-hub.firebaseapp.com",
+  projectId: "trujillo-digital-hub",
+  storageBucket: "trujillo-digital-hub.firebasestorage.app",
+  messagingSenderId: "162799375782",
+  appId: "1:162799375782:web:2be9127bfeaa613fd6ab67"
+};
+
+// 🔥 INIT
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// 🚀 TODO EL SISTEMA
+document.addEventListener("DOMContentLoaded", async () => {
+
     let emp = JSON.parse(sessionStorage.getItem("empleado"));
 
     if (!emp) {
@@ -168,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
-    // 🔥 DATOS EMPLEADO
+    // 👤 PERFIL
     document.getElementById("nombre").innerText = "Nombre: " + emp.nombre;
     document.getElementById("puesto").innerText = "Puesto: " + emp.puesto;
     document.getElementById("usuario").innerText = "Usuario: " + emp.user;
@@ -178,95 +195,93 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("estado").innerText = "Estado: " + emp.estado;
     document.getElementById("id").innerText = "ID: " + emp.id;
 
-    // 🔥 ELEMENTOS
     let lista = document.getElementById("tareas");
     let notificaciones = document.getElementById("notificaciones");
 
-    // 🔥 BASE DE DATOS
-    let tareasDB = JSON.parse(localStorage.getItem("tareas")) || {};
-    let notiDB = JSON.parse(localStorage.getItem("notificaciones")) || {};
+    // 🔥 TAREAS
+    const tareasSnap = await getDocs(collection(db, "tareas"));
 
-    // 🔥 MOSTRAR TAREAS
-    if (lista) {
-        lista.innerHTML = "";
+    lista.innerHTML = "";
+    let tieneTareas = false;
 
-        if (tareasDB[emp.user] && tareasDB[emp.user].length > 0) {
-            tareasDB[emp.user].forEach(t => {
-                let li = document.createElement("li");
-                li.textContent = "✔ " + t;
-                lista.appendChild(li);
-            });
-        } else {
+    tareasSnap.forEach(doc => {
+        let data = doc.data();
+
+        if (data.usuario === emp.user) {
             let li = document.createElement("li");
-            li.textContent = "Sin tareas";
+            li.textContent = "✔ " + data.texto;
             lista.appendChild(li);
+            tieneTareas = true;
         }
-    }
+    });
 
-    // 🔔 MOSTRAR NOTIFICACIONES
-    if (notificaciones) {
-        notificaciones.innerHTML = "";
+    if (!tieneTareas) lista.innerHTML = "<li>Sin tareas</li>";
 
-        if (notiDB[emp.user] && notiDB[emp.user].length > 0) {
-            notiDB[emp.user].forEach(n => {
-                let li = document.createElement("li");
-                li.textContent = "🔔 " + n;
-                notificaciones.appendChild(li);
-            });
-        } else {
+    // 🔔 NOTIFICACIONES
+    const notiSnap = await getDocs(collection(db, "notificaciones"));
+
+    notificaciones.innerHTML = "";
+    let tieneNoti = false;
+
+    notiSnap.forEach(doc => {
+        let data = doc.data();
+
+        if (data.usuario === emp.user) {
             let li = document.createElement("li");
-            li.textContent = "Sin notificaciones";
+            li.textContent = "🔔 " + data.texto;
             notificaciones.appendChild(li);
+            tieneNoti = true;
         }
-    }
+    });
 
-    // 🔐 MOSTRAR PANEL SOLO ADMIN
+    if (!tieneNoti) notificaciones.innerHTML = "<li>Sin notificaciones</li>";
+
+    // 🔐 ADMIN
     if (emp.user === "ofe" || emp.user === "samm") {
-        let panel = document.getElementById("adminPanel");
-        if (panel) panel.style.display = "block";
+        document.getElementById("adminPanel").style.display = "block";
     }
 
-    // ➕ AGREGAR TAREA
-    window.agregarTarea = function () {
+    // ➕ TAREA
+    window.agregarTarea = async () => {
         let user = document.getElementById("usuarioSelect").value;
         let tarea = document.getElementById("nuevaTarea").value;
 
         if (!tarea) return alert("Escribe una tarea");
 
-        if (!tareasDB[user]) tareasDB[user] = [];
+        await addDoc(collection(db, "tareas"), {
+            usuario: user,
+            texto: tarea
+        });
 
-        tareasDB[user].push(tarea);
-        localStorage.setItem("tareas", JSON.stringify(tareasDB));
-
-        alert("✅ Tarea asignada");
+        alert("✅ Guardado");
         location.reload();
     };
 
-    // ➕ AGREGAR NOTIFICACIÓN
-    window.agregarNotificacion = function () {
+    // ➕ NOTIFICACIÓN
+    window.agregarNotificacion = async () => {
         let user = document.getElementById("usuarioSelect").value;
         let noti = document.getElementById("nuevaNoti").value;
 
         if (!noti) return alert("Escribe una notificación");
 
-        if (!notiDB[user]) notiDB[user] = [];
+        await addDoc(collection(db, "notificaciones"), {
+            usuario: user,
+            texto: noti
+        });
 
-        notiDB[user].push(noti);
-        localStorage.setItem("notificaciones", JSON.stringify(notiDB));
-
-        alert("🔔 Notificación enviada");
+        alert("🔔 Enviado");
         location.reload();
     };
 
 });
 
-// 🔴 LOGOUT (fuera para que funcione siempre)
-function logout() {
+// 🔴 LOGOUT
+window.logout = () => {
     sessionStorage.clear();
     window.location.href = "acceso.html";
-}
-</script>
+};
 
+</script>
 
 </body>
 </html>
