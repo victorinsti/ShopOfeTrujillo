@@ -161,7 +161,7 @@ if(acceso !== "ok") {
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-// 🔥 CONFIG
+// 🔥 CONFIG FIREBASE
 const firebaseConfig = {
   apiKey: "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
   authDomain: "trujillo-digital-hub.firebaseapp.com",
@@ -175,9 +175,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// 🚀 TODO EL SISTEMA
+// 🚀 SISTEMA
 document.addEventListener("DOMContentLoaded", async () => {
 
+    // 🔐 USUARIO
     let emp = JSON.parse(sessionStorage.getItem("empleado"));
 
     if (!emp) {
@@ -209,7 +210,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (data.usuario === emp.user) {
             let li = document.createElement("li");
-            li.textContent = "✔ " + data.texto;
+            li.textContent = "✔ " + data.texto + " (" + data.creadoPor + ")";
             lista.appendChild(li);
             tieneTareas = true;
         }
@@ -228,7 +229,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (data.usuario === emp.user) {
             let li = document.createElement("li");
-            li.textContent = "🔔 " + data.texto;
+            li.textContent = "🔔 " + data.texto + " (" + data.creadoPor + ")";
             notificaciones.appendChild(li);
             tieneNoti = true;
         }
@@ -236,13 +237,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (!tieneNoti) notificaciones.innerHTML = "<li>Sin notificaciones</li>";
 
-    // 🔐 ADMIN
+    // 🔐 PANEL ADMIN SOLO OFE Y SAMM
     if (emp.user === "ofe" || emp.user === "samm") {
-        document.getElementById("adminPanel").style.display = "block";
+        let panel = document.getElementById("adminPanel");
+        if (panel) panel.style.display = "block";
     }
 
-    // ➕ TAREA
+    // ➕ AGREGAR TAREA (SOLO ADMIN)
     window.agregarTarea = async () => {
+
+        if (emp.user !== "ofe" && emp.user !== "samm") {
+            alert("❌ No tienes permiso");
+            return;
+        }
+
         let user = document.getElementById("usuarioSelect").value;
         let tarea = document.getElementById("nuevaTarea").value;
 
@@ -250,15 +258,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         await addDoc(collection(db, "tareas"), {
             usuario: user,
-            texto: tarea
+            texto: tarea,
+            creadoPor: emp.user,
+            fecha: new Date().toISOString()
         });
 
-        alert("✅ Guardado");
+        alert("✅ Tarea asignada");
         location.reload();
     };
 
-    // ➕ NOTIFICACIÓN
+    // ➕ AGREGAR NOTIFICACIÓN (SOLO ADMIN)
     window.agregarNotificacion = async () => {
+
+        if (emp.user !== "ofe" && emp.user !== "samm") {
+            alert("❌ No tienes permiso");
+            return;
+        }
+
         let user = document.getElementById("usuarioSelect").value;
         let noti = document.getElementById("nuevaNoti").value;
 
@@ -266,10 +282,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         await addDoc(collection(db, "notificaciones"), {
             usuario: user,
-            texto: noti
+            texto: noti,
+            creadoPor: emp.user,
+            fecha: new Date().toISOString()
         });
 
-        alert("🔔 Enviado");
+        alert("🔔 Notificación enviada");
         location.reload();
     };
 
