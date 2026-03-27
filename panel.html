@@ -150,22 +150,6 @@ if(acceso !== "ok") {
     
 </div>
 
-<div class="card">
-    <h2>🛍️ Subir producto</h2>
-
-    <input type="text" id="nombreProducto" placeholder="Nombre">
-    <input type="text" id="precioProducto" placeholder="Precio">
-    
-    <input type="file" id="imagenProducto" accept="image/*">
-
-    <select id="categoriaProducto">
-        <option value="productos">Productos</option>
-        <option value="accesorios">Accesorios</option>
-    </select>
-
-  <button type="button" onclick="window.agregarProducto()">Subir Producto</button>
-</div>
-
 <!-- TAREAS DINÁMICAS -->
 <div class="card">
     <h2>📋 Actividades asignadas</h2>
@@ -342,7 +326,6 @@ window.logout = () => {
     sessionStorage.clear();
     window.location.href = "acceso.html";
 };
-
 
 </script>
 
