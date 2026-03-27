@@ -1,46 +1,47 @@
-import { getStorage, ref, uploadBytes, getDownloadURL } 
-from "https://www.gstatic.com/firebasejs/12.11.0/firebase-storage.js";
+// 🔥 FIREBASE IMPORTS
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
+// 🔥 CONFIG
+const firebaseConfig = {
+  apiKey: "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
+  authDomain: "trujillo-digital-hub.firebaseapp.com",
+  projectId: "trujillo-digital-hub"
+};
 
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// 🔥 TODO EL SISTEMA
 document.addEventListener('DOMContentLoaded', function() {
 
     // HEADER SCROLL
     const header = document.querySelector('header');
-
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
-
-    // AÑO FOOTER
-    const currentYear = new Date().getFullYear();
-    const yearSpan = document.getElementById('current-year');
-    if (yearSpan) {
-        yearSpan.textContent = currentYear;
+    if(header){
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
     }
 
-    // CONTADOR CARRITO
-    let cartItemCount = 0;
-    const cartCountElement = document.querySelector('.cart-count');
-    if (cartCountElement) {
-        cartCountElement.textContent = cartItemCount;
+    // AÑO
+    const yearSpan = document.getElementById('current-year');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
     }
 
     // NEWSLETTER
     const newsletterForm = document.querySelector('.newsletter-form');
-
     if (newsletterForm) {
         newsletterForm.addEventListener('submit', function(event) {
             event.preventDefault();
-
             const emailInput = newsletterForm.querySelector('input[type="email"]');
-            const userEmail = emailInput.value;
 
-            if (userEmail) {
-                alert(`¡Gracias por suscribirte, ${userEmail}!`);
+            if (emailInput.value) {
+                alert(`¡Gracias por suscribirte, ${emailInput.value}!`);
                 emailInput.value = '';
             } else {
                 alert('Introduce un email válido');
@@ -48,57 +49,119 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // SMOOTH SCROLL
+    // 🔥 SMOOTH SCROLL + CERRAR MENÚ
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             if (this.getAttribute('href').length > 1) {
                 e.preventDefault();
 
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const destino = document.querySelector(this.getAttribute('href'));
+                if(destino){
+                    destino.scrollIntoView({ behavior: 'smooth' });
+                }
 
-                // 🔥 CERRAR MENÚ AL HACER CLICK (AQUÍ VA)
-                document.querySelector("header nav").classList.remove("active");
+                const nav = document.getElementById("navMenu");
+                if(nav){
+                    nav.classList.remove("active");
+                }
             }
         });
     });
 
-    // CARRITO (solo si usas add-to-cart)
-    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    // 🛒 CARRITO
+    let cartItemCount = 0;
+    const cartCountElement = document.querySelector('.cart-count');
 
-    addToCartButtons.forEach(button => {
+    document.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', function() {
-            const productName = this.closest('.product-item, .accessory-item').querySelector('h3').textContent;
+            const product = this.closest('.product-item, .accessory-item');
 
-            cartItemCount++;
-            if (cartCountElement) {
-                cartCountElement.textContent = cartItemCount;
+            if(product){
+                const name = product.querySelector('h3').textContent;
+
+                cartItemCount++;
+                if(cartCountElement){
+                    cartCountElement.textContent = cartItemCount;
+                }
+
+                alert(`"${name}" agregado al carrito`);
             }
-
-            alert(`"${productName}" agregado al carrito`);
         });
     });
+
+    // 🖼️ LIGHTBOX
+    const images = document.querySelectorAll('.gallery-grid img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    if(images && lightbox && lightboxImg){
+        images.forEach(img => {
+            img.addEventListener('click', () => {
+                lightbox.classList.add('active');
+                lightboxImg.src = img.src;
+            });
+        });
+
+        lightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+    }
+
+    // 🛍️ CARGAR PRODUCTOS
+    cargarProductos();
 
 });
 
-// 🔥 FUNCIÓN MENÚ (FUERA, PERO CORRECTA)
+// 🔥 MENÚ GLOBAL
 function toggleMenu() {
-    document.querySelector("header nav").classList.toggle("active");
+    const nav = document.getElementById("navMenu");
+    if (nav) {
+        nav.classList.toggle("active");
+    }
 }
 
-const images = document.querySelectorAll('.gallery-grid img');
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
+// 🔥 FIREBASE PRODUCTOS
+async function cargarProductos(){
 
-images.forEach(img => {
-    img.addEventListener('click', () => {
-        lightbox.classList.add('active');
-        lightboxImg.src = img.src;
+    let productos = document.getElementById("listaProductos");
+    let accesorios = document.getElementById("listaAccesorios");
+
+    if(!productos && !accesorios) return;
+
+    const snap = await getDocs(collection(db,"productos"));
+
+    snap.forEach(doc=>{
+        let d = doc.data();
+
+        let card = document.createElement("div");
+        card.className="product-item";
+
+        card.innerHTML = `
+            <div class="product-image-wrapper">
+                <img src="${d.imagen}">
+            </div>
+            <h3>${d.nombre}</h3>
+            <p class="price">$${d.precio}</p>
+            <a href="https://wa.link/ph7p5s" class="btn btn-whatsapp">
+                <i class="fab fa-whatsapp"></i> Preguntar
+            </a>
+        `;
+
+        if(d.categoria === "productos" && productos){
+            productos.appendChild(card);
+        } else if(accesorios){
+            accesorios.appendChild(card);
+        }
     });
-});
 
-lightbox.addEventListener('click', () => {
-    lightbox.classList.remove('active');
-});
-
+}
+// Busca esta parte al final de tu a.js y cámbiala por esto:
+window.toggleMenu = function() {
+    const nav = document.getElementById("navMenu");
+    if (nav) {
+        nav.classList.toggle("active");
+        console.log("Menú activado:", nav.classList.contains("active"));
+    } else {
+        console.error("No se encontró el ID navMenu");
+    }
+};
