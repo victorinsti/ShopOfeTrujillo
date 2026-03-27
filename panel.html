@@ -343,6 +343,45 @@ window.logout = () => {
     window.location.href = "acceso.html";
 };
 
+window.agregarProducto = async () => {
+
+    try {
+
+        let emp = JSON.parse(sessionStorage.getItem("empleado"));
+
+        let nombre = document.getElementById("nombreProducto").value;
+        let precio = document.getElementById("precioProducto").value;
+        let categoria = document.getElementById("categoriaProducto").value;
+        let archivo = document.getElementById("imagenProducto").files[0];
+
+        if (!nombre || !precio || !archivo) {
+            return alert("❌ Completa todos los campos");
+        }
+
+        let reader = new FileReader();
+
+        reader.onload = async function(e) {
+
+            await addDoc(collection(db, "productos"), {
+                nombre: nombre,
+                precio: precio,
+                categoria: categoria,
+                imagen: e.target.result,
+                creadoPor: emp.user,
+                fecha: new Date().toISOString()
+            });
+
+            alert("✅ Producto subido correctamente");
+            location.reload();
+        };
+
+        reader.readAsDataURL(archivo);
+
+    } catch (error) {
+        console.error("ERROR:", error);
+        alert("❌ Error al subir producto");
+    }
+};
 </script>
 
 </body>
