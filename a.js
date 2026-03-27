@@ -1,4 +1,4 @@
-// 🔥 FIREBASE IMPORTS
+// En la parte superior de a.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
