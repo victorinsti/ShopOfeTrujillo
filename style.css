@@ -1198,3 +1198,69 @@ img {
         animation-duration: 20s;
     }
 }
+
+/* PANEL ADMIN PRO */
+.admin-card {
+    background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+    border: 2px solid #ff4da6;
+}
+
+/* GRID */
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* CAJAS */
+.admin-box {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.admin-box:hover {
+    transform: translateY(-5px);
+}
+
+/* TITULOS */
+.admin-box h3 {
+    color: #ff4da6;
+    margin-bottom: 10px;
+}
+
+/* INPUTS */
+.admin-box input,
+.admin-box select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+/* BOTONES */
+.btn-tarea {
+    background: #ff4da6;
+}
+
+.btn-noti {
+    background: #ff9800;
+}
+
+/* EFECTO */
+.admin-box button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.admin-box button:hover {
+    transform: scale(1.05);
+}

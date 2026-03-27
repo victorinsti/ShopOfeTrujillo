@@ -89,27 +89,55 @@ if(acceso !== "ok") {
     <p id="puesto"></p>
 </div>
 
-<div class="card" id="adminPanel" style="display:none;">
-    <h2>⚙️ Asignar tareas / notificaciones</h2>
+<div class="card admin-card" id="adminPanel" style="display:none;">
+    
+    <h2>⚙️ Panel Administrativo</h2>
 
-    <select id="usuarioSelect">
-        <option value="sol">Sol</option>
-        <option value="pao">Paola</option>
-        <option value="angy">Angy</option>
-        <option value="jun">Jun</option>
-        <option value="nao">Naomi</option>
-        <option value="paty">Paty</option>
-        <option value="lety">Lety</option>
-        <option value="samm">Sammy</option>
-    </select>
+    <div class="admin-grid">
 
-    <input type="text" id="nuevaTarea" placeholder="Nueva tarea">
-    <button onclick="agregarTarea()">Agregar tarea</button>
+        <!-- 🧾 TAREAS -->
+        <div class="admin-box">
+            <h3>📋 Asignar tareas</h3>
 
-    <input type="text" id="nuevaNoti" placeholder="Nueva notificación">
-    <button onclick="agregarNotificacion()">Agregar notificación</button>
+            <select id="usuarioSelect">
+                <option value="sol">Sol</option>
+                <option value="pao">Paola</option>
+                <option value="angy">Angy</option>
+                <option value="jun">Jun</option>
+                <option value="nao">Naomi</option>
+                <option value="paty">Paty</option>
+                <option value="lety">Lety</option>
+                <option value="samm">Sammy</option>
+                <option value="ofe">Ofe</option>
+            </select>
+
+            <input type="text" id="nuevaTarea" placeholder="Escribe una tarea">
+            <button class="btn-tarea" onclick="agregarTarea()">Agregar tarea</button>
+        </div>
+
+        <!-- 🔔 NOTIFICACIONES -->
+        <div class="admin-box">
+            <h3>🔔 Enviar notificaciones</h3>
+
+            <select id="usuarioSelect">
+                <option value="sol">Sol</option>
+                <option value="pao">Paola</option>
+                <option value="angy">Angy</option>
+                <option value="jun">Jun</option>
+                <option value="nao">Naomi</option>
+                <option value="paty">Paty</option>
+                <option value="lety">Lety</option>
+                <option value="samm">Sammy</option>
+                <option value="ofe">Ofe</option>
+            </select>
+
+            <input type="text" id="nuevaNoti" placeholder="Escribe una notificación">
+            <button class="btn-noti" onclick="agregarNotificacion()">Enviar notificación</button>
+        </div>
+
+    </div>
+
 </div>
-
 <!-- Rol de limpieza -->
 <div class="card">
     <h2>🧹 Rol de Limpieza Abril</h2>
@@ -120,6 +148,22 @@ if(acceso !== "ok") {
     <p>Viernes: Angy</p>
     <p>Sabado: Sol</p>
     
+</div>
+
+<div class="card">
+    <h2>🛍️ Subir producto</h2>
+
+    <input type="text" id="nombreProducto" placeholder="Nombre">
+    <input type="text" id="precioProducto" placeholder="Precio">
+    
+    <input type="file" id="imagenProducto" accept="image/*">
+
+    <select id="categoriaProducto">
+        <option value="productos">Productos</option>
+        <option value="accesorios">Accesorios</option>
+    </select>
+
+    <button onclick="agregarProducto()">Subir producto</button>
 </div>
 
 <!-- TAREAS DINÁMICAS -->
