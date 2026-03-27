@@ -1,6 +1,6 @@
 // 🔥 FIREBASE IMPORTS
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 // 🔥 CONFIG
 const firebaseConfig = {
@@ -163,5 +163,47 @@ window.toggleMenu = function() {
         console.log("Menú activado:", nav.classList.contains("active"));
     } else {
         console.error("No se encontró el ID navMenu");
+    }
+};
+
+// 🔥 FUNCIÓN GLOBAL PARA AGREGAR PRODUCTOS (Para todos los empleados)
+window.agregarProducto = async () => {
+    try {
+        const nombre = document.getElementById("nombreProducto").value;
+        const precio = document.getElementById("precioProducto").value;
+        const categoria = document.getElementById("categoriaProducto").value;
+        const archivo = document.getElementById("imagenProducto").files[0];
+
+        if (!nombre || !precio || !archivo) {
+            return alert("❌ Por favor, completa todos los campos y selecciona una imagen.");
+        }
+
+        // Obtener datos del empleado desde el sessionStorage
+        const empleado = JSON.parse(sessionStorage.getItem("empleado"));
+        if (!empleado) return alert("❌ Sesión no válida. Vuelve a entrar.");
+
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+            // Importante: Asegúrate de que 'addDoc' y 'collection' estén importados al inicio de a.js
+            // Si no, añádelos en la línea 2 de a.js: 
+            // import { getFirestore, collection, getDocs, addDoc } from "...";
+
+            await addDoc(collection(db, "productos"), {
+                nombre: nombre,
+                precio: precio,
+                categoria: categoria,
+                imagen: e.target.result, // Base64 de la imagen
+                creadoPor: empleado.nombre,
+                fecha: new Date().toISOString()
+            });
+
+            alert("✅ ¡Producto subido con éxito!");
+            location.reload();
+        };
+        reader.readAsDataURL(archivo);
+
+    } catch (error) {
+        console.error("Error al subir:", error);
+        alert("❌ Error técnico al subir el producto.");
     }
 };
