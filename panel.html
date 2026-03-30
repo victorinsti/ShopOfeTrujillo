@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Empleado</title>
+
+<style>
+body {
+    margin:0;
+    font-family: Arial;
+    background: linear-gradient(135deg, #ffe4ec, #fff0f5);
+}
+
+/* HEADER */
+.header {
+    background:#ff4da6;
+    color:white;
+    padding:15px;
+    text-align:center;
+    font-weight:bold;
+}
+
+/* CONTENEDOR */
+.container {
+    padding:20px;
+}
+
+/* TARJETAS */
+.card {
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* TITULOS */
+h2 {
+    color:#ff4da6;
+}
+
+/* LISTA */
+ul {
+    padding-left:20px;
+}
+
+/* BOTON */
+button {
+    width:100%;
+    padding:12px;
+    background:#ff4da6;
+    color:white;
+    border:none;
+    border-radius:10px;
+    margin-top:20px;
+}
+
+/* RESPONSIVE */
+@media (max-width:768px){
+    .container {
+        padding:10px;
+    }
+}
+</style>
+
+<script>
+// 🔐 PROTECCIÓN
+let acceso = sessionStorage.getItem("acceso");
+
+if(acceso !== "ok") {
+    window.location.href = "acceso.html";
+}
+</script>
+
+</head>
+<body>
+
+<div class="header">
+💖 Panel de Empleado
+</div>
+
+<div class="container">
+
+<!-- PERFIL -->
+<div class="card">
+    <h2>👤 Perfil</h2>
+    <p id="nombre"></p>
+    <p id="puesto"></p>
+</div>
+
+<div class="card admin-card" id="adminPanel" style="display:none;">
+    
+    <h2>⚙️ Panel Administrativo</h2>
+
+    <div class="admin-grid">
+
+        <!-- 🧾 TAREAS -->
+        <div class="admin-box">
+            <h3>📋 Asignar tareas</h3>
+
+            <select id="usuarioSelect">
+                <option value="sol">Sol</option>
+                <option value="pao">Paola</option>
+                <option value="angy">Angy</option>
+                <option value="jun">Jun</option>
+                <option value="nao">Naomi</option>
+                <option value="paty">Paty</option>
+                <option value="lety">Lety</option>
+                <option value="samm">Sammy</option>
+                <option value="ofe">Ofe</option>
+            </select>
+
+            <input type="text" id="nuevaTarea" placeholder="Escribe una tarea">
+            <button class="btn-tarea" onclick="agregarTarea()">Agregar tarea</button>
+        </div>
+
+        <!-- 🔔 NOTIFICACIONES -->
+        <div class="admin-box">
+            <h3>🔔 Enviar notificaciones</h3>
+
+            <select id="usuarioSelect">
+                <option value="sol">Sol</option>
+                <option value="pao">Paola</option>
+                <option value="angy">Angy</option>
+                <option value="jun">Jun</option>
+                <option value="nao">Naomi</option>
+                <option value="paty">Paty</option>
+                <option value="lety">Lety</option>
+                <option value="samm">Sammy</option>
+                <option value="ofe">Ofe</option>
+            </select>
+
+            <input type="text" id="nuevaNoti" placeholder="Escribe una notificación">
+            <button class="btn-noti" onclick="agregarNotificacion()">Enviar notificación</button>
+        </div>
+
+    </div>
+
+</div>
+<!-- Rol de limpieza -->
+<div class="card">
+    <h2>🧹 Rol de Limpieza Abril</h2>
+    <p>Lunes: Jun</p>
+    <p>Martes: Lety</p>
+    <p>Miercoles: Paty</p>
+    <p>Jueves: Naomi</p>
+    <p>Viernes: Angy</p>
+    <p>Sabado: Sol</p>
+    
+</div>
+
+<!-- TAREAS DINÁMICAS -->
+<div class="card">
+    <h2>📋 Actividades asignadas</h2>
+    <ul id="tareas"></ul>
+     <h2>📋 Notificaciones</h2>
+    <ul id="notificaciones"></ul>
+</div>
+
+<div class="card">
+    <h2>👤 Información del empleado</h2>
+    <p id="nombre"></p>
+    <p id="puesto"></p>
+    <p id="usuario"></p>
+    <p id="telefono"></p>
+    <p id="horario"></p>
+    <p id="area"></p>
+    <p id="estado"></p>
+    <p id="id"></p>
+  
+</div>
+
+<!-- INFO -->
+<div class="card">
+    <h2>🏪 Información de la Empresa</h2>
+    <p>📍 Minatitlán, Veracruz</p>
+    <p>📦 Envíos nacionales</p>
+    <p>📲 WhatsApp: 922 217 4646</p>
+</div>
+
+<button onclick="logout()">Cerrar sesión</button>
+
+</div>
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+// 🔥 CONFIG FIREBASE
+const firebaseConfig = {
+  apiKey: "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
+  authDomain: "trujillo-digital-hub.firebaseapp.com",
+  projectId: "trujillo-digital-hub",
+  storageBucket: "trujillo-digital-hub.firebasestorage.app",
+  messagingSenderId: "162799375782",
+  appId: "1:162799375782:web:2be9127bfeaa613fd6ab67"
+};
+
+// 🔥 INIT
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// 🚀 SISTEMA
+document.addEventListener("DOMContentLoaded", async () => {
+
+    // 🔐 USUARIO
+    let emp = JSON.parse(sessionStorage.getItem("empleado"));
+
+    if (!emp) {
+        window.location.href = "acceso.html";
+        return;
+    }
+
+    // 👤 PERFIL
+    document.getElementById("nombre").innerText = "Nombre: " + emp.nombre;
+    document.getElementById("puesto").innerText = "Puesto: " + emp.puesto;
+    document.getElementById("usuario").innerText = "Usuario: " + emp.user;
+    document.getElementById("telefono").innerText = "Teléfono: " + emp.telefono;
+    document.getElementById("horario").innerText = "Horario: " + emp.horario;
+    document.getElementById("area").innerText = "Área: " + emp.area;
+    document.getElementById("estado").innerText = "Estado: " + emp.estado;
+    document.getElementById("id").innerText = "ID: " + emp.id;
+
+    let lista = document.getElementById("tareas");
+    let notificaciones = document.getElementById("notificaciones");
+
+    // 🔥 TAREAS
+    const tareasSnap = await getDocs(collection(db, "tareas"));
+
+    lista.innerHTML = "";
+    let tieneTareas = false;
+
+    tareasSnap.forEach(doc => {
+        let data = doc.data();
+
+        if (data.usuario === emp.user) {
+            let li = document.createElement("li");
+            li.textContent = "✔ " + data.texto + " (" + data.creadoPor + ")";
+            lista.appendChild(li);
+            tieneTareas = true;
+        }
+    });
+
+    if (!tieneTareas) lista.innerHTML = "<li>Sin tareas</li>";
+
+    // 🔔 NOTIFICACIONES
+    const notiSnap = await getDocs(collection(db, "notificaciones"));
+
+    notificaciones.innerHTML = "";
+    let tieneNoti = false;
+
+    notiSnap.forEach(doc => {
+        let data = doc.data();
+
+        if (data.usuario === emp.user) {
+            let li = document.createElement("li");
+            li.textContent = "🔔 " + data.texto + " (" + data.creadoPor + ")";
+            notificaciones.appendChild(li);
+            tieneNoti = true;
+        }
+    });
+
+    if (!tieneNoti) notificaciones.innerHTML = "<li>Sin notificaciones</li>";
+
+    // 🔐 PANEL ADMIN SOLO OFE Y SAMM
+    if (emp.user === "ofe" || emp.user === "samm") {
+        let panel = document.getElementById("adminPanel");
+        if (panel) panel.style.display = "block";
+    }
+
+    // ➕ AGREGAR TAREA (SOLO ADMIN)
+    window.agregarTarea = async () => {
+
+        if (emp.user !== "ofe" && emp.user !== "samm") {
+            alert("❌ No tienes permiso");
+            return;
+        }
+
+        let user = document.getElementById("usuarioSelect").value;
+        let tarea = document.getElementById("nuevaTarea").value;
+
+        if (!tarea) return alert("Escribe una tarea");
+
+        await addDoc(collection(db, "tareas"), {
+            usuario: user,
+            texto: tarea,
+            creadoPor: emp.user,
+            fecha: new Date().toISOString()
+        });
+
+        alert("✅ Tarea asignada");
+        location.reload();
+    };
+
+    // ➕ AGREGAR NOTIFICACIÓN (SOLO ADMIN)
+    window.agregarNotificacion = async () => {
+
+        if (emp.user !== "ofe" && emp.user !== "samm") {
+            alert("❌ No tienes permiso");
+            return;
+        }
+
+        let user = document.getElementById("usuarioSelect").value;
+        let noti = document.getElementById("nuevaNoti").value;
+
+        if (!noti) return alert("Escribe una notificación");
+
+        await addDoc(collection(db, "notificaciones"), {
+            usuario: user,
+            texto: noti,
+            creadoPor: emp.user,
+            fecha: new Date().toISOString()
+        });
+
+        alert("🔔 Notificación enviada");
+        location.reload();
+    };
+
+});
+
+// 🔴 LOGOUT
+window.logout = () => {
+    sessionStorage.clear();
+    window.location.href = "acceso.html";
+};
+
+</script>
+
+</body>
+</html>
