@@ -1263,4 +1263,108 @@ img {
 
 .admin-box button:hover {
     transform: scale(1.05);
+<<<<<<< HEAD
+=======
+}
+
+/* 🔥 FIX MENÚ MÓVIL DEFINITIVO */
+
+@media (max-width: 992px) {
+
+    .menu-toggle {
+        display: block;
+        font-size: 28px;
+        cursor: pointer;
+        z-index: 2000;
+    }
+
+    header nav {
+        display: none !important;
+        width: 100%;
+    }
+
+    header nav.active {
+        display: block !important;
+        animation: fadeIn 0.3s ease;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        background: white;
+        padding: 15px 0;
+        border-top: 1px solid #eee;
+    }
+
+    header nav ul li {
+        margin: 10px 0;
+    }
+}
+
+/* 🔥 FIX DEFINITIVO MENÚ */
+
+@media (max-width: 992px) {
+
+    .menu-toggle {
+        display: block !important;
+        font-size: 26px;
+        cursor: pointer;
+    }
+
+    header nav {
+        display: none !important;
+        width: 100%;
+    }
+
+    header nav.active {
+        display: block !important;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        background: white;
+        padding: 15px;
+        text-align: center;
+    }
+
+    header nav ul li {
+        margin: 10px 0;
+    }
+}
+
+@media (max-width: 992px) {
+    .menu-toggle {
+        display: block !important; /* Asegura que se vea la hamburguesa */
+        font-size: 28px;
+        cursor: pointer;
+        position: relative;
+        z-index: 2001;
+    }
+
+    header nav {
+        display: none; /* Quitamos el !important de aquí */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Esta es la clase que activa el menú */
+    header nav.active {
+        display: flex !important; /* Forzamos a que se muestre como flex */
+    }
+
+    header nav ul {
+        flex-direction: column;
+        width: 100%;
+        padding: 20px 0;
+    }
+
+    header nav ul li {
+        text-align: center;
+        margin: 10px 0;
+    }
+>>>>>>> 51cc7952637d92c7ed5725038d5454c5a10b3e96
 }
