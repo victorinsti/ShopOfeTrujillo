@@ -44,6 +44,10 @@
     </header>
     
 <section id="anuncios" class="gallery-section container">
+
+<h2> Anuncios recientes</h2>
+<div class="anuncios" id="anunciosRecientes"></div>
+    
     <h2>Anuncios</h2>
     <div class="anuncios">
 
@@ -117,7 +121,7 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-import { query, orderBy } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { query, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 const firebaseConfig = { 
   apiKey: "AIzaSyB...",
@@ -130,7 +134,11 @@ const db = getFirestore(app);
 
 const contenedor = document.querySelector(".anuncios");
 
-const q = query(collection(db, "anuncios"), orderBy("fecha", "desc"));
+const q = query(
+    collection(db, "anuncios"),
+    orderBy("fecha", "desc"),
+    limit(3) // 🔥 SOLO LOS 5 MÁS RECIENTES
+);
 const anunciosSnap = await getDocs(q);
 
 anunciosSnap.forEach(doc => {
@@ -148,7 +156,11 @@ anunciosSnap.forEach(doc => {
     `;
 
     contenedor.innerHTML += card;
+
+    
 });
+
+
 
 </script>
 
