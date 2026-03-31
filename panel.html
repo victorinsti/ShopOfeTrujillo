@@ -152,6 +152,21 @@ if(acceso !== "ok") {
 </div>
 
 <div class="card">
+    <h2>📢 Subir anuncio</h2>
+
+    <input type="text" id="tituloAnuncio" placeholder="Título">
+    <input type="text" id="descAnuncio" placeholder="Descripción">
+    <input type="file" id="imgAnuncio" accept="image/*">
+
+    <button onclick="subirAnuncio()">Subir anuncio</button>
+</div>
+
+<div class="card">
+    <h2>🗑️ Eliminar anuncios</h2>
+    <div id="listaAnuncios"></div>
+</div>
+
+<div class="card">
     <h2>🛍️ Subir producto o accesorio</h2>
 
     <input type="text" id="nombreProd" placeholder="Nombre del producto">
@@ -171,6 +186,7 @@ if(acceso !== "ok") {
     <h2>🗑️ Eliminar productos</h2>
     <div id="listaProductos"></div>
 </div>
+
 
 
 <!-- TAREAS DINÁMICAS -->
@@ -407,6 +423,84 @@ window.agregarNotificacion = async () => {
     });
 
     alert("✅ Notificación enviada");
+    location.reload();
+};
+
+// 🔥 SUBIR ANUNCIO
+window.subirAnuncio = async () => {
+
+    let titulo = document.getElementById("tituloAnuncio").value;
+    let descripcion = document.getElementById("descAnuncio").value;
+    let file = document.getElementById("imgAnuncio").files[0];
+
+    if (!titulo || !file) {
+        return alert("❌ Completa los campos");
+    }
+
+    try {
+
+        const formData = new FormData();
+        formData.append("image", file);
+
+        const response = await fetch("https://api.imgbb.com/1/upload?key=e5fca8fd3a72f235075cfa08e1370ee3", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+        const imageUrl = data.data.url;
+
+        await addDoc(collection(db, "anuncios"), {
+            titulo,
+            descripcion,
+            imagen: imageUrl,
+            creadoPor: emp.user,
+            fecha: new Date()
+        });
+
+        alert("✅ Anuncio subido");
+        location.reload();
+
+    } catch (error) {
+        console.error(error);
+        alert("❌ Error al subir anuncio");
+    }
+};
+
+// 🔥 MOSTRAR ANUNCIOS
+const listaAnuncios = document.getElementById("listaAnuncios");
+
+const anunciosSnap = await getDocs(collection(db, "anuncios"));
+
+listaAnuncios.innerHTML = "";
+
+anunciosSnap.forEach(docSnap => {
+
+    let data = docSnap.data();
+    let id = docSnap.id;
+
+    let div = document.createElement("div");
+    div.style.borderBottom = "1px solid #ccc";
+    div.style.padding = "10px";
+
+    div.innerHTML = `
+        <b>${data.titulo}</b>
+        <br>
+        <button onclick="eliminarAnuncio('${id}')">🗑️ Eliminar</button>
+    `;
+
+    listaAnuncios.appendChild(div);
+});
+
+// 🔥 ELIMINAR ANUNCIO
+window.eliminarAnuncio = async (id) => {
+
+    if (!confirm("¿Eliminar anuncio?")) return;
+
+    await deleteDoc(doc(db, "anuncios", id));
+
+    alert("🗑️ Anuncio eliminado");
+
     location.reload();
 };
 

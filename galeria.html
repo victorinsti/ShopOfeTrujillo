@@ -113,7 +113,44 @@
 <footer>
     <p style="text-align:center; padding:20px;">© 2026 Shop Ofe Trujillo</p>
 </footer>
+<script type="module">
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { query, orderBy } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+const firebaseConfig = { 
+  apiKey: "AIzaSyB...",
+  authDomain: "trujillo-digital-hub.firebaseapp.com",
+  projectId: "trujillo-digital-hub"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const contenedor = document.querySelector(".anuncios");
+
+const q = query(collection(db, "anuncios"), orderBy("fecha", "desc"));
+const anunciosSnap = await getDocs(q);
+
+anunciosSnap.forEach(doc => {
+
+    let data = doc.data();
+
+    let card = `
+    <div class="anuncio-card">
+        <img src="${data.imagen}">
+        <div class="anuncio-info">
+            <h3>${data.titulo}</h3>
+            <p>${data.descripcion}</p>
+        </div>
+    </div>
+    `;
+
+    contenedor.innerHTML += card;
+});
+
+</script>
 
 <script src="a.js"></script>
 </body>
