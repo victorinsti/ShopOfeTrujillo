@@ -130,22 +130,24 @@
             <div class="accessory-grid">
                 <div class="accessory-item">
                     <div class="accessory-image-wrapper">
-                        <img src="img/proximamente.png" alt="proximamente">
+                        <img src="img/splaya.jpg" alt="proximamente">
+                        <span class="badge bestseller">Más Vendido</span>
                     </div>
-                    <h3>PROXIMAMENTE</h3>
-                    <p class="description">.</p>
-                    <p class="price">$</p>
+                    <h3>Sombrero de Playa</h3>
+                    <p class="description">Hermoso sombrero de playa diseñado para brindarte estilo y protección al mismo tiempo. Su diseño moderno y cómodo lo hace perfecto para complementar cualquier outfit veraniego. 🌴✨</p>
+                    <p class="price">$120</p>
                   <a href="https://wa.link/ph7p5s" class="btn btn-whatsapp">
     <i class="fab fa-whatsapp"></i> Preguntar existencias
 </a>
                 </div>
                  <div class="accessory-item">
                     <div class="accessory-image-wrapper">
-                      <img src="img/proximamente.png" alt="proximamente">
+                      <img src="img/viseras.jpg" alt="proximamente">
+                      <span class="badge bestseller">Más Vendido</span>
                     </div>
-                    <h3>PROXIMAMENTE</h3>
-                    <p class="description">.</p>
-                    <p class="price">$</p>
+                    <h3>Viseras</h3>
+                    <p class="description">Visera ligera y cómoda, ideal para protegerte del sol mientras mantienes un estilo fresco y moderno. Perfecta para tus días al aire libre o en la playa. ☀️✨</p>
+                    <p class="price">$110</p>
                    <a href="https://wa.link/ph7p5s" class="btn btn-whatsapp">
     <i class="fab fa-whatsapp"></i> Preguntar existencias
 </a>
@@ -155,11 +157,12 @@
 
                  <div class="accessory-item">
                     <div class="accessory-image-wrapper">
-                    <img src="img/proximamente.png" alt="proximamente">
+                    <img src="img/gorras.jpg" alt="proximamente">
+                    <span class="badge bestseller">Más Vendido</span>
                     </div>
-                    <h3>PROXIMAMENTE</h3>
-                    <p class="description">.</p>
-                    <p class="price">$</p>
+                    <h3>Gorras</h3>
+                    <p class="description">Gorras fabricadas con materiales de alta calidad, ligeras y resistentes. Diseñadas para brindar comodidad, ajuste perfecto y estilo en cualquier momento del día.</p>
+                    <p class="price">$80</p>
                     <a href="https://wa.link/ph7p5s" class="btn btn-whatsapp">
     <i class="fab fa-whatsapp"></i> Preguntar existencias
 </a>
@@ -264,6 +267,59 @@ Creemos en consentirte, escucharte y evolucionar contigo. Por eso, cada detalle 
         </div>
         </section>
     </footer>
+
+
+
+    <script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
+  authDomain: "trujillo-digital-hub.firebaseapp.com",
+  projectId: "trujillo-digital-hub",
+  storageBucket: "trujillo-digital-hub.firebasestorage.app",
+  messagingSenderId: "162799375782",
+  appId: "1:162799375782:web:2be9127bfeaa613fd6ab67"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// CONTENEDORES
+const productGrid = document.querySelector(".product-grid");
+const accessoryGrid = document.querySelector(".accessory-grid");
+
+// CARGAR PRODUCTOS
+const productosSnap = await getDocs(collection(db, "productos"));
+
+productosSnap.forEach(doc => {
+    let data = doc.data();
+
+    let card = `
+    <div class="${data.tipo === "producto" ? "product-item" : "accessory-item"}">
+        <div class="${data.tipo === "producto" ? "product-image-wrapper" : "accessory-image-wrapper"}">
+            <img src="${data.imagen}">
+        </div>
+        <h3>${data.nombre}</h3>
+        <p class="description">${data.descripcion}</p>
+        <p class="price">$${data.precio}</p>
+
+        <a href="https://wa.link/ph7p5s" class="btn btn-whatsapp">
+            <i class="fab fa-whatsapp"></i> Preguntar existencias
+        </a>
+    </div>
+    `;
+
+    if (data.tipo === "producto") {
+        productGrid.innerHTML += card;
+    } else {
+        accessoryGrid.innerHTML += card;
+    }
+});
+
+</script>
 
     <script src="a.js"></script>
 </body>

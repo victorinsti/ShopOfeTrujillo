@@ -99,7 +99,7 @@ if(acceso !== "ok") {
         <div class="admin-box">
             <h3>📋 Asignar tareas</h3>
 
-            <select id="usuarioSelect">
+            <select id="usuarioTarea">
                 <option value="sol">Sol</option>
                 <option value="pao">Paola</option>
                 <option value="angy">Angy</option>
@@ -120,7 +120,7 @@ if(acceso !== "ok") {
         <div class="admin-box">
             <h3>🔔 Enviar notificaciones</h3>
 
-            <select id="usuarioSelect">
+           <select id="usuarioNoti">
                 <option value="sol">Sol</option>
                 <option value="pao">Paola</option>
                 <option value="angy">Angy</option>
@@ -151,11 +151,33 @@ if(acceso !== "ok") {
     
 </div>
 
+<div class="card">
+    <h2>🛍️ Subir producto o accesorio</h2>
+
+    <input type="text" id="nombreProd" placeholder="Nombre del producto">
+    <input type="text" id="descProd" placeholder="Descripción">
+    <input type="number" id="precioProd" placeholder="Precio">
+   <input type="file" id="imgProd" accept="image/*">
+
+    <select id="tipoProd">
+        <option value="producto">Producto</option>
+        <option value="accesorio">Accesorio</option>
+    </select>
+
+    <button onclick="subirProducto()">Subir</button>
+</div>
+
+<div class="card">
+    <h2>🗑️ Eliminar productos</h2>
+    <div id="listaProductos"></div>
+</div>
+
+
 <!-- TAREAS DINÁMICAS -->
 <div class="card">
-    <h2>📋 Actividades asignadas</h2>
+    <h2>📋 Tareas asignadas</h2>
     <ul id="tareas"></ul>
-     <h2>📋 Notificaciones</h2>
+     <h2>📋 Notificaciones asignadas</h2>
     <ul id="notificaciones"></ul>
 </div>
 
@@ -188,9 +210,9 @@ if(acceso !== "ok") {
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-// 🔥 CONFIG FIREBASE
+// 🔥 CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
   authDomain: "trujillo-digital-hub.firebaseapp.com",
@@ -200,14 +222,11 @@ const firebaseConfig = {
   appId: "1:162799375782:web:2be9127bfeaa613fd6ab67"
 };
 
-// 🔥 INIT
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// 🚀 SISTEMA
 document.addEventListener("DOMContentLoaded", async () => {
 
-    // 🔐 USUARIO
     let emp = JSON.parse(sessionStorage.getItem("empleado"));
 
     if (!emp) {
@@ -225,6 +244,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("estado").innerText = "Estado: " + emp.estado;
     document.getElementById("id").innerText = "ID: " + emp.id;
 
+    // 🔐 MOSTRAR PANEL ADMIN
+if (emp.user === "ofe" || emp.user === "samm") {
+    let panel = document.getElementById("adminPanel");
+    if (panel) panel.style.display = "block";
+}
+
     let lista = document.getElementById("tareas");
     let notificaciones = document.getElementById("notificaciones");
 
@@ -234,8 +259,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     lista.innerHTML = "";
     let tieneTareas = false;
 
-    tareasSnap.forEach(doc => {
-        let data = doc.data();
+    tareasSnap.forEach(docSnap => {
+        let data = docSnap.data();
 
         if (data.usuario === emp.user) {
             let li = document.createElement("li");
@@ -253,8 +278,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     notificaciones.innerHTML = "";
     let tieneNoti = false;
 
-    notiSnap.forEach(doc => {
-        let data = doc.data();
+    notiSnap.forEach(docSnap => {
+        let data = docSnap.data();
 
         if (data.usuario === emp.user) {
             let li = document.createElement("li");
@@ -266,69 +291,133 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (!tieneNoti) notificaciones.innerHTML = "<li>Sin notificaciones</li>";
 
-    // 🔐 PANEL ADMIN SOLO OFE Y SAMM
-    if (emp.user === "ofe" || emp.user === "samm") {
-        let panel = document.getElementById("adminPanel");
-        if (panel) panel.style.display = "block";
-    }
+    // 🔥 MOSTRAR PRODUCTOS
+    const listaProductos = document.getElementById("listaProductos");
 
-    // ➕ AGREGAR TAREA (SOLO ADMIN)
-    window.agregarTarea = async () => {
+    const productosSnap = await getDocs(collection(db, "productos"));
 
-        if (emp.user !== "ofe" && emp.user !== "samm") {
-            alert("❌ No tienes permiso");
-            return;
+    listaProductos.innerHTML = "";
+
+    productosSnap.forEach(docSnap => {
+
+        let data = docSnap.data();
+        let id = docSnap.id;
+
+        let div = document.createElement("div");
+        div.style.borderBottom = "1px solid #ccc";
+        div.style.padding = "10px";
+
+        div.innerHTML = `
+            <b>${data.nombre}</b> - $${data.precio}
+            <br>
+            <button onclick="eliminarProducto('${id}')">🗑️ Eliminar</button>
+        `;
+
+        listaProductos.appendChild(div);
+    });
+
+    // 🔥 SUBIR PRODUCTO
+    window.subirProducto = async () => {
+
+        let nombre = document.getElementById("nombreProd").value;
+        let descripcion = document.getElementById("descProd").value;
+        let precio = document.getElementById("precioProd").value;
+        let file = document.getElementById("imgProd").files[0];
+        let tipo = document.getElementById("tipoProd").value;
+
+        if (!nombre || !precio || !file) {
+            return alert("❌ Completa los campos");
         }
 
-        let user = document.getElementById("usuarioSelect").value;
-        let tarea = document.getElementById("nuevaTarea").value;
+        try {
 
-        if (!tarea) return alert("Escribe una tarea");
+            const formData = new FormData();
+            formData.append("image", file);
 
-        await addDoc(collection(db, "tareas"), {
-            usuario: user,
-            texto: tarea,
-            creadoPor: emp.user,
-            fecha: new Date().toISOString()
-        });
+            const response = await fetch("https://api.imgbb.com/1/upload?key=e5fca8fd3a72f235075cfa08e1370ee3", {
+                method: "POST",
+                body: formData
+            });
 
-        alert("✅ Tarea asignada");
+            const data = await response.json();
+
+            const imageUrl = data.data.url;
+
+            await addDoc(collection(db, "productos"), {
+                nombre,
+                descripcion,
+                precio,
+                imagen: imageUrl,
+                tipo,
+                creadoPor: emp.user,
+                fecha: new Date()
+            });
+
+            alert("✅ Producto subido");
+            location.reload();
+
+        } catch (error) {
+            console.error(error);
+            alert("❌ Error al subir");
+        }
+    };
+
+    // 🔥 ELIMINAR PRODUCTO
+    window.eliminarProducto = async (id) => {
+
+        if (!confirm("¿Eliminar producto?")) return;
+
+        await deleteDoc(doc(db, "productos", id));
+
+        alert("🗑️ Eliminado");
         location.reload();
     };
 
-    // ➕ AGREGAR NOTIFICACIÓN (SOLO ADMIN)
-    window.agregarNotificacion = async () => {
+    // 🔥 AGREGAR TAREA
+window.agregarTarea = async () => {
 
-        if (emp.user !== "ofe" && emp.user !== "samm") {
-            alert("❌ No tienes permiso");
-            return;
-        }
+    let user = document.getElementById("usuarioTarea").value;
+    let tarea = document.getElementById("nuevaTarea").value;
 
-        let user = document.getElementById("usuarioSelect").value;
-        let noti = document.getElementById("nuevaNoti").value;
+    if (!tarea) return alert("Escribe una tarea");
 
-        if (!noti) return alert("Escribe una notificación");
+    await addDoc(collection(db, "tareas"), {
+        usuario: user,
+        texto: tarea,
+        creadoPor: emp.user
+    });
 
-        await addDoc(collection(db, "notificaciones"), {
-            usuario: user,
-            texto: noti,
-            creadoPor: emp.user,
-            fecha: new Date().toISOString()
-        });
+    alert("✅ Tarea agregada");
+    location.reload();
+};
 
-        alert("🔔 Notificación enviada");
-        location.reload();
-    };
+
+// 🔔 AGREGAR NOTIFICACIÓN
+window.agregarNotificacion = async () => {
+
+    let user = document.getElementById("usuarioNoti").value;
+    let noti = document.getElementById("nuevaNoti").value;
+
+    if (!noti) return alert("Escribe una notificación");
+
+    await addDoc(collection(db, "notificaciones"), {
+        usuario: user,
+        texto: noti,
+        creadoPor: emp.user
+    });
+
+    alert("✅ Notificación enviada");
+    location.reload();
+};
 
 });
 
-// 🔴 LOGOUT
+// 🔐 LOGOUT
 window.logout = () => {
     sessionStorage.clear();
     window.location.href = "acceso.html";
 };
 
 </script>
-
 </body>
 </html>
