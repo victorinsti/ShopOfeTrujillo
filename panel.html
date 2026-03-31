@@ -224,6 +224,20 @@ if(acceso !== "ok") {
 
 
 <script type="module">
+const empleados = [
+    { user: "ofe", nombre: "Ofe", telefono: "9221640747" },
+    { user: "samm", nombre: "Samm", telefono: "9222081087" },
+     { user: "sol", nombre: "Sol", telefono: "9222136931" },
+      { user: "pao", nombre: "Pao", telefono: "9221589784" },
+       { user: "angy", nombre: "Angy", telefono: "9221251906" },
+        { user: "jun", nombre: "Jun", telefono: "9512732511" },
+         { user: "nao", nombre: "Nao", telefono: "9221721390" },
+            { user: "paty", nombre: "Paty", telefono: "9222038139" },
+               { user: "lety", nombre: "Lety", telefono: "9221307100" },
+                  { user: "luis", nombre: "Luis", telefono: "9222098471" },
+                     
+];
+
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
@@ -389,8 +403,7 @@ if (emp.user === "ofe" || emp.user === "samm") {
         location.reload();
     };
 
-    // 🔥 AGREGAR TAREA
-window.agregarTarea = async () => {
+   window.agregarTarea = async () => {
 
     let user = document.getElementById("usuarioTarea").value;
     let tarea = document.getElementById("nuevaTarea").value;
@@ -403,12 +416,23 @@ window.agregarTarea = async () => {
         creadoPor: emp.user
     });
 
-    alert("✅ Tarea agregada");
-    location.reload();
+    let empleados = JSON.parse(localStorage.getItem("empleados")) || [];
+    let empleado = empleados.find(e => e.user === user);
+
+    console.log(empleados);
+
+    if (empleado) {
+
+        let mensaje = `Hola ${empleado.nombre}, tienes una nueva tarea: ${tarea}`;
+
+        let url = `https://wa.me/52${empleado.telefono}?text=${encodeURIComponent(mensaje)}`;
+
+        window.open(url, "_blank");
+    }
+
+    alert("✅ Tarea enviada por WhatsApp");
 };
 
-
-// 🔔 AGREGAR NOTIFICACIÓN
 window.agregarNotificacion = async () => {
 
     let user = document.getElementById("usuarioNoti").value;
@@ -416,15 +440,28 @@ window.agregarNotificacion = async () => {
 
     if (!noti) return alert("Escribe una notificación");
 
+    // 🔥 GUARDAR EN FIREBASE
     await addDoc(collection(db, "notificaciones"), {
         usuario: user,
         texto: noti,
         creadoPor: emp.user
     });
 
-    alert("✅ Notificación enviada");
-    location.reload();
+    // 🔥 BUSCAR EMPLEADO (SIN FIREBASE)
+    let empleado = empleados.find(e => e.user === user);
+
+    if (empleado) {
+
+        let mensaje = `Hola ${empleado.nombre}, tienes una notificación en Shop Ofe Trujillo`;
+
+        let url = `https://wa.me/52${empleado.telefono}?text=${encodeURIComponent(mensaje)}`;
+
+        window.location.href = url;
+    }
+
+    alert("🔔 Notificación enviada");
 };
+
 
 // 🔥 SUBIR ANUNCIO
 window.subirAnuncio = async () => {
