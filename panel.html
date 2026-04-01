@@ -174,6 +174,10 @@ if(acceso !== "ok") {
     <input type="text" id="nombreProd" placeholder="Nombre del producto">
     <input type="text" id="descProd" placeholder="Descripción">
     <input type="number" id="precioProd" placeholder="Precio">
+    <input type="text" id="codigoProd" placeholder="Código de barras">
+    <button onclick="iniciarEscaner()">📷 Escanear código</button>
+
+<div id="scanner" style="width:100%; margin-top:10px;"></div>
    <input type="file" id="imgProd" accept="image/*">
 
     <select id="tipoProd">
@@ -234,7 +238,7 @@ if(acceso !== "ok") {
 
 </div>
 
-
+<script src="https://unpkg.com/html5-qrcode"></script>
 <script type="module">
 const empleados = [
     { user: "ofe", nombre: "Ofe", telefono: "9221640747" },
@@ -349,8 +353,12 @@ if (emp.user === "ofe" || emp.user === "samm") {
     div.style.borderBottom = "1px solid #ccc";
     div.style.padding = "10px";
 
-    // TEXTO
-    div.innerHTML = `<b>${data.nombre}</b> - $${data.precio}<br>`;
+    div.innerHTML = `
+<b>${data.nombre}</b> - $${data.precio}
+<br>
+Código: ${data.codigo || "N/A"}
+<br>
+`;
 
     // ✏️ EDITAR
     let btnEditar = document.createElement("button");
@@ -376,6 +384,7 @@ if (emp.user === "ofe" || emp.user === "samm") {
         let nombre = document.getElementById("nombreProd").value;
         let descripcion = document.getElementById("descProd").value;
         let precio = document.getElementById("precioProd").value;
+        let codigo = document.getElementById("codigoProd").value;
         let file = document.getElementById("imgProd").files[0];
         let tipo = document.getElementById("tipoProd").value;
 
@@ -403,6 +412,7 @@ if (emp.user === "ofe" || emp.user === "samm") {
                 precio,
                 imagen: imageUrl,
                 tipo,
+                codigo, // 🔥 AQUI
                 creadoPor: emp.user,
                 fecha: new Date()
             });
@@ -596,7 +606,43 @@ window.guardarEdicion = async () => {
     location.reload();
 };
 
+// 📷 ESCÁNER DE CÓDIGO
+window.iniciarEscaner = () => {
+
+    const html5QrCode = new Html5Qrcode("scanner");
+
+    Html5Qrcode.getCameras().then(devices => {
+
+        if (devices && devices.length) {
+
+            let cameraId = devices[0].id;
+
+            html5QrCode.start(
+                cameraId,
+                {
+                    fps: 10,
+                    qrbox: 250
+                },
+                (codigo) => {
+
+                    document.getElementById("codigoProd").value = codigo;
+
+                    html5QrCode.stop();
+                    document.getElementById("scanner").innerHTML = "";
+
+                    alert("✅ Código: " + codigo);
+                }
+            );
+
+        }
+
+    }).catch(err => {
+        alert("❌ Error cámara: " + err);
+    });
+};
+
 });
+
 
 // 🔐 LOGOUT
 window.logout = () => {
