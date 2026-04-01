@@ -410,29 +410,27 @@ if (emp.user === "ofe" || emp.user === "samm") {
 
     if (!tarea) return alert("Escribe una tarea");
 
+    // 🔥 GUARDAR EN FIREBASE
     await addDoc(collection(db, "tareas"), {
         usuario: user,
         texto: tarea,
         creadoPor: emp.user
     });
 
-    let empleados = JSON.parse(localStorage.getItem("empleados")) || [];
+    // 🔥 BUSCAR EMPLEADO (SIN FIREBASE)
     let empleado = empleados.find(e => e.user === user);
-
-    console.log(empleados);
 
     if (empleado) {
 
-        let mensaje = `Hola ${empleado.nombre}, tienes una nueva tarea: ${tarea}`;
+        let mensaje = `Hola ${empleado.nombre}, tienes una nueva tarea en Shop Ofe Trujillo`;
 
         let url = `https://wa.me/52${empleado.telefono}?text=${encodeURIComponent(mensaje)}`;
 
-        window.open(url, "_blank");
+        window.location.href = url;
     }
 
-    alert("✅ Tarea enviada por WhatsApp");
+    alert("✅ Tarea enviada");
 };
-
 window.agregarNotificacion = async () => {
 
     let user = document.getElementById("usuarioNoti").value;
