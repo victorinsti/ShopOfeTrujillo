@@ -613,15 +613,22 @@ window.iniciarEscaner = () => {
 
     Html5Qrcode.getCameras().then(devices => {
 
-        if (devices && devices.length) {
+        if (devices.length) {
 
-            let cameraId = devices[0].id;
+            // 🔥 buscar cámara trasera
+            let backCam = devices.find(d => d.label.toLowerCase().includes("back"));
+
+            let cameraId = backCam ? backCam.id : devices[0].id;
 
             html5QrCode.start(
                 cameraId,
                 {
                     fps: 10,
-                    qrbox: 250
+                    qrbox: 250,
+                    formatsToSupport: [
+                        Html5QrcodeSupportedFormats.EAN_13,
+                        Html5QrcodeSupportedFormats.CODE_128
+                    ]
                 },
                 (codigo) => {
 
@@ -636,11 +643,8 @@ window.iniciarEscaner = () => {
 
         }
 
-    }).catch(err => {
-        alert("❌ Error cámara: " + err);
     });
 };
-
 });
 
 
