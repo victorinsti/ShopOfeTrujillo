@@ -166,6 +166,8 @@ if(acceso !== "ok") {
     <div id="listaAnuncios"></div>
 </div>
 
+
+
 <div class="card">
     <h2>🛍️ Subir producto o accesorio</h2>
 
@@ -185,6 +187,16 @@ if(acceso !== "ok") {
 <div class="card">
     <h2>🗑️ Eliminar productos</h2>
     <div id="listaProductos"></div>
+</div>
+
+<div class="card" id="editarBox" style="display:none;">
+    <h2>✏️ Editar producto</h2>
+
+    <input id="editNombre" placeholder="Nombre">
+    <input id="editDesc" placeholder="Descripción">
+    <input id="editPrecio" type="number" placeholder="Precio">
+
+    <button onclick="guardarEdicion()">Guardar cambios</button>
 </div>
 
 
@@ -240,7 +252,7 @@ const empleados = [
 
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 // 🔥 CONFIG
 const firebaseConfig = {
@@ -330,21 +342,33 @@ if (emp.user === "ofe" || emp.user === "samm") {
 
     productosSnap.forEach(docSnap => {
 
-        let data = docSnap.data();
-        let id = docSnap.id;
+    let data = docSnap.data();
+    let id = docSnap.id;
 
-        let div = document.createElement("div");
-        div.style.borderBottom = "1px solid #ccc";
-        div.style.padding = "10px";
+    let div = document.createElement("div");
+    div.style.borderBottom = "1px solid #ccc";
+    div.style.padding = "10px";
 
-        div.innerHTML = `
-            <b>${data.nombre}</b> - $${data.precio}
-            <br>
-            <button onclick="eliminarProducto('${id}')">🗑️ Eliminar</button>
-        `;
+    // TEXTO
+    div.innerHTML = `<b>${data.nombre}</b> - $${data.precio}<br>`;
 
-        listaProductos.appendChild(div);
-    });
+    // ✏️ EDITAR
+    let btnEditar = document.createElement("button");
+    btnEditar.textContent = "✏️ Editar";
+    btnEditar.onclick = () => {
+        editarProducto(id, data);
+    };
+
+    // 🗑️ ELIMINAR
+    let btnEliminar = document.createElement("button");
+    btnEliminar.textContent = "🗑️ Eliminar";
+    btnEliminar.onclick = () => eliminarProducto(id);
+
+    div.appendChild(btnEditar);
+    div.appendChild(btnEliminar);
+
+    listaProductos.appendChild(div);
+});
 
     // 🔥 SUBIR PRODUCTO
     window.subirProducto = async () => {
@@ -536,6 +560,39 @@ window.eliminarAnuncio = async (id) => {
 
     alert("🗑️ Anuncio eliminado");
 
+    location.reload();
+};
+
+// ✏️ EDITAR
+let productoEditando = null;
+
+window.editarProducto = (id, data) => {
+    productoEditando = id;
+
+    document.getElementById("editarBox").style.display = "block";
+    document.getElementById("editNombre").value = data.nombre;
+    document.getElementById("editDesc").value = data.descripcion || "";
+    document.getElementById("editPrecio").value = data.precio;
+};
+
+// 💾 GUARDAR
+window.guardarEdicion = async () => {
+
+    let nombre = document.getElementById("editNombre").value;
+    let descripcion = document.getElementById("editDesc").value;
+    let precio = document.getElementById("editPrecio").value;
+
+    if (!nombre || !precio) {
+        return alert("❌ Completa los campos");
+    }
+
+    await updateDoc(doc(db, "productos", productoEditando), {
+        nombre,
+        descripcion,
+        precio
+    });
+
+    alert("✅ Producto actualizado");
     location.reload();
 };
 
