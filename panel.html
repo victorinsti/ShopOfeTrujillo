@@ -89,11 +89,22 @@ if(acceso !== "ok") {
     <p id="puesto"></p>
 </div>
 
+
+<div class="card">
+    <h2>⏰ Asistencia</h2>
+
+    <p id="estadoAsistencia">Cargando...</p>
+
+    <button onclick="registrarEntrada()">🟢 Registrar entrada</button>
+    <button onclick="registrarSalida()">🔴 Registrar salida</button>
+</div>
 <div class="card admin-card" id="adminPanel" style="display:none;">
     
     <h2>⚙️ Panel Administrativo</h2>
 
     <div class="admin-grid">
+
+        
 
         <!-- 🧾 TAREAS -->
         <div class="admin-box">
@@ -253,7 +264,10 @@ const empleados = [
 
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { 
+  getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc,
+  setDoc, getDoc
+} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 // 🔥 CONFIG
 const firebaseConfig = {
@@ -272,14 +286,43 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let emp = JSON.parse(sessionStorage.getItem("empleado"));
 
+    // ⏰ MOSTRAR ASISTENCIA
+const estadoAsistencia = document.getElementById("estadoAsistencia");
+
+if (estadoAsistencia) {
+
+    let fecha = obtenerFechaHoy();
+    const ref = doc(db, "asistencia", emp.user + "_" + fecha);
+    const snap = await getDoc(ref);
+
+    if (!snap.exists()) {
+        estadoAsistencia.innerText = "❌ Sin registro hoy";
+    } else {
+        let data = snap.data();
+
+        let entrada = data.entrada
+            ? data.entrada.toDate().toLocaleTimeString()
+            : "—";
+
+        let salida = data.salida
+            ? data.salida.toDate().toLocaleTimeString()
+            : "—";
+
+        estadoAsistencia.innerHTML = `
+🟢 <b>Entrada:</b> ${entrada} <br>
+🔴 <b>Salida:</b> ${salida}
+`;
+    }
+}
+
     if (!emp) {
         window.location.href = "acceso.html";
         return;
     }
 
     // 👤 PERFIL
-    document.getElementById("nombre").innerText = "Nombre: " + emp.nombre;
-    document.getElementById("puesto").innerText = "Puesto: " + emp.puesto;
+    document.querySelectorAll("#nombre").forEach(e => e.innerText = "Nombre: " + emp.nombre);
+document.querySelectorAll("#puesto").forEach(e => e.innerText = "Puesto: " + emp.puesto);
     document.getElementById("usuario").innerText = "Usuario: " + emp.user;
     document.getElementById("telefono").innerText = "Teléfono: " + emp.telefono;
     document.getElementById("horario").innerText = "Horario: " + emp.horario;
@@ -536,27 +579,31 @@ window.subirAnuncio = async () => {
 // 🔥 MOSTRAR ANUNCIOS
 const listaAnuncios = document.getElementById("listaAnuncios");
 
-const anunciosSnap = await getDocs(collection(db, "anuncios"));
+if (listaAnuncios) {
 
-listaAnuncios.innerHTML = "";
+    const anunciosSnap = await getDocs(collection(db, "anuncios"));
 
-anunciosSnap.forEach(docSnap => {
+    listaAnuncios.innerHTML = "";
 
-    let data = docSnap.data();
-    let id = docSnap.id;
+    anunciosSnap.forEach(docSnap => {
 
-    let div = document.createElement("div");
-    div.style.borderBottom = "1px solid #ccc";
-    div.style.padding = "10px";
+        let data = docSnap.data();
+        let id = docSnap.id;
 
-    div.innerHTML = `
-        <b>${data.titulo}</b>
-        <br>
-        <button onclick="eliminarAnuncio('${id}')">🗑️ Eliminar</button>
-    `;
+        let div = document.createElement("div");
+        div.style.borderBottom = "1px solid #ccc";
+        div.style.padding = "10px";
 
-    listaAnuncios.appendChild(div);
-});
+        div.innerHTML = `
+            <b>${data.titulo}</b>
+            <br>
+            <button onclick="eliminarAnuncio('${id}')">🗑️ Eliminar</button>
+        `;
+
+        listaAnuncios.appendChild(div);
+    });
+
+}
 
 // 🔥 ELIMINAR ANUNCIO
 window.eliminarAnuncio = async (id) => {
@@ -639,8 +686,62 @@ window.iniciarEscaner = () => {
             );
 
         }
+        
 
     });
+
+    
+};
+function obtenerFechaHoy() {
+    return new Date().toISOString().split("T")[0];
+}
+
+// 🟢 ENTRADA
+window.registrarEntrada = async () => {
+
+    let emp = JSON.parse(sessionStorage.getItem("empleado"));
+    let fecha = obtenerFechaHoy();
+
+    const ref = doc(db, "asistencia", emp.user + "_" + fecha);
+    const snap = await getDoc(ref);
+
+    if (snap.exists()) {
+        alert("⚠️ Ya registraste entrada");
+        return;
+    }
+
+    await setDoc(ref, {
+        usuario: emp.user,
+        nombre: emp.nombre,
+        entrada: new Date(),
+        salida: null
+    });
+
+    alert("✅ Entrada registrada");
+    location.reload();
+};
+
+// 🔴 SALIDA
+window.registrarSalida = async () => {
+
+    let emp = JSON.parse(sessionStorage.getItem("empleado"));
+    let fecha = obtenerFechaHoy();
+
+    const ref = doc(db, "asistencia", emp.user + "_" + fecha);
+    const snap = await getDoc(ref);
+
+    if (!snap.exists()) {
+        alert("❌ Primero registra entrada");
+        return;
+    }
+
+    await setDoc(ref, {
+        ...snap.data(),
+        salida: new Date()
+    });
+
+    alert("✅ Salida registrada");
+    location.reload();
 };
 });
 
