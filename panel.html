@@ -754,6 +754,14 @@ window.registrarSalida = async () => {
         return;
     }
 
+    let data = snap.data();
+
+    // 🔥 BLOQUEO CLAVE
+    if (data.salida) {
+        alert("⚠️ Ya registraste tu salida");
+        return;
+    }
+
     try {
         navigator.geolocation.getCurrentPosition(async (pos) => {
 
@@ -763,12 +771,12 @@ window.registrarSalida = async () => {
             };
 
             await setDoc(ref, {
-                ...snap.data(),
+                ...data,
                 salida: new Date(),
-                ubicacionSalida: ubicacion // 🔥 AQUÍ
+                ubicacionSalida: ubicacion
             });
 
-            alert("✅ Salida registrada con ubicación");
+            alert("✅ Salida registrada");
             location.reload();
 
         }, (error) => {
