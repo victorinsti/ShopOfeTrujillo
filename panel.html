@@ -532,6 +532,8 @@ window.agregarNotificacion = async () => {
     }
 
     alert("🔔 Notificación enviada");
+
+
 };
 
 
@@ -710,17 +712,34 @@ window.registrarEntrada = async () => {
         return;
     }
 
-    await setDoc(ref, {
-        usuario: emp.user,
-        nombre: emp.nombre,
-        entrada: new Date(),
-        salida: null
-    });
+    try {
+        navigator.geolocation.getCurrentPosition(async (pos) => {
 
-    alert("✅ Entrada registrada");
-    location.reload();
+            const ubicacion = {
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude
+            };
+
+            await setDoc(ref, {
+                usuario: emp.user,
+                nombre: emp.nombre,
+                entrada: new Date(),
+                salida: null,
+                ubicacionEntrada: ubicacion // 🔥 AQUÍ
+            });
+
+            alert("✅ Entrada registrada con ubicación");
+            location.reload();
+
+        }, (error) => {
+            alert("❌ No se pudo obtener ubicación");
+            console.error(error);
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
 };
-
 // 🔴 SALIDA
 window.registrarSalida = async () => {
 
@@ -735,14 +754,44 @@ window.registrarSalida = async () => {
         return;
     }
 
-    await setDoc(ref, {
-        ...snap.data(),
-        salida: new Date()
-    });
+    try {
+        navigator.geolocation.getCurrentPosition(async (pos) => {
 
-    alert("✅ Salida registrada");
-    location.reload();
+            const ubicacion = {
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude
+            };
+
+            await setDoc(ref, {
+                ...snap.data(),
+                salida: new Date(),
+                ubicacionSalida: ubicacion // 🔥 AQUÍ
+            });
+
+            alert("✅ Salida registrada con ubicación");
+            location.reload();
+
+        }, (error) => {
+            alert("❌ No se pudo obtener ubicación");
+            console.error(error);
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
 };
+
+
+// 🔥 AUTO RESET DIARIO
+function obtenerFechaHoy() {
+    const fecha = new Date();
+
+    const year = fecha.getFullYear();
+    const month = String(fecha.getMonth() + 1).padStart(2, '0');
+    const day = String(fecha.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+}
 });
 
 
