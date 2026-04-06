@@ -62,6 +62,36 @@ button {
         padding:10px;
     }
 }
+
+#calendario {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.dia {
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    background: #eee;
+    font-size: 12px;
+}
+
+.asistio {
+    background: #4caf50;
+    color: white;
+}
+
+.falta {
+    background: #f44336;
+    color: white;
+}
+
+.retardo {
+    background: #ff9800;
+    color: white;
+}
 </style>
 
 <script>
@@ -168,6 +198,13 @@ if(acceso !== "ok") {
 </div>
 <button onclick="verHistorial()">📅 Ver historial</button>
 <div id="historialBox"></div>
+
+<br>
+
+<div class="card">
+    <h2>📅 Calendario de asistencia</h2>
+    <div id="calendario"></div>
+</div>
 
 <br>
 
@@ -746,6 +783,9 @@ window.registrarEntrada = async () => {
         console.error(error);
     }
 };
+
+cargarCalendario();
+
 // 🔴 SALIDA
 window.registrarSalida = async () => {
 
@@ -940,6 +980,56 @@ window.verHistorial = async () => {
     });
 
     historialVisible = true;
+};
+
+window.cargarCalendario = async () => {
+
+    let emp = JSON.parse(sessionStorage.getItem("empleado"));
+    const contenedor = document.getElementById("calendario");
+
+    contenedor.innerHTML = "";
+
+    let hoy = new Date();
+    let year = hoy.getFullYear();
+    let month = hoy.getMonth();
+
+    let diasMes = new Date(year, month + 1, 0).getDate();
+
+    // 🔥 traer asistencia
+    const snap = await getDocs(collection(db, "asistencia"));
+
+    let asistencias = {};
+
+    snap.forEach(docSnap => {
+        let data = docSnap.data();
+
+        if (data.usuario === emp.user) {
+            let fecha = docSnap.id.split("_")[1]; // yyyy-mm-dd
+            asistencias[fecha] = data;
+        }
+    });
+
+    // 🔥 pintar días
+    for (let dia = 1; dia <= diasMes; dia++) {
+
+        let fecha = `${year}-${String(month+1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
+
+        let div = document.createElement("div");
+        div.classList.add("dia");
+        div.innerText = dia;
+
+        if (asistencias[fecha]) {
+
+            if (asistencias[fecha].entrada) {
+                div.classList.add("asistio");
+            }
+
+        } else {
+            div.classList.add("falta");
+        }
+
+        contenedor.appendChild(div);
+    }
 };
 </script>
 </body>
