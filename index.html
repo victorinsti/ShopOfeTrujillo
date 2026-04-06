@@ -294,6 +294,10 @@ const accessoryGrid = document.querySelector(".accessory-grid");
 // CARGAR PRODUCTOS
 const productosSnap = await getDocs(collection(db, "productos"));
 
+// 🔥 LIMPIAR CONTENEDORES
+productGrid.innerHTML = "";
+accessoryGrid.innerHTML = "";
+
 productosSnap.forEach(doc => {
     let data = doc.data();
 
@@ -312,13 +316,15 @@ productosSnap.forEach(doc => {
     </div>
     `;
 
-    if (data.tipo === "producto") {
-        pr
+   if (data.tipo === "producto") {
+        productGrid.innerHTML += card;
+    } else {
         accessoryGrid.innerHTML += card;
     }
 });
-
 </script>
+
+
 
     <script src="a.js"></script>
 </body>
