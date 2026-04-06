@@ -92,6 +92,35 @@ button {
     background: #ff9800;
     color: white;
 }
+.ranking-item {
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* 🥇 */
+.oro {
+    background: linear-gradient(135deg, #FFD700, #FFC107);
+    color: #000;
+}
+
+/* 🥈 */
+.plata {
+    background: linear-gradient(135deg, #C0C0C0, #9E9E9E);
+    color: #000;
+}
+
+/* 🥉 */
+.bronce {
+    background: linear-gradient(135deg, #CD7F32, #A0522D);
+    color: #fff;
+}
+
+/* resto */
+.normal {
+    background: #f5f5f5;
+}
 </style>
 
 <script>
@@ -196,6 +225,13 @@ if(acceso !== "ok") {
 
     <div id="tablaAsistencia"></div>
 </div>
+
+<div class="card">
+    <h2>🏆 Ranking de empleados</h2>
+    <div id="ranking"></div>
+</div>
+
+
 <button onclick="verHistorial()">📅 Ver historial</button>
 <div id="historialBox"></div>
 
@@ -616,6 +652,7 @@ window.agregarNotificacion = async () => {
 
 
 };
+cargarRanking();
 
 document.getElementById("filtroEmpleado").addEventListener("change", (e) => {
     mostrarAsistencia(e.target.value.toLowerCase());
@@ -1030,6 +1067,66 @@ window.cargarCalendario = async () => {
 
         contenedor.appendChild(div);
     }
+};
+
+window.cargarRanking = async () => {
+
+    const contenedor = document.getElementById("ranking");
+    contenedor.innerHTML = "Cargando...";
+
+    const snap = await getDocs(collection(db, "asistencia"));
+
+    let ranking = {};
+
+    snap.forEach(docSnap => {
+
+        let data = docSnap.data();
+
+        if (!data.usuario) return;
+
+        let horas = parseFloat(data.horasTrabajadas || 0);
+
+        if (!ranking[data.usuario]) {
+            ranking[data.usuario] = 0;
+        }
+
+        ranking[data.usuario] += horas;
+    });
+
+    let lista = Object.entries(ranking).map(([user, horas]) => ({
+        user,
+        horas
+    }));
+
+    lista.sort((a, b) => b.horas - a.horas);
+
+    contenedor.innerHTML = "";
+
+    lista.forEach((emp, index) => {
+
+        let clase = "normal";
+        let emoji = "👤";
+
+        if (index === 0) {
+            clase = "oro";
+            emoji = "🥇";
+        } else if (index === 1) {
+            clase = "plata";
+            emoji = "🥈";
+        } else if (index === 2) {
+            clase = "bronce";
+            emoji = "🥉";
+        }
+
+        let div = document.createElement("div");
+        div.className = `ranking-item ${clase}`;
+
+        div.innerHTML = `
+${emoji} ${emp.user.toUpperCase()}
+        `;
+
+        contenedor.appendChild(div);
+    });
 };
 </script>
 </body>
