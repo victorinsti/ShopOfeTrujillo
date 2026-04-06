@@ -149,11 +149,10 @@ if(acceso !== "ok") {
 
 </div>
 
-<div class="card">
+<div class="card" id="asistenciaAdmin" style="display:none;">
     <h2>📊 Asistencia de empleados</h2>
 
     <select id="filtroEmpleado">
-        <option value="todos">👥 Todos</option>
         <option value="ofe">Ofe</option>
         <option value="samm">Samm</option>
         <option value="sol">Sol</option>
@@ -360,6 +359,11 @@ document.querySelectorAll("#puesto").forEach(e => e.innerText = "Puesto: " + emp
 if (emp.user === "ofe" || emp.user === "samm") {
     let panel = document.getElementById("adminPanel");
     if (panel) panel.style.display = "block";
+}
+
+if (emp.user === "ofe" || emp.user === "samm") {
+    let asistenciaAdmin = document.getElementById("asistenciaAdmin");
+    if (asistenciaAdmin) asistenciaAdmin.style.display = "block";
 }
 
 // 🔥 CARGAR ASISTENCIA (AQUÍ VA)
@@ -834,7 +838,7 @@ const select = document.getElementById("filtroEmpleado");
 
 if (select) {
     select.value = "todos"; // valor inicial
-    mostrarAsistencia("todos");
+    
 }
 });
 
@@ -851,13 +855,12 @@ function mostrarAsistencia(filtro) {
 
     contenedor.innerHTML = "";
 
+    // 🔥 SI NO HAY SELECCIÓN → NO MOSTRAR NADA
+    if (!filtro) return;
+
     datosAsistencia.forEach(data => {
 
-        // 🔥 FILTRO CORRECTO
-        if (
-            filtro !== "todos" &&
-            data.usuario !== filtro.toLowerCase()
-        ) return;
+        if (data.usuario !== filtro.toLowerCase()) return;
 
         let entrada = data.entrada
             ? data.entrada.toDate().toLocaleString()
@@ -895,26 +898,31 @@ window.filtrarAsistencia = () => {
     mostrarAsistencia(valor);
 };
 // 🔥 HISTORIAL CORREGIDO
-window.verHistorial = () => {
+window.verHistorial = async () => {
 
     let emp = JSON.parse(sessionStorage.getItem("empleado"));
     const box = document.getElementById("historialBox");
 
-    // 🔥 SI YA ESTÁ ABIERTO → CERRAR
+    // 🔥 TOGGLE (abrir/cerrar)
     if (historialVisible) {
         box.innerHTML = "";
         historialVisible = false;
         return;
     }
 
-    // 🔥 SI ESTÁ CERRADO → ABRIR
     box.innerHTML = "<h3>📅 Historial</h3>";
 
-    datosAsistencia.forEach(data => {
+    // 🔥 AQUÍ CAMBIA TODO → CONSULTA FIREBASE
+    const snap = await getDocs(collection(db, "asistencia"));
 
-        if (data.usuario !== emp.user.toLowerCase()) return;
+    snap.forEach(docSnap => {
 
-        let fecha = data.id.split("_")[1];
+        let data = docSnap.data();
+
+        // 🔥 SOLO SU HISTORIAL
+        if (data.usuario !== emp.user) return;
+
+        let fecha = docSnap.id.split("_")[1];
 
         let entrada = data.entrada
             ? data.entrada.toDate().toLocaleTimeString()
