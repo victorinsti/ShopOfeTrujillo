@@ -148,6 +148,30 @@ if(acceso !== "ok") {
     </div>
 
 </div>
+
+<div class="card">
+    <h2>📊 Asistencia de empleados</h2>
+
+    <select id="filtroEmpleado">
+        <option value="todos">👥 Todos</option>
+        <option value="ofe">Ofe</option>
+        <option value="samm">Samm</option>
+        <option value="sol">Sol</option>
+        <option value="pao">Pao</option>
+        <option value="angy">Angy</option>
+        <option value="nao">Nao</option>
+        <option value="paty">Paty</option>
+        <option value="lety">Lety</option>
+        <option value="luis">Luis</option>
+    </select>
+
+    <div id="tablaAsistencia"></div>
+</div>
+<button onclick="verHistorial()">📅 Ver historial</button>
+<div id="historialBox"></div>
+
+<br>
+
 <!-- Rol de limpieza -->
 <div class="card">
     <h2>🧹 Rol de Limpieza Abril</h2>
@@ -281,6 +305,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+let datosAsistencia = [];
+let historialVisible = false;
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -336,6 +362,25 @@ if (emp.user === "ofe" || emp.user === "samm") {
     if (panel) panel.style.display = "block";
 }
 
+// 🔥 CARGAR ASISTENCIA (AQUÍ VA)
+if (emp.user === "ofe" || emp.user === "samm") {
+
+    const snap = await getDocs(collection(db, "asistencia"));
+
+    datosAsistencia = [];
+
+    snap.forEach(docSnap => {
+
+        let data = docSnap.data();
+
+        data.usuario = data.usuario?.toLowerCase();
+        data.id = docSnap.id;
+
+        datosAsistencia.push(data);
+    });
+
+    mostrarAsistencia("todos");
+}
     let lista = document.getElementById("tareas");
     let notificaciones = document.getElementById("notificaciones");
 
@@ -424,7 +469,6 @@ Código: ${data.codigo || "N/A"}
         let nombre = document.getElementById("nombreProd").value;
         let descripcion = document.getElementById("descProd").value;
         let precio = document.getElementById("precioProd").value;
-        let codigo = document.getElementById("codigoProd").value;
         let file = document.getElementById("imgProd").files[0];
         let tipo = document.getElementById("tipoProd").value;
 
@@ -536,6 +580,9 @@ window.agregarNotificacion = async () => {
 
 };
 
+document.getElementById("filtroEmpleado").addEventListener("change", (e) => {
+    mostrarAsistencia(e.target.value.toLowerCase());
+});
 
 // 🔥 SUBIR ANUNCIO
 window.subirAnuncio = async () => {
@@ -652,48 +699,7 @@ window.guardarEdicion = async () => {
     location.reload();
 };
 
-// 📷 ESCÁNER DE CÓDIGO
-window.iniciarEscaner = () => {
 
-    const html5QrCode = new Html5Qrcode("scanner");
-
-    Html5Qrcode.getCameras().then(devices => {
-
-        if (devices.length) {
-
-            // 🔥 buscar cámara trasera
-            let backCam = devices.find(d => d.label.toLowerCase().includes("back"));
-
-            let cameraId = backCam ? backCam.id : devices[0].id;
-
-            html5QrCode.start(
-                cameraId,
-                {
-                    fps: 10,
-                    qrbox: 250,
-                    formatsToSupport: [
-                        Html5QrcodeSupportedFormats.EAN_13,
-                        Html5QrcodeSupportedFormats.CODE_128
-                    ]
-                },
-                (codigo) => {
-
-                    document.getElementById("codigoProd").value = codigo;
-
-                    html5QrCode.stop();
-                    document.getElementById("scanner").innerHTML = "";
-
-                    alert("✅ Código: " + codigo);
-                }
-            );
-
-        }
-        
-
-    });
-
-    
-};
 function obtenerFechaHoy() {
     return new Date().toISOString().split("T")[0];
 }
@@ -756,39 +762,60 @@ window.registrarSalida = async () => {
 
     let data = snap.data();
 
-    // 🔥 BLOQUEO CLAVE
+    // 🔥 BLOQUEO DOBLE SALIDA
     if (data.salida) {
         alert("⚠️ Ya registraste tu salida");
         return;
     }
 
-    try {
-        navigator.geolocation.getCurrentPosition(async (pos) => {
+    // 🔥 CALCULAR HORAS (ANTES DE UBICACIÓN)
+    let entrada = data.entrada?.toDate ? data.entrada.toDate() : new Date(data.entrada);
+    let salida = new Date();
 
-            const ubicacion = {
-                lat: pos.coords.latitude,
-                lng: pos.coords.longitude
-            };
+    let horas = (salida - entrada) / 1000 / 60 / 60;
 
-            await setDoc(ref, {
-                ...data,
-                salida: new Date(),
-                ubicacionSalida: ubicacion
-            });
+    // 🔥 FUNCIÓN PARA GUARDAR (con o sin ubicación)
+    const guardarSalida = async (ubicacion = null) => {
 
-            alert("✅ Salida registrada");
-            location.reload();
-
-        }, (error) => {
-            alert("❌ No se pudo obtener ubicación");
-            console.error(error);
+        await setDoc(ref, {
+            ...data,
+            salida: salida,
+            horasTrabajadas: horas.toFixed(2),
+            ubicacionSalida: ubicacion
         });
 
-    } catch (error) {
-        console.error(error);
+        alert("✅ Salida registrada");
+        location.reload();
+    };
+
+    // 🔥 INTENTAR OBTENER UBICACIÓN
+    if (navigator.geolocation) {
+
+        navigator.geolocation.getCurrentPosition(
+
+            async (pos) => {
+                const ubicacion = {
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude
+                };
+
+                await guardarSalida(ubicacion);
+            },
+
+            async (error) => {
+                console.warn("Sin ubicación:", error);
+
+                // 👉 SI FALLA GPS, IGUAL GUARDA
+                await guardarSalida(null);
+            }
+
+        );
+
+    } else {
+        // 👉 SI NO HAY GEOLOCALIZACIÓN
+        await guardarSalida(null);
     }
 };
-
 
 // 🔥 AUTO RESET DIARIO
 function obtenerFechaHoy() {
@@ -800,6 +827,15 @@ function obtenerFechaHoy() {
 
     return `${year}-${month}-${day}`;
 }
+
+
+
+const select = document.getElementById("filtroEmpleado");
+
+if (select) {
+    select.value = "todos"; // valor inicial
+    mostrarAsistencia("todos");
+}
 });
 
 
@@ -809,6 +845,98 @@ window.logout = () => {
     window.location.href = "acceso.html";
 };
 
+function mostrarAsistencia(filtro) {
+
+    const contenedor = document.getElementById("tablaAsistencia");
+
+    contenedor.innerHTML = "";
+
+    datosAsistencia.forEach(data => {
+
+        // 🔥 FILTRO CORRECTO
+        if (
+            filtro !== "todos" &&
+            data.usuario !== filtro.toLowerCase()
+        ) return;
+
+        let entrada = data.entrada
+            ? data.entrada.toDate().toLocaleString()
+            : "—";
+
+        let salida = data.salida
+            ? data.salida.toDate().toLocaleString()
+            : "—";
+
+        let horas = data.horasTrabajadas || "—";
+
+        let div = document.createElement("div");
+        div.style.borderBottom = "1px solid #ccc";
+        div.style.padding = "10px";
+
+        div.innerHTML = `
+👤 ${data.usuario}<br>
+🟢 Entrada: ${entrada}<br>
+🔴 Salida: ${salida}<br>
+⏱️ Horas: ${horas}
+        `;
+
+        contenedor.appendChild(div);
+    });
+}
+
+// 🔥 FILTRO
+window.filtrarAsistencia = () => {
+
+    let select = document.getElementById("filtroEmpleado");
+    let valor = select.value.toLowerCase();
+
+    console.log("Filtrando:", valor); // 🔥 para debug
+
+    mostrarAsistencia(valor);
+};
+// 🔥 HISTORIAL CORREGIDO
+window.verHistorial = () => {
+
+    let emp = JSON.parse(sessionStorage.getItem("empleado"));
+    const box = document.getElementById("historialBox");
+
+    // 🔥 SI YA ESTÁ ABIERTO → CERRAR
+    if (historialVisible) {
+        box.innerHTML = "";
+        historialVisible = false;
+        return;
+    }
+
+    // 🔥 SI ESTÁ CERRADO → ABRIR
+    box.innerHTML = "<h3>📅 Historial</h3>";
+
+    datosAsistencia.forEach(data => {
+
+        if (data.usuario !== emp.user.toLowerCase()) return;
+
+        let fecha = data.id.split("_")[1];
+
+        let entrada = data.entrada
+            ? data.entrada.toDate().toLocaleTimeString()
+            : "—";
+
+        let salida = data.salida
+            ? data.salida.toDate().toLocaleTimeString()
+            : "—";
+
+        let horas = data.horasTrabajadas || "—";
+
+        box.innerHTML += `
+<hr>
+📅 ${fecha}<br>
+🟢 ${entrada}<br>
+🔴 ${salida}<br>
+⏱️ ${horas} hrs
+`;
+    });
+
+    historialVisible = true;
+};
 </script>
 </body>
 </html>
