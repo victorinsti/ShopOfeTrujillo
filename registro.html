@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crear cuenta 💖</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+
+/* BODY */
+body {
+    margin:0;
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(135deg, #ff4da6, #ffc1e3);
+    min-height: 100vh;
+}
+
+/* CONTENEDOR */
+.main-register {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:calc(100vh - 80px);
+    padding:20px;
+}
+
+/* TARJETA */
+.register-card {
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    width:100%;
+    max-width:350px;
+    text-align:center;
+    box-shadow:0 15px 40px rgba(0,0,0,0.2);
+    animation: fadeUp 0.5s ease;
+}
+
+h2 {
+    color:#ff4da6;
+}
+
+/* INPUTS */
+.input-group {
+    position:relative;
+}
+
+input {
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+
+/* OJO */
+.eye {
+    position:absolute;
+    right:10px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+}
+
+/* BOTÓN */
+.btn {
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    background:#ff4da6;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn:hover {
+    background:#e60073;
+}
+
+/* TEXTOS */
+.link {
+    margin-top:10px;
+    font-size:14px;
+}
+
+.link a {
+    color:#ff4da6;
+    text-decoration:none;
+}
+
+/* MENSAJES */
+.error {
+    color:red;
+    font-size:13px;
+}
+
+.success {
+    color:green;
+    font-size:13px;
+}
+
+.loader {
+    display:none;
+    margin-top:10px;
+}
+
+@keyframes fadeUp {
+    from {opacity:0; transform: translateY(20px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 🔥 NAVBAR -->
+<header>
+<div class="container">
+
+    <div class="logo">
+        <a href="index.html">Shop Ofe Trujillo</a>
+    </div>
+
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="index.html#productos">Productos</a></li>
+            <li><a href="index.html#accesorios">Accesorios</a></li>
+            <li><a href="index.html#envios">Envíos</a></li>
+            <li><a href="index.html#novedades">Nosotros</a></li>
+            <li><a href="login.html">Clientes</a></li>
+            <li><a href="galeria.html#anuncios">Anuncios</a></li>
+            <li><a href="galeria.html#galeria">Galería</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+            <li><a href="acceso.html">Acceso</a></li>
+        </ul>
+    </nav>
+
+</div>
+</header>
+
+<!-- 🔥 CONTENIDO -->
+<div class="main-register">
+
+<div class="register-card">
+
+    <h2>💖 Crear cuenta</h2>
+
+    <input type="text" id="nombre" placeholder="Nombre">
+
+    <input type="email" id="email" placeholder="Correo">
+
+    <div class="input-group">
+        <input type="password" id="password" placeholder="Contraseña">
+        <span class="eye" onclick="togglePass('password')">👁️</span>
+    </div>
+
+    <div class="input-group">
+        <input type="password" id="confirm" placeholder="Confirmar contraseña">
+        <span class="eye" onclick="togglePass('confirm')">👁️</span>
+    </div>
+
+    <button class="btn" onclick="registrar()">Registrarse</button>
+
+    <p class="loader" id="loader">⏳ Creando cuenta...</p>
+    <p class="error" id="error"></p>
+    <p class="success" id="success"></p>
+
+    <div class="link">
+        ¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a>
+    </div>
+
+</div>
+
+</div>
+
+<script type="module">
+import { auth, db } from "./firebase.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+// 👁️ PASSWORD
+window.togglePass = (id) => {
+    let input = document.getElementById(id);
+    input.type = input.type === "password" ? "text" : "password";
+};
+
+// 🔥 REGISTRO
+window.registrar = async () => {
+
+    let nombre = document.getElementById("nombre").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let confirm = document.getElementById("confirm").value;
+
+    let error = document.getElementById("error");
+    let success = document.getElementById("success");
+    let loader = document.getElementById("loader");
+
+    error.innerText = "";
+    success.innerText = "";
+
+    if(!nombre || !email || !password){
+        return error.innerText = "Completa todos los campos";
+    }
+
+    if(password.length < 6){
+        return error.innerText = "Mínimo 6 caracteres";
+    }
+
+    if(password !== confirm){
+        return error.innerText = "Las contraseñas no coinciden";
+    }
+
+    loader.style.display = "block";
+
+    try {
+
+        const user = await createUserWithEmailAndPassword(auth, email, password);
+
+        await setDoc(doc(db, "clientes", user.user.uid), {
+            nombre,
+            email,
+            fecha: new Date()
+        });
+
+        loader.style.display = "none";
+        success.innerText = "✅ Cuenta creada 💖";
+
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 1500);
+
+    } catch(err){
+
+        loader.style.display = "none";
+
+        if(err.code === "auth/email-already-in-use"){
+            error.innerText = "⚠️ Este correo ya está registrado";
+        }
+        else if(err.code === "auth/invalid-email"){
+            error.innerText = "❌ Correo inválido";
+        }
+        else{
+            error.innerText = "❌ Error al registrar";
+        }
+    }
+};
+</script>
+
+<script>
+// 📱 MENÚ MOBILE
+function toggleMenu() {
+    document.querySelector("nav").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>

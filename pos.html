@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Punto de Venta 💰</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+body {
+    font-family: Arial;
+    background: #f5f5f5;
+}
+
+.pos-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    height: 100vh;
+}
+
+/* PRODUCTOS */
+.productos {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.producto {
+    background: white;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* CARRITO */
+.carrito {
+    background: #fff;
+    padding: 20px;
+    border-left: 2px solid #eee;
+}
+
+.total {
+    font-size: 24px;
+    margin: 20px 0;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background: #ff4da6;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔙 BOTÓN PANEL -->
+<button onclick="irPanel()">⬅ Regresar al panel</button>
+
+<div class="pos-container">
+
+    <!-- PRODUCTOS -->
+    <div class="productos" id="productos"></div>
+
+    <!-- CARRITO -->
+    <div class="carrito">
+        <h2>🛒 Venta</h2>
+        <ul id="listaCarrito"></ul>
+
+        <p class="total">Total: $<span id="total">0</span></p>
+
+       <select id="metodoPago">
+    <option>Efectivo</option>
+    <option>Transferencia</option>
+    <option>Tarjeta</option> <!-- 🔥 NUEVO -->
+</select>
+
+
+
+        <!-- 💵 CAMBIO -->
+        <input type="number" id="pago" placeholder="Pago del cliente">
+        <button onclick="calcularCambio()">Calcular cambio</button>
+        <p>Cambio: $<span id="cambio">0</span></p>
+
+
+        <input type="text" id="cliente" placeholder="Nombre del cliente">
+
+<input type="number" id="extra" placeholder="Dinero extra (opcional)">
+
+        <!-- 💳 COBRAR -->
+        <button onclick="cobrar()">💳 Cobrar</button>
+
+        <!-- 💾 GUARDAR -->
+        <button onclick="guardarVenta()">Guardar venta</button>
+
+        <h3>💸 Registrar gasto</h3>
+
+<input type="text" id="descGasto" placeholder="Descripción del gasto">
+<input type="number" id="montoGasto" placeholder="Monto">
+
+<button onclick="registrarGasto()">Guardar gasto</button>
+
+    </div>
+
+    
+
+</div>
+
+<script type="module" src="pos.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+/* 🔥 REPORTES Y CORTE */
+
+.contenedor {
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+}
+
+/* TARJETAS */
+.card {
+    background: white;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* TITULOS */
+h2 {
+    text-align: center;
+    color: #ff4da6;
+}
+
+/* LISTA DE VENTAS */
+.venta {
+    background: #f9f9f9;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* TOTAL GRANDE */
+.total-dia {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    color: #ff4da6;
+    margin-top: 20px;
+}
+
+/* BOTÓN PRINCIPAL */
+.btn-principal {
+    background: linear-gradient(135deg, #ff4da6, #ff80bf);
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+/* RESULTADO CORTE */
+.resultado {
+    background: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* BOTÓN REGRESAR */
+.btn-volver {
+    background: #333;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+}

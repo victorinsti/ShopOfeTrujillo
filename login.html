@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iniciar sesión 💖</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+
+/* 🌸 BODY */
+body {
+    margin:0;
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(135deg, #ff4da6, #ffc1e3);
+    min-height: 100vh;
+}
+
+/* 🔥 CONTENEDOR LOGIN */
+.main-login {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:calc(100vh - 80px);
+}
+
+/* TARJETA */
+.login-card {
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    width:100%;
+    max-width:350px;
+    text-align:center;
+    box-shadow:0 15px 40px rgba(0,0,0,0.2);
+    animation: fadeUp 0.5s ease;
+}
+
+h2 {
+    color:#ff4da6;
+}
+
+.input-group {
+    position:relative;
+}
+
+input {
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+
+.eye {
+    position:absolute;
+    right:10px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+}
+
+.btn {
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    background:#ff4da6;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn:hover {
+    background:#e60073;
+}
+
+.link {
+    margin-top:10px;
+    font-size:14px;
+}
+
+.link a {
+    color:#ff4da6;
+    text-decoration:none;
+}
+
+.error {
+    color:red;
+    font-size:13px;
+}
+
+.loader {
+    display:none;
+    margin-top:10px;
+    font-size:14px;
+}
+
+@keyframes fadeUp {
+    from {opacity:0; transform: translateY(20px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="container">
+
+    <div class="logo">
+        <a href="index.html">Shop Ofe Trujillo</a>
+    </div>
+
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="index.html#productos">Productos</a></li>
+            <li><a href="index.html#accesorios">Accesorios</a></li>
+            <li><a href="index.html#envios">Envíos</a></li>
+            <li><a href="index.html#novedades">Nosotros</a></li>
+            <li><a href="login.html">Clientes</a></li>
+            <li><a href="galeria.html#anuncios">Anuncios</a></li>
+            <li><a href="galeria.html#galeria">Galería</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+            <li><a href="acceso.html">Acceso</a></li>
+        </ul>
+    </nav>
+
+</div>
+</header>
+
+<div class="main-login">
+
+<div class="login-card">
+
+    <h2>💖 Bienvenida</h2>
+
+    <input type="email" id="email" placeholder="Correo">
+
+    <div class="input-group">
+        <input type="password" id="password" placeholder="Contraseña">
+        <span class="eye" onclick="togglePass()">👁️</span>
+    </div>
+
+    <button class="btn" onclick="login()">Entrar</button>
+
+    <p class="loader" id="loader">⏳ Entrando...</p>
+    <p class="error" id="error"></p>
+
+    <div class="link">
+        ¿No tienes cuenta? <a href="registro.html">Crear cuenta</a>
+    </div>
+
+</div>
+
+</div>
+
+<script type="module">
+import { auth } from "./firebase.js";
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+
+// 👁️ PASSWORD
+window.togglePass = () => {
+    const input = document.getElementById("password");
+    input.type = input.type === "password" ? "text" : "password";
+};
+
+// 🔥 LOGIN
+window.login = async () => {
+
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    let errorBox = document.getElementById("error");
+    let loader = document.getElementById("loader");
+
+    errorBox.innerText = "";
+
+    if(!email || !password){
+        return errorBox.innerText = "Completa todos los campos";
+    }
+
+    loader.style.display = "block";
+
+    try {
+
+        await signInWithEmailAndPassword(auth, email, password);
+
+        loader.innerText = "💖 Bienvenida...";
+        setTimeout(() => {
+            window.location.href = "perfil.html";
+        }, 1000);
+
+    } catch(error){
+
+        loader.style.display = "none";
+
+        if(error.code === "auth/user-not-found"){
+            errorBox.innerText = "❌ Usuario no existe";
+        }
+        else if(error.code === "auth/wrong-password"){
+            errorBox.innerText = "❌ Contraseña incorrecta";
+        }
+        else if(error.code === "auth/invalid-email"){
+            errorBox.innerText = "❌ Correo inválido";
+        }
+        else{
+            errorBox.innerText = "❌ Error al iniciar sesión";
+        }
+    }
+};
+</script>
+
+<script>
+// 📱 MENÚ
+function toggleMenu() {
+    document.querySelector("nav").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>

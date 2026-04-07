@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Perfil 💖</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+
+/* BODY */
+body {
+    margin:0;
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(135deg, #ff4da6, #ffc1e3);
+}
+
+/* CONTENEDOR */
+.main-perfil {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:calc(100vh - 80px);
+    padding:20px;
+}
+
+/* TARJETA */
+.perfil-card {
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    width:100%;
+    max-width:380px;
+    text-align:center;
+    box-shadow:0 15px 40px rgba(0,0,0,0.2);
+}
+
+/* AVATAR */
+.avatar {
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background: linear-gradient(135deg,#ff4da6,#ff80bf);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+    color:white;
+    margin:0 auto 15px;
+    font-weight:bold;
+}
+
+h2 {
+    color:#ff4da6;
+}
+
+/* INPUTS */
+input, textarea {
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+
+/* BOTONES */
+.btn {
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.btn-primary {
+    background:#ff4da6;
+    color:white;
+}
+
+.btn-secondary {
+    background:#f7e1ed;
+    color:#ff4da6;
+}
+
+/* TEXTO */
+.info {
+    margin:5px 0;
+    color:#555;
+}
+
+.mensaje {
+    font-size:13px;
+    margin-top:10px;
+    color:green;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 🔥 NAV -->
+<header>
+<div class="container">
+
+    <div class="logo">
+        <a href="index.html">Shop Ofe Trujillo</a>
+    </div>
+
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="index.html#productos">Productos</a></li>
+            <li><a href="index.html#accesorios">Accesorios</a></li>
+            <li><a href="index.html#envios">Envíos</a></li>
+            <li><a href="index.html#novedades">Nosotros</a></li>
+            <li><a href="login.html">Clientes</a></li>
+            <li><a href="galeria.html#anuncios">Anuncios</a></li>
+            <li><a href="galeria.html#galeria">Galería</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+            <li><a href="acceso.html">Acceso</a></li>
+        </ul>
+    </nav>
+
+</div>
+</header>
+
+<!-- 💖 PERFIL -->
+<div class="main-perfil">
+
+<div class="perfil-card">
+
+    <div class="avatar" id="avatar">👤</div>
+    
+
+    <h2>Mi Perfil 💖</h2>
+
+    <p class="info" id="email"></p>
+
+    <input type="text" id="nombreInput" placeholder="Tu nombre">
+
+    <textarea id="direccionInput" placeholder="Tu dirección (para envíos)"></textarea>
+
+    <button class="btn btn-primary" onclick="guardarDatos()">
+        💾 Guardar cambios
+    </button>
+
+    <p class="info" id="fecha"></p>
+
+    <button class="btn btn-secondary" onclick="irPedidos()">
+        📦 Mis pedidos
+    </button>
+
+    <button class="btn btn-secondary" onclick="window.location.href='index.html'">
+        🛍️ Ir a tienda
+    </button>
+
+    
+
+    
+    <button class="btn btn-primary" onclick="logout()">
+        🚪 Cerrar sesión
+    </button>
+
+    <p class="mensaje" id="mensaje"></p>
+
+
+</div>
+
+</div>
+
+<script type="module">
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+let userActual;
+
+// 🔥 CARGAR
+onAuthStateChanged(auth, async (user) => {
+
+    if(user){
+
+        userActual = user;
+
+        const snap = await getDoc(doc(db, "clientes", user.uid));
+
+        if(snap.exists()){
+            const data = snap.data();
+
+            document.getElementById("email").innerText = "📧 " + data.email;
+            document.getElementById("nombreInput").value = data.nombre || "";
+            document.getElementById("direccionInput").value = data.direccion || "";
+
+            // AVATAR LETRA
+            if(data.nombre){
+                document.getElementById("avatar").innerText = data.nombre.charAt(0).toUpperCase();
+            }
+
+            if(data.fecha){
+                document.getElementById("fecha").innerText =
+                    "🗓️ Registro: " + new Date(data.fecha.seconds * 1000).toLocaleDateString();
+            }
+        }
+
+    } else {
+        window.location.href = "login.html";
+    }
+});
+
+// 💾 GUARDAR TODO
+window.guardarDatos = async () => {
+
+    let nombre = document.getElementById("nombreInput").value;
+    let direccion = document.getElementById("direccionInput").value;
+
+    if(!nombre){
+        return alert("El nombre es obligatorio");
+    }
+
+    await updateDoc(doc(db, "clientes", userActual.uid), {
+        nombre,
+        direccion
+    });
+
+    document.getElementById("mensaje").innerText = "✅ Datos actualizados 💖";
+
+    // actualizar avatar
+    document.getElementById("avatar").innerText = nombre.charAt(0).toUpperCase();
+};
+
+// 🚪 LOGOUT
+window.logout = async () => {
+    await signOut(auth);
+    window.location.href = "login.html";
+};
+
+// 📦 PEDIDOS
+window.irPedidos = () => {
+    alert("Aquí verás tus pedidos próximamente 💖");
+};
+</script>
+
+<script>
+// 📱 MENÚ
+function toggleMenu() {
+    document.querySelector("nav").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>
