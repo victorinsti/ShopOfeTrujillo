@@ -3,14 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mi Perfil 💖</title>
+<title>Mi Perfil | Shop Ofe Trujillo</title>
 
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
 
-/* BODY */
 body {
     margin:0;
     font-family: 'Open Sans', sans-serif;
@@ -22,7 +21,7 @@ body {
     display:flex;
     justify-content:center;
     align-items:center;
-    min-height:calc(100vh - 80px);
+    min-height:100vh;
     padding:20px;
 }
 
@@ -32,47 +31,84 @@ body {
     padding:30px;
     border-radius:20px;
     width:100%;
-    max-width:380px;
+    max-width:420px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.2);
+    animation: fadeUp 0.5s ease;
+}
+
+/* HEADER PERFIL */
+.perfil-header {
     text-align:center;
-    box-shadow:0 15px 40px rgba(0,0,0,0.2);
+    margin-bottom:20px;
 }
 
 /* AVATAR */
 .avatar {
-    width:90px;
-    height:90px;
+    width:100px;
+    height:100px;
     border-radius:50%;
     background: linear-gradient(135deg,#ff4da6,#ff80bf);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:32px;
+    font-size:36px;
     color:white;
-    margin:0 auto 15px;
+    margin:0 auto 10px;
     font-weight:bold;
+    overflow:hidden;
 }
 
-h2 {
+.avatar img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* NOMBRE */
+.perfil-header h2 {
+    margin:5px 0;
     color:#ff4da6;
 }
 
+/* EMAIL */
+.perfil-header p {
+    font-size:14px;
+    color:#777;
+}
+
+/* SECCIONES */
+.section {
+    margin-top:20px;
+}
+
 /* INPUTS */
-input, textarea {
+.input-group {
+    margin-bottom:12px;
+}
+
+.input-group label {
+    font-size:13px;
+    color:#555;
+}
+
+.input-group input {
     width:100%;
     padding:10px;
-    margin:8px 0;
     border-radius:10px;
-    border:1px solid #ccc;
+    border:1px solid #ddd;
+    margin-top:5px;
 }
 
 /* BOTONES */
 .btn {
     width:100%;
     padding:12px;
-    margin-top:10px;
     border:none;
     border-radius:10px;
     cursor:pointer;
+    font-weight:bold;
+    margin-top:10px;
+    transition:0.3s;
 }
 
 .btn-primary {
@@ -80,21 +116,30 @@ input, textarea {
     color:white;
 }
 
+.btn-primary:hover {
+    background:#e60073;
+}
+
 .btn-secondary {
-    background:#f7e1ed;
-    color:#ff4da6;
+    background:#f2f2f2;
 }
 
-/* TEXTO */
-.info {
-    margin:5px 0;
-    color:#555;
+.btn-secondary:hover {
+    background:#ddd;
 }
 
+/* MENSAJE */
 .mensaje {
-    font-size:13px;
+    text-align:center;
     margin-top:10px;
+    font-size:13px;
     color:green;
+}
+
+/* ANIMACIÓN */
+@keyframes fadeUp {
+    from {opacity:0; transform: translateY(20px);}
+    to {opacity:1; transform: translateY(0);}
 }
 
 </style>
@@ -102,158 +147,175 @@ input, textarea {
 
 <body>
 
-<!-- 🔥 NAV -->
-<header>
-<div class="container">
-
-    <div class="logo">
-        <a href="index.html">Shop Ofe Trujillo</a>
-    </div>
-
-    <div class="menu-toggle" onclick="toggleMenu()">
-        <i class="fas fa-bars"></i>
-    </div>
-
-    <nav>
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="index.html#productos">Productos</a></li>
-            <li><a href="index.html#accesorios">Accesorios</a></li>
-            <li><a href="index.html#envios">Envíos</a></li>
-            <li><a href="index.html#novedades">Nosotros</a></li>
-            <li><a href="login.html">Clientes</a></li>
-            <li><a href="galeria.html#anuncios">Anuncios</a></li>
-            <li><a href="galeria.html#galeria">Galería</a></li>
-            <li><a href="index.html#contacto">Contacto</a></li>
-            <li><a href="acceso.html">Acceso</a></li>
-        </ul>
-    </nav>
-
-</div>
-</header>
-
-<!-- 💖 PERFIL -->
 <div class="main-perfil">
 
 <div class="perfil-card">
 
-    <div class="avatar" id="avatar">👤</div>
-    
+    <!-- HEADER -->
+    <div class="perfil-header">
+        <div class="avatar" id="avatar">👤</div>
+        <h2 id="nombre">Usuario</h2>
+        <p id="email">correo@email.com</p>
+    </div>
 
-    <h2>Mi Perfil 💖</h2>
+    <!-- INFO -->
+    <div class="section">
 
-    <p class="info" id="email"></p>
+        <div class="input-group">
+            <label>Nombre</label>
+            <input type="text" id="inputNombre">
+        </div>
 
-    <input type="text" id="nombreInput" placeholder="Tu nombre">
+        <div class="input-group">
+            <label>Teléfono</label>
+            <input type="text" id="inputTelefono">
+        </div>
 
-    <textarea id="direccionInput" placeholder="Tu dirección (para envíos)"></textarea>
+        <div class="input-group">
+    <label>Correo electrónico</label>
+    <input type="email" id="inputEmail">
+</div>
 
-    <button class="btn btn-primary" onclick="guardarDatos()">
-        💾 Guardar cambios
-    </button>
+        <div class="input-group">
+            <label>Dirección</label>
+            <input type="text" id="inputDireccion">
+        </div>
 
-    <p class="info" id="fecha"></p>
+    </div>
 
-    <button class="btn btn-secondary" onclick="irPedidos()">
-        📦 Mis pedidos
-    </button>
+    <div class="section">
+    <h3>🔔 Notificaciones</h3>
+    <ul id="listaNotis"></ul>
+</div>
 
-    <button class="btn btn-secondary" onclick="window.location.href='index.html'">
-        🛍️ Ir a tienda
-    </button>
+    <!-- BOTONES -->
+    <button class="btn btn-primary" onclick="guardar()">💾 Guardar cambios</button>
+    <button class="btn btn-secondary" onclick="logout()">🚪 Cerrar sesión</button>
 
-    
-
-    
-    <button class="btn btn-primary" onclick="logout()">
-        🚪 Cerrar sesión
-    </button>
-
-    <p class="mensaje" id="mensaje"></p>
-
+    <div class="mensaje" id="mensaje"></div>
 
 </div>
 
 </div>
 
 <script type="module">
-import { auth, db } from "./firebase.js";
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
-import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-let userActual;
+import { db } from "./firebase.js";
+import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-// 🔥 CARGAR
-onAuthStateChanged(auth, async (user) => {
+// 🔥 CARGAR DATOS
+document.addEventListener("DOMContentLoaded", async () => {
 
-    if(user){
+    let usuarioLocal = JSON.parse(localStorage.getItem("usuario"));
 
-        userActual = user;
+    if(!usuarioLocal || !usuarioLocal.email){
+        window.location.href = "login.html";
+        return;
+    }
 
-        const snap = await getDoc(doc(db, "clientes", user.uid));
+    try {
+
+        const ref = doc(db, "usuarios", usuarioLocal.email);
+        const snap = await getDoc(ref);
 
         if(snap.exists()){
-            const data = snap.data();
 
-            document.getElementById("email").innerText = "📧 " + data.email;
-            document.getElementById("nombreInput").value = data.nombre || "";
-            document.getElementById("direccionInput").value = data.direccion || "";
+            let data = snap.data();
 
-            // AVATAR LETRA
+            document.getElementById("nombre").innerText = data.nombre || "Usuario";
+            document.getElementById("email").innerText = data.email || "";
+
+            document.getElementById("inputNombre").value = data.nombre || "";
+            document.getElementById("inputTelefono").value = data.telefono || "";
+            document.getElementById("inputEmail").value = data.email || "";
+            document.getElementById("inputDireccion").value = data.direccion || "";
+
             if(data.nombre){
                 document.getElementById("avatar").innerText = data.nombre.charAt(0).toUpperCase();
             }
 
-            if(data.fecha){
-                document.getElementById("fecha").innerText =
-                    "🗓️ Registro: " + new Date(data.fecha.seconds * 1000).toLocaleDateString();
-            }
+        } else {
+
+            // 🔥 Si no existe en Firebase, usar localStorage
+            document.getElementById("nombre").innerText = usuarioLocal.nombre || "Usuario";
+            document.getElementById("email").innerText = usuarioLocal.email || "";
+
+            document.getElementById("inputNombre").value = usuarioLocal.nombre || "";
+            document.getElementById("inputTelefono").value = usuarioLocal.telefono || "";
+            document.getElementById("inputEmail").value = usuarioLocal.email || "";
+            document.getElementById("inputDireccion").value = usuarioLocal.direccion || "";
+
         }
 
-    } else {
-        window.location.href = "login.html";
+    } catch (error) {
+        console.error("Error cargando datos:", error);
     }
+
+    cargarNotificaciones();
+
 });
 
-// 💾 GUARDAR TODO
-window.guardarDatos = async () => {
 
-    let nombre = document.getElementById("nombreInput").value;
-    let direccion = document.getElementById("direccionInput").value;
+// 💾 GUARDAR
+window.guardar = async function() {
 
-    if(!nombre){
-        return alert("El nombre es obligatorio");
+    let usuarioLocal = JSON.parse(localStorage.getItem("usuario"));
+
+    if(!usuarioLocal || !usuarioLocal.email){
+        alert("Error: usuario no identificado");
+        return;
     }
 
-    await updateDoc(doc(db, "clientes", userActual.uid), {
-        nombre,
-        direccion
-    });
+    let datos = {
+        nombre: document.getElementById("inputNombre").value,
+        telefono: document.getElementById("inputTelefono").value,
+        direccion: document.getElementById("inputDireccion").value,
+        email: document.getElementById("inputEmail").value
+    };
 
-    document.getElementById("mensaje").innerText = "✅ Datos actualizados 💖";
+    try {
 
-    // actualizar avatar
-    document.getElementById("avatar").innerText = nombre.charAt(0).toUpperCase();
+        // 🔥 Guardar en Firebase
+        await setDoc(doc(db, "usuarios", datos.email), datos);
+
+        // 🔥 Guardar local (cache)
+        localStorage.setItem("usuario", JSON.stringify(datos));
+
+        // UI
+        document.getElementById("nombre").innerText = datos.nombre;
+        document.getElementById("email").innerText = datos.email;
+
+        document.getElementById("mensaje").innerText = "☁️ Guardado en la nube";
+
+    } catch (error) {
+        console.error("Error guardando:", error);
+        alert("Error al guardar");
+    }
 };
 
+
 // 🚪 LOGOUT
-window.logout = async () => {
-    await signOut(auth);
+window.logout = function(){
+    localStorage.removeItem("usuario");
     window.location.href = "login.html";
 };
 
-// 📦 PEDIDOS
-window.irPedidos = () => {
-    alert("Aquí verás tus pedidos próximamente 💖");
-};
-</script>
 
-<script>
-// 📱 MENÚ
-function toggleMenu() {
-    document.querySelector("nav").classList.toggle("active");
+// 🔔 NOTIFICACIONES
+function cargarNotificaciones(){
+
+    let notis = JSON.parse(localStorage.getItem("notis")) || [];
+
+    let lista = document.getElementById("listaNotis");
+    lista.innerHTML = "";
+
+    notis.slice().reverse().forEach(n => {
+        let li = document.createElement("li");
+        li.textContent = n;
+        lista.appendChild(li);
+    });
 }
-</script>
 
+</script>
 </body>
 </html>

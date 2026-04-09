@@ -193,9 +193,15 @@ window.login = async () => {
 
     try {
 
-        await signInWithEmailAndPassword(auth, email, password);
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+        // 🔥 GUARDAR USUARIO (CLAVE DEL PROBLEMA)
+        localStorage.setItem("usuario", JSON.stringify({
+            email: userCredential.user.email
+        }));
 
         loader.innerText = "💖 Bienvenida...";
+
         setTimeout(() => {
             window.location.href = "perfil.html";
         }, 1000);
@@ -218,6 +224,19 @@ window.login = async () => {
         }
     }
 };
+
+await signInWithEmailAndPassword(auth, email, password);
+
+// 🔥 GUARDAR USUARIO LOCAL
+localStorage.setItem("usuario", JSON.stringify({
+    email: email
+}));
+
+loader.innerText = "💖 Bienvenida...";
+setTimeout(() => {
+    window.location.href = "perfil.html";
+}, 1000);
+
 </script>
 
 <script>

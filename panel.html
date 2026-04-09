@@ -121,6 +121,8 @@ button {
 .normal {
     background: #f5f5f5;
 }
+
+
 </style>
 
 <script>
@@ -157,6 +159,23 @@ if(acceso !== "ok") {
     <button onclick="registrarEntrada()">🟢 Registrar entrada</button>
     <button onclick="registrarSalida()">🔴 Registrar salida</button>
 </div>
+
+<div class="card">
+    <h2>💰 Caja y Reportes</h2>
+
+    <button onclick="window.location='pos.html'">
+        ❤️ Punto de venta
+    </button>
+
+    <button onclick="window.location='corte.html'">
+        💼 Corte de Caja
+    </button>
+
+    <button onclick="window.location='reportes.html'">
+        📊 Ver Reportes
+    </button>
+</div>
+
 <div class="card admin-card" id="adminPanel" style="display:none;">
     
     <h2>⚙️ Panel Administrativo</h2>
@@ -211,23 +230,24 @@ if(acceso !== "ok") {
 <div class="card" id="asistenciaAdmin" style="display:none;">
     <h2>📊 Asistencia de empleados</h2>
 
-    <select id="filtroEmpleado">
-        <option value="ofe">Ofe</option>
-        <option value="samm">Samm</option>
-        <option value="sol">Sol</option>
-        <option value="pao">Pao</option>
-        <option value="angy">Angy</option>
-        <option value="nao">Nao</option>
-        <option value="paty">Paty</option>
-        <option value="lety">Lety</option>
-        <option value="luis">Luis</option>
-    </select>
+   <select id="filtroEmpleado">
+    <option value="ofe">Ofe</option>
+    <option value="samm">Samm</option>
+    <option value="sol">Sol</option>
+    <option value="pao">Pao</option>
+    <option value="angy">Angy</option>
+    <option value="nao">Nao</option>
+    <option value="paty">Paty</option>
+    <option value="lety">Lety</option>
+    <option value="luis">Luis</option>
+</select>
 
     <div id="tablaAsistencia"></div>
 </div>
 
 <div class="card">
     <h2>🏆 Ranking de empleados</h2>
+    <h3>si no marcas asistencia y salida no se contará el dia completo</h3>
     <div id="ranking"></div>
 </div>
 
@@ -244,23 +264,15 @@ if(acceso !== "ok") {
 
 <br>
 
-<div class="card">
-    <h2>💰 Sistema de Caja</h2>
-
-    <button onclick="window.location.href='pos.html'">Abrir Punto de Venta</button>
-    <button onclick="window.location.href='reportes.html'">Ver Reportes</button>
-    <button onclick="window.location.href='corte.html'">Corte de Caja</button>
-</div>
-
 <!-- Rol de limpieza -->
 <div class="card">
     <h2>🧹 Rol de Limpieza Abril</h2>
     <p>Lunes: Paty</p>
-    <p>Martes: Lety</p>
-    <p>Miercoles: Paola</p>
-    <p>Jueves: Naomi</p>
-    <p>Viernes: Angy</p>
-    <p>Sabado: Sol</p>
+    <p>Martes: Sol</p>
+    <p>Miercoles: Angy</p>
+    <p>Jueves: Pao</p>
+    <p>Viernes: Nao</p>
+    <p>Sabado: Lety</p>
     
 </div>
 
@@ -935,10 +947,9 @@ window.logout = () => {
 function mostrarAsistencia(filtro) {
 
     const contenedor = document.getElementById("tablaAsistencia");
-
     contenedor.innerHTML = "";
 
-    // 🔥 SI NO HAY SELECCIÓN → NO MOSTRAR NADA
+    // 🔥 SI NO SELECCIONA → NO MOSTRAR NADA
     if (!filtro) return;
 
     datosAsistencia.forEach(data => {
@@ -960,10 +971,11 @@ function mostrarAsistencia(filtro) {
         div.style.padding = "10px";
 
         div.innerHTML = `
-👤 ${data.usuario}<br>
-🟢 Entrada: ${entrada}<br>
-🔴 Salida: ${salida}<br>
-⏱️ Horas: ${horas}
+            📅 ${data.id.split("_")[1]} <br>
+            👤 ${data.usuario} <br>
+            🟢 Entrada: ${entrada} <br>
+            🔴 Salida: ${salida} <br>
+            ⏱️ Horas: ${horas}
         `;
 
         contenedor.appendChild(div);
@@ -1079,65 +1091,112 @@ window.cargarCalendario = async () => {
     }
 };
 
-window.cargarRanking = async () => {
+async function cargarRanking() {
 
-    const contenedor = document.getElementById("ranking");
-    contenedor.innerHTML = "Cargando...";
+    const cont = document.getElementById("ranking");
+    cont.innerHTML = "⏳ Cargando ranking...";
 
-    const snap = await getDocs(collection(db, "asistencia"));
+    let empleadosData = {};
 
-    let ranking = {};
+    const lista = [
+        "ofe","samm","sol","pao","angy","nao","paty","lety","luis"
+    ];
 
-    snap.forEach(docSnap => {
-
-        let data = docSnap.data();
-
-        if (!data.usuario) return;
-
-        let horas = parseFloat(data.horasTrabajadas || 0);
-
-        if (!ranking[data.usuario]) {
-            ranking[data.usuario] = 0;
-        }
-
-        ranking[data.usuario] += horas;
+    lista.forEach(u => {
+        empleadosData[u] = {
+            puntos: 0,
+            asistencias: 0,
+            retardos: 0,
+            faltas: 0,
+            totalDias: 0
+        };
     });
 
-    let lista = Object.entries(ranking).map(([user, horas]) => ({
-        user,
-        horas
-    }));
+    try {
 
-    lista.sort((a, b) => b.horas - a.horas);
+       const snap = await getDocs(collection(db, "asistencia"));
 
-    contenedor.innerHTML = "";
+snap.forEach(doc => {
+    let a = doc.data();
 
-    lista.forEach((emp, index) => {
+    let user = (a.usuario || "").toLowerCase();
+    if(!empleadosData[user]) return;
 
-        let clase = "normal";
-        let emoji = "👤";
+    let fecha = a.entrada?.toDate();
+    if(!fecha) return;
 
-        if (index === 0) {
-            clase = "oro";
-            emoji = "🥇";
-        } else if (index === 1) {
-            clase = "plata";
-            emoji = "🥈";
-        } else if (index === 2) {
-            clase = "bronce";
-            emoji = "🥉";
-        }
+    let dia = fecha.getDay();
 
-        let div = document.createElement("div");
-        div.className = `ranking-item ${clase}`;
+    // 🔥 SOLO LUNES A VIERNES
+    if(dia === 0 || dia === 6) return;
 
-        div.innerHTML = `
-${emoji} ${emp.user.toUpperCase()}
-        `;
+    empleadosData[user].totalDias++;
 
-        contenedor.appendChild(div);
-    });
-};
+    let horas = parseFloat(a.horasTrabajadas || 0);
+
+    // 🔥 CASO: SOLO ENTRADA (SIN SALIDA)
+    if(a.entrada && !a.salida){
+        empleadosData[user].puntos += 10;
+        empleadosData[user].asistencias++;
+    }
+    else if(horas >= 8){
+        empleadosData[user].puntos += 100;
+        empleadosData[user].asistencias++;
+    }
+    else if(horas >= 4){
+        empleadosData[user].puntos += 90;
+        empleadosData[user].retardos++;
+    }
+    else{
+        empleadosData[user].puntos -= 200;
+        empleadosData[user].faltas++;
+    }
+});
+        let ranking = Object.keys(empleadosData).map(user => {
+
+            let emp = empleadosData[user];
+
+           let porcentaje = (emp.asistencias + emp.retardos) * 20;
+            return {
+                user,
+                ...emp,
+                porcentaje
+            };
+        });
+
+        ranking.sort((a,b) => b.puntos - a.puntos);
+
+        cont.innerHTML = "";
+
+        ranking.forEach((emp, i) => {
+
+            if(emp.totalDias === 0) return; // 🔥 oculta vacíos
+
+            let medal = "";
+
+            if(i === 0) medal = "🥇";
+            else if(i === 1) medal = "🥈";
+            else if(i === 2) medal = "🥉";
+
+            let div = document.createElement("div");
+            div.className = "venta";
+
+            div.innerHTML = `
+                ${medal} ${emp.user.toUpperCase()}
+                <span>⭐ ${emp.puntos}</span>
+                <span>📊 ${emp.porcentaje.toFixed(0)}%</span>
+            `;
+
+            cont.appendChild(div);
+        });
+
+    } catch(error){
+        console.error(error);
+        cont.innerHTML = "❌ Error cargando ranking";
+    }
+}
+
+cargarRanking();
 </script>
 </body>
 </html>

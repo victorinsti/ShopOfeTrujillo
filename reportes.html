@@ -17,6 +17,8 @@
     <h2>📊 Reportes del día</h2>
 
     <button onclick="descargarPDF()">📄 Descargar PDF</button>
+    
+    
 
     <div id="reportes" class="card"></div>
 
@@ -27,6 +29,11 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script type="module" src="reportes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+emailjs.init("TU_PUBLIC_KEY");
+</script>
 
 </body>
 </html>
