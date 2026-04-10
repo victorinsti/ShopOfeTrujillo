@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // 🔥 FUNCIÓN MENÚ (FUERA, PERO CORRECTA)
 function toggleMenu() {
-    document.querySelector("header nav").classList.toggle("active");
+    document.querySelector("nav").classList.toggle("active");
 }
 
 const images = document.querySelectorAll('.gallery-grid img');
