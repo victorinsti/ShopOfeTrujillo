@@ -121,7 +121,34 @@ button {
 .normal {
     background: #f5f5f5;
 }
+.btn-impuntuales {
+        background: linear-gradient(135deg, #ff14e4, #f44336);
+        color: white;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+        margin: 15px 0;
+        box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+        transition: transform 0.2s, box-shadow 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        border: none;
+        width: 100%;
+        font-size: 18px;
+    }
 
+    .btn-impuntuales:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(244, 67, 54, 0.4);
+    }
+
+    .btn-impuntuales i {
+        font-size: 24px;
+    }
 
 </style>
 
@@ -166,6 +193,14 @@ if(acceso !== "ok") {
         <br> La persona que este en el top 1 recibirá: PROXIMAMENTE</h3>
     <div id="ranking"></div>
 </div>
+<hr>
+
+<button class="btn-impuntuales" onclick="window.location='impuntuales.html'">
+    <i class="fas fa-exclamation-triangle"></i>
+    <span>Gestión de Clientas Impuntuales</span>
+</button>
+<hr>
+<br>
 
 <div class="card">
     <h2>💰 Caja y Reportes</h2>

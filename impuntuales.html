@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Control | Shop Ofe Trujillo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: #f9f9f9; font-family: 'Open Sans', sans-serif; }
+        .contenedor { max-width: 900px; margin: 30px auto; padding: 20px; }
+        
+        .header-seccion { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+        
+        .form-registro { 
+            background: white; padding: 25px; border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 30px;
+            display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px; align-items: end;
+        }
+
+        @media (max-width: 768px) { .form-registro { grid-template-columns: 1fr; } }
+
+        .form-registro input { padding: 12px; border: 1px solid #ddd; border-radius: 10px; outline: none; }
+        .form-registro button { 
+            background: #ff4da6; color: white; border: none; padding: 12px 20px; 
+            border-radius: 10px; cursor: pointer; font-weight: bold; 
+        }
+
+        .buscador-caja { position: relative; margin-bottom: 20px; }
+        .buscador-caja i { position: absolute; left: 15px; top: 15px; color: #aaa; }
+        .buscador-caja input { width: 100%; padding: 15px 15px 15px 45px; border-radius: 15px; border: 1px solid #ddd; font-size: 16px; box-sizing: border-box;}
+
+        .tabla-container { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #ff4da6; color: white; padding: 15px; text-align: left; }
+        td { padding: 15px; border-bottom: 1px solid #eee; }
+        tr:hover { background: #fff9fb; }
+        
+        .monto { color: #d32f2f; font-weight: bold; }
+        .btn-borrar { color: #ff5252; cursor: pointer; transition: 0.2s; }
+        .btn-borrar:hover { transform: scale(1.2); }
+    </style>
+</head>
+<body>
+
+<div class="contenedor">
+    <div class="header-seccion">
+        <button class="btn-volver" onclick="window.location='panel.html'" style="border:none; background:none; cursor:pointer; color:#ff4da6; font-weight:bold;">
+            <i class="fas fa-chevron-left"></i> Volver al Panel
+        </button>
+        <h2 style="color: #333; margin:0;">📋 Control de Pagos Pendientes</h2>
+    </div>
+
+    <div class="form-registro">
+        <div>
+            <label style="font-size: 12px; display:block; margin-bottom:5px;">Nombre Clienta</label>
+            <input type="text" id="nombre" placeholder="Ej. María López" style="width:100%; box-sizing:border-box;">
+        </div>
+        <div>
+            <label style="font-size: 12px; display:block; margin-bottom:5px;">Monto Debida</label>
+            <input type="number" id="adeudo" placeholder="$0.00" style="width:100%; box-sizing:border-box;">
+        </div>
+        <div>
+            <label style="font-size: 12px; display:block; margin-bottom:5px;">Fecha Límite/Vencimiento</label>
+            <input type="date" id="fecha" style="width:100%; box-sizing:border-box;">
+        </div>
+        <button onclick="agregarImpuntual()">Registrar</button>
+    </div>
+
+    <div class="buscador-caja">
+        <i class="fas fa-search"></i>
+        <input type="text" id="buscador" placeholder="Buscar clienta por nombre..." onkeyup="filtrarTabla()">
+    </div>
+
+    <div class="tabla-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Clienta</th>
+                    <th>Deuda</th>
+                    <th>Fecha Registro</th>
+                    <th style="text-align: center;">Acción</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-cuerpo">
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="module">
+    // SEGURIDAD IGUAL QUE EN CORTE.JS
+    let acceso = sessionStorage.getItem("acceso");
+    if(acceso !== "ok"){ window.location.href = "acceso.html"; }
+
+    import { db } from "./firebase.js";
+    import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+    async function cargarDatos() {
+        const tabla = document.getElementById("tabla-cuerpo");
+        tabla.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Cargando registros...</td></tr>";
+        
+        try {
+            const q = query(collection(db, "impuntuales"), orderBy("fecha", "desc"));
+            const snap = await getDocs(q);
+            tabla.innerHTML = "";
+            
+            if (snap.empty) {
+                tabla.innerHTML = "<tr><td colspan='4' style='text-align:center;'>No hay clientas registradas.</td></tr>";
+                return;
+            }
+
+            snap.forEach(documento => {
+                const d = documento.data();
+                tabla.innerHTML += `
+                    <tr>
+                        <td><b>${d.nombre}</b></td>
+                        <td class="monto">$${parseFloat(d.adeudo).toFixed(2)}</td>
+                        <td>${d.fecha}</td>
+                        <td style="text-align: center;">
+                            <i class="fas fa-trash-alt btn-borrar" onclick="eliminarRegistro('${documento.id}')"></i>
+                        </td>
+                    </tr>
+                `;
+            });
+        } catch(e) { console.error(e); }
+    }
+
+    window.agregarImpuntual = async () => {
+        const n = document.getElementById("nombre").value;
+        const a = document.getElementById("adeudo").value;
+        const f = document.getElementById("fecha").value;
+
+        if(!n || !a || !f) return alert("Por favor completa todos los campos");
+
+        await addDoc(collection(db, "impuntuales"), { nombre: n, adeudo: a, fecha: f });
+        document.getElementById("nombre").value = "";
+        document.getElementById("adeudo").value = "";
+        cargarDatos();
+    };
+
+    window.eliminarRegistro = async (id) => {
+        if(confirm("¿Confirmas que la clienta ya liquidó su adeudo?")) {
+            await deleteDoc(doc(db, "impuntuales", id));
+            cargarDatos();
+        }
+    };
+
+    window.filtrarTabla = () => {
+        const val = document.getElementById("buscador").value.toLowerCase();
+        const filas = document.querySelectorAll("#tabla-cuerpo tr");
+        filas.forEach(tr => {
+            const txt = tr.cells[0].textContent.toLowerCase();
+            tr.style.display = txt.includes(val) ? "" : "none";
+        });
+    };
+
+    cargarDatos();
+</script>
+</body>
+</html>
