@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Validar Puntos | Shop Ofe Trujillo</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: sans-serif; background: #f4f4f4; padding: 20px; }
+        .solicitud-card {
+            background: white; padding: 15px; border-radius: 10px;
+            margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex; flex-wrap: wrap; gap: 15px; align-items: center;
+        }
+        .solicitud-card img { width: 120px; border-radius: 5px; cursor: pointer; }
+        .info { flex: 1; min-width: 200px; }
+        .btn-check { background: #28a745; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
+        .btn-rechazar { background: #dc3545; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <button onclick="window.location.href='panel.html'" style="margin-bottom: 20px;">⬅ Volver al Panel</button>
+    <h2>📸 Validación de Notas Foráneas</h2>
+    
+    <div id="listaSolicitudes">Cargando solicitudes...</div>
+
+<script type="module">
+    import { db } from "./firebase.js";
+    import { 
+        collection, query, where, getDocs, doc, updateDoc, increment 
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+    // 1. Verificar acceso (Solo Ofe, Samm o Paty)
+    const empleado = JSON.parse(sessionStorage.getItem("empleado"));
+    const permitidos = ["ofe", "samm", "paty"];
+    if(!empleado || !permitidos.includes(empleado.user)) {
+        window.location.href = "acceso.html";
+    }
+
+    async function cargarSolicitudes() {
+        const cont = document.getElementById("listaSolicitudes");
+        // Buscamos solo las que están "pendientes"
+        const q = query(collection(db, "solicitudes_puntos"), where("estado", "==", "pendiente"));
+        const snap = await getDocs(q);
+
+        cont.innerHTML = "";
+
+        if (snap.empty) {
+            cont.innerHTML = "<p>No hay notas pendientes por revisar. ✨</p>";
+            return;
+        }
+
+        snap.forEach(solDoc => {
+            const s = solDoc.data();
+            const card = document.createElement("div");
+            card.className = "solicitud-card";
+            card.innerHTML = `
+                <img src="${s.foto}" onclick="window.open('${s.foto}')" title="Click para ampliar">
+                <div class="info">
+                    <b>${s.nombreCliente}</b> (${s.email})<br>
+                    Monto: $${s.monto} -> <b>${s.puntos} Puntos</b><br>
+                    <small>Enviado: ${s.fecha} ${s.hora}</small>
+                </div>
+                <div>
+                    <button class="btn-check" onclick="aprobar('${solDoc.id}', '${s.email}', ${s.puntos})">✅ Aprobar</button>
+                    <button class="btn-rechazar" onclick="rechazar('${solDoc.id}')">❌</button>
+                </div>
+            `;
+            cont.appendChild(card);
+        });
+    }
+
+    // 🔥 FUNCIÓN PARA APROBAR PUNTOS
+    window.aprobar = async function(idSol, emailCli, puntos) {
+        if(!confirm(`¿Aprobar ${puntos} puntos para esta clienta?`)) return;
+
+        try {
+            // A. Sumar puntos al perfil de la clienta
+            const userRef = doc(db, "usuarios", emailCli);
+            await updateDoc(userRef, {
+                puntos: increment(puntos)
+            });
+
+            // B. Marcar solicitud como aprobada
+            const solRef = doc(db, "solicitudes_puntos", idSol);
+            await updateDoc(solRef, { estado: "aprobado" });
+
+            alert("✅ Puntos cargados con éxito");
+            cargarSolicitudes();
+        } catch (e) {
+            alert("Error al aprobar");
+        }
+    }
+
+    // 🔥 FUNCIÓN PARA RECHAZAR
+    window.rechazar = async function(idSol) {
+        if(!confirm("¿Rechazar esta solicitud?")) return;
+        const solRef = doc(db, "solicitudes_puntos", idSol);
+        await updateDoc(solRef, { estado: "rechazado" });
+        cargarSolicitudes();
+    }
+
+    cargarSolicitudes();
+</script>
+</body>
+</html>

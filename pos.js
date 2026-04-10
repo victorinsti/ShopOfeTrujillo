@@ -13,16 +13,19 @@ if(!permitidos.includes(empleado.user)){
     window.location.href = "panel.html";
 }
 
-
 if(acceso !== "ok"){
     window.location.href = "acceso.html";
 }
 
+// 🔥 SE AGREGA: query, where, updateDoc e increment para los puntos
 import { db } from "./firebase.js";
-import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+import { 
+    collection, addDoc, getDocs, query, where, updateDoc, doc, increment 
+} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 let carrito = [];
 let total = 0;
+let clientaEncontrada = null; // 🔥 Variable para rastrear si hay una clienta oficial
 
 // 🔥 CARGAR PRODUCTOS DESDE FIREBASE
 async function cargarProductos() {
@@ -49,7 +52,6 @@ async function cargarProductos() {
 
 // 🛒 AGREGAR (🔥 FIX IMPORTANTE)
 function agregar(p) {
-
     let precio = Number(p.precio); // 🔥 convertir a número
 
     carrito.push({
@@ -58,7 +60,6 @@ function agregar(p) {
     });
 
     total += precio;
-
     render();
 }
 
@@ -78,14 +79,41 @@ function render() {
     totalSpan.textContent = total.toFixed(2); // 🔥 FIX
 }
 
+// 🔍 BUSCAR CLIENTA (CORREGIDO)
+window.buscarClienta = async function() {
+    const codigo = document.getElementById("codigoCliente").value.trim();
+    const status = document.getElementById("statusCliente");
+    const inputNombreManual = document.getElementById("cliente");
+
+    // 🔥 CAMBIO AQUÍ: Cambiamos 8 por 6 para que reconozca tu ID numérico
+    if (codigo.length >= 6) { 
+        const q = query(collection(db, "usuarios"), where("clienteId", "==", codigo));
+        const snap = await getDocs(q);
+
+        if (!snap.empty) {
+            const userDoc = snap.docs[0];
+            clientaEncontrada = { id: userDoc.id, ...userDoc.data() };
+            
+            status.innerHTML = `✅ <b>${clientaEncontrada.nombre || 'Clienta Encontrada'}</b>`;
+            status.style.color = "green";
+            inputNombreManual.value = clientaEncontrada.nombre || "";
+        } else {
+            clientaEncontrada = null;
+            status.innerText = "❌ No encontrada";
+            status.style.color = "red";
+        }
+    } else {
+        clientaEncontrada = null;
+        status.innerText = "Venta general";
+        status.style.color = "#555";
+    }
+}
 // 💳 COBRAR
 window.cobrar = async function() {
-
     const metodo = document.getElementById("metodoPago").value;
     const cliente = document.getElementById("cliente").value || "General";
     const extra = Number(document.getElementById("extra").value) || 0;
 
-    // 🔥 permitir venta solo con dinero extra
     if (carrito.length === 0 && extra <= 0) {
         alert("Agrega productos o dinero");
         return;
@@ -99,6 +127,7 @@ window.cobrar = async function() {
         subtotal: total,
         extra: extra,
         cliente: cliente,
+        clienteId: clientaEncontrada ? clientaEncontrada.clienteId : "General", // 🔥 Vincular ID
         metodo: metodo,
         fecha: new Date(),
         dia: new Date().toLocaleDateString()
@@ -106,17 +135,29 @@ window.cobrar = async function() {
 
     await addDoc(collection(db, "ventas"), venta);
 
-    alert("Venta guardada 💖");
+    // 🚀 SUMAR PUNTOS SI HAY CLIENTA
+    if (clientaEncontrada) {
+        const puntosGanados = Math.floor(totalFinal / 10);
+        const refUser = doc(db, "usuarios", clientaEncontrada.id);
+        await updateDoc(refUser, {
+            puntos: increment(puntosGanados)
+        });
+        alert(`Venta guardada. ¡${clientaEncontrada.nombre} ganó ${puntosGanados} puntos! 💖`);
+    } else {
+        alert("Venta guardada 💖");
+    }
 
+    // RESET
     carrito = [];
     total = 0;
-
+    clientaEncontrada = null;
     document.getElementById("cliente").value = "";
     document.getElementById("extra").value = "";
+    document.getElementById("codigoCliente").value = "";
+    document.getElementById("statusCliente").innerText = "Venta general";
 
     render();
 }
-
 
 // 💵 CALCULAR CAMBIO
 window.calcularCambio = function() {
@@ -128,14 +169,11 @@ window.calcularCambio = function() {
     }
 
     let cambio = pago - total;
-
     document.getElementById("cambio").textContent = cambio.toFixed(2);
 }
 
-
 // 💾 GUARDAR VENTA (OPCIONAL)
 window.guardarVenta = async function() {
-
     const metodo = document.getElementById("metodoPago").value;
     const cliente = document.getElementById("cliente").value || "General";
     const extra = Number(document.getElementById("extra").value) || 0;
@@ -153,10 +191,19 @@ window.guardarVenta = async function() {
         subtotal: total,
         extra: extra,
         cliente: cliente,
+        clienteId: clientaEncontrada ? clientaEncontrada.clienteId : "General",
         metodo: metodo,
         fecha: new Date(),
         dia: new Date().toLocaleDateString()
     });
+
+    // 🚀 SUMAR PUNTOS EN GUARDADO MANUAL TAMBIÉN
+    if (clientaEncontrada) {
+        const puntosGanados = Math.floor(totalFinal / 10);
+        await updateDoc(doc(db, "usuarios", clientaEncontrada.id), {
+            puntos: increment(puntosGanados)
+        });
+    }
 
     alert("Venta guardada manualmente ✅");
 }
@@ -166,12 +213,10 @@ window.irPanel = function() {
     window.location.href = "panel.html";
 }
 
-
 // 🚀 INICIAR
 cargarProductos();
 
 window.registrarGasto = async function() {
-
     let descripcion = document.getElementById("descGasto").value;
     let monto = Number(document.getElementById("montoGasto").value);
 
@@ -188,7 +233,6 @@ window.registrarGasto = async function() {
     });
 
     alert("Gasto registrado 💸");
-
     document.getElementById("descGasto").value = "";
     document.getElementById("montoGasto").value = "";
 }

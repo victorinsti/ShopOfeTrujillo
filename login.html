@@ -165,18 +165,20 @@ input {
 </div>
 
 <script type="module">
-import { auth } from "./firebase.js";
+// 1. Importamos auth y db desde tu configuración de firebase.js
+import { auth, db } from "./firebase.js"; 
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+// Agregamos las funciones necesarias para manejar la base de datos
+import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-// 👁️ PASSWORD
+// 👁️ MOSTRAR/OCULTAR CONTRASEÑA
 window.togglePass = () => {
     const input = document.getElementById("password");
     input.type = input.type === "password" ? "text" : "password";
 };
 
-// 🔥 LOGIN
+// 🔥 FUNCIÓN DE INICIO DE SESIÓN
 window.login = async () => {
-
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
 
@@ -192,12 +194,31 @@ window.login = async () => {
     loader.style.display = "block";
 
     try {
-
+        // Autenticación con Firebase
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-        // 🔥 GUARDAR USUARIO (CLAVE DEL PROBLEMA)
+        // 🚀 REGISTRO DE NÚMERO DE CLIENTA (SOLO NÚMEROS)
+        // Buscamos el documento usando el correo como ID, igual que en tu perfil
+        const clienteRef = doc(db, "usuarios", user.email);
+        const docSnap = await getDoc(clienteRef);
+
+        if (!docSnap.exists()) {
+            // Si es su primera vez, generamos un ID de 6 números (ej: 452893)
+            const nuevoIdNum = Math.floor(100000 + Math.random() * 900000).toString();
+            
+            await setDoc(clienteRef, {
+                clienteId: nuevoIdNum, // ID Numérico
+                email: user.email,
+                puntos: 0,
+                nombre: "", // Se llenará después en el perfil
+                fechaRegistro: new Date().toLocaleDateString()
+            });
+        }
+
+        // Guardar sesión local para el perfil
         localStorage.setItem("usuario", JSON.stringify({
-            email: userCredential.user.email
+            email: user.email
         }));
 
         loader.innerText = "💖 Bienvenida...";
@@ -207,40 +228,24 @@ window.login = async () => {
         }, 1000);
 
     } catch(error){
-
         loader.style.display = "none";
-
+        
+        // Manejo de errores de acceso
         if(error.code === "auth/user-not-found"){
             errorBox.innerText = "❌ Usuario no existe";
-        }
-        else if(error.code === "auth/wrong-password"){
+        } else if(error.code === "auth/wrong-password"){
             errorBox.innerText = "❌ Contraseña incorrecta";
-        }
-        else if(error.code === "auth/invalid-email"){
+        } else if(error.code === "auth/invalid-email"){
             errorBox.innerText = "❌ Correo inválido";
-        }
-        else{
+        } else {
             errorBox.innerText = "❌ Error al iniciar sesión";
         }
     }
 };
-
-await signInWithEmailAndPassword(auth, email, password);
-
-// 🔥 GUARDAR USUARIO LOCAL
-localStorage.setItem("usuario", JSON.stringify({
-    email: email
-}));
-
-loader.innerText = "💖 Bienvenida...";
-setTimeout(() => {
-    window.location.href = "perfil.html";
-}, 1000);
-
 </script>
 
 <script>
-// 📱 MENÚ
+// 📱 MENÚ MOBILE
 function toggleMenu() {
     document.querySelector("nav").classList.toggle("active");
 }

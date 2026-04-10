@@ -161,6 +161,13 @@ if(acceso !== "ok") {
 </div>
 
 <div class="card">
+    <h2>🏆 Ranking de empleados</h2>
+    <h3>Si no marcas asistencia y salida no se contará el dia completo.
+        <br> La persona que este en el top 1 recibirá: PROXIMAMENTE</h3>
+    <div id="ranking"></div>
+</div>
+
+<div class="card">
     <h2>💰 Caja y Reportes</h2>
 
     <button onclick="window.location='pos.html'">
@@ -173,6 +180,10 @@ if(acceso !== "ok") {
 
     <button onclick="window.location='reportes.html'">
         📊 Ver Reportes
+    </button>
+
+    <button onclick="window.location='validarpuntos.html'" style="background: #ff4da6; color: white; border: 2px solid #000;">
+        📸 Validar Notas Foráneas
     </button>
 </div>
 
@@ -245,11 +256,7 @@ if(acceso !== "ok") {
     <div id="tablaAsistencia"></div>
 </div>
 
-<div class="card">
-    <h2>🏆 Ranking de empleados</h2>
-    <h3>si no marcas asistencia y salida no se contará el dia completo</h3>
-    <div id="ranking"></div>
-</div>
+
 
 
 <button onclick="verHistorial()">📅 Ver historial</button>
