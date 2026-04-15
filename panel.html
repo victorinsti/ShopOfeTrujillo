@@ -178,6 +178,16 @@ if(acceso !== "ok") {
 </div>
 
 
+
+
+<div class="card">
+    <h2>🏆 Ranking de empleados</h2>
+    <h3>Si no marcas asistencia y salida no se contará el dia completo.
+        <br> </h3>
+    <div id="ranking"></div>
+</div>
+<hr>
+
 <div class="card">
     <h2>⏰ Asistencia</h2>
 
@@ -187,20 +197,13 @@ if(acceso !== "ok") {
     <button onclick="registrarSalida()">🔴 Registrar salida</button>
 </div>
 
+<!-- TAREAS DINÁMICAS -->
 <div class="card">
-    <h2>🏆 Ranking de empleados</h2>
-    <h3>Si no marcas asistencia y salida no se contará el dia completo.
-        <br> La persona que este en el top 1 recibirá: PROXIMAMENTE</h3>
-    <div id="ranking"></div>
+    <h2>📋 Tareas asignadas</h2>
+    <ul id="tareas"></ul>
+     <h2>📋 Notificaciones asignadas</h2>
+    <ul id="notificaciones"></ul>
 </div>
-<hr>
-
-<button class="btn-impuntuales" onclick="window.location='impuntuales.html'">
-    <i class="fas fa-exclamation-triangle"></i>
-    <span>Gestión de Clientas Impuntuales</span>
-</button>
-<hr>
-<br>
 
 <div class="card">
     <h2>💰 Caja y Reportes</h2>
@@ -221,6 +224,49 @@ if(acceso !== "ok") {
         📸 Validar Notas Foráneas
     </button>
 </div>
+<hr>
+<button class="btn-impuntuales" onclick="window.location='impuntuales.html'">
+    <i class="fas fa-exclamation-triangle"></i>
+    <span>Gestión de Clientas Impuntuales</span>
+</button>
+<hr>
+<br>
+
+<!-- Rol de limpieza -->
+<div class="card">
+    <h2>🧹 Rol de Limpieza Abril</h2>
+    <p>Lunes: Paty</p>
+    <p>Martes: Sol</p>
+    <p>Miercoles: Angy</p>
+    <p>Jueves: Pao</p>
+    <p>Viernes: Nao</p>
+    <p>Sabado: Lety</p>
+    
+</div>
+
+
+
+<div class="card" id="asistenciaAdmin" style="display:none;">
+    <h2>📊 Asistencia de empleados</h2>
+
+   <select id="filtroEmpleado">
+    <option value="ofe">Ofe</option>
+    <option value="samm">Samm</option>
+    <option value="sol">Sol</option>
+    <option value="pao">Pao</option>
+    <option value="angy">Angy</option>
+    <option value="nao">Nao</option>
+    <option value="paty">Paty</option>
+    <option value="lety">Lety</option>
+    <option value="luis">Luis</option>
+</select>
+
+    <div id="tablaAsistencia"></div>
+</div>
+<button onclick="verHistorial()">📅 Ver historial</button>
+<div id="historialBox"></div>
+
+<br>
 
 <div class="card admin-card" id="adminPanel" style="display:none;">
     
@@ -273,31 +319,12 @@ if(acceso !== "ok") {
 
 </div>
 
-<div class="card" id="asistenciaAdmin" style="display:none;">
-    <h2>📊 Asistencia de empleados</h2>
-
-   <select id="filtroEmpleado">
-    <option value="ofe">Ofe</option>
-    <option value="samm">Samm</option>
-    <option value="sol">Sol</option>
-    <option value="pao">Pao</option>
-    <option value="angy">Angy</option>
-    <option value="nao">Nao</option>
-    <option value="paty">Paty</option>
-    <option value="lety">Lety</option>
-    <option value="luis">Luis</option>
-</select>
-
-    <div id="tablaAsistencia"></div>
-</div>
 
 
 
 
-<button onclick="verHistorial()">📅 Ver historial</button>
-<div id="historialBox"></div>
 
-<br>
+
 
 <div class="card">
     <h2>📅 Calendario de asistencia</h2>
@@ -306,17 +333,6 @@ if(acceso !== "ok") {
 
 <br>
 
-<!-- Rol de limpieza -->
-<div class="card">
-    <h2>🧹 Rol de Limpieza Abril</h2>
-    <p>Lunes: Paty</p>
-    <p>Martes: Sol</p>
-    <p>Miercoles: Angy</p>
-    <p>Jueves: Pao</p>
-    <p>Viernes: Nao</p>
-    <p>Sabado: Lety</p>
-    
-</div>
 
 
 
@@ -370,13 +386,7 @@ if(acceso !== "ok") {
 
 
 
-<!-- TAREAS DINÁMICAS -->
-<div class="card">
-    <h2>📋 Tareas asignadas</h2>
-    <ul id="tareas"></ul>
-     <h2>📋 Notificaciones asignadas</h2>
-    <ul id="notificaciones"></ul>
-</div>
+
 
 <div class="card">
     <h2>👤 Información del empleado</h2>
