@@ -1160,6 +1160,8 @@ async function cargarRanking() {
 
        const snap = await getDocs(collection(db, "asistencia"));
 
+       let inicioSemana = obtenerInicioSemana();
+
 snap.forEach(doc => {
     let a = doc.data();
 
@@ -1167,7 +1169,10 @@ snap.forEach(doc => {
     if(!empleadosData[user]) return;
 
     let fecha = a.entrada?.toDate();
-    if(!fecha) return;
+if(!fecha) return;
+
+// 🔥 FILTRAR SOLO ESTA SEMANA
+if (fecha < inicioSemana) return;
 
     let dia = fecha.getDay();
 
@@ -1179,22 +1184,19 @@ snap.forEach(doc => {
     let horas = parseFloat(a.horasTrabajadas || 0);
 
     // 🔥 CASO: SOLO ENTRADA (SIN SALIDA)
-    if(a.entrada && !a.salida){
-        empleadosData[user].puntos += 10;
-        empleadosData[user].asistencias++;
-    }
-    else if(horas >= 8){
-        empleadosData[user].puntos += 100;
-        empleadosData[user].asistencias++;
-    }
-    else if(horas >= 4){
-        empleadosData[user].puntos += 90;
-        empleadosData[user].retardos++;
-    }
-    else{
-        empleadosData[user].puntos -= 200;
-        empleadosData[user].faltas++;
-    }
+    // 🔥 SUMAR HORAS REALES
+empleadosData[user].puntos += horas;
+
+// métricas opcionales
+if(horas >= 8){
+    empleadosData[user].asistencias++;
+}
+else if(horas > 0){
+    empleadosData[user].retardos++;
+}
+else{
+    empleadosData[user].faltas++;
+}
 });
         let ranking = Object.keys(empleadosData).map(user => {
 
@@ -1226,9 +1228,9 @@ snap.forEach(doc => {
             div.className = "venta";
 
             div.innerHTML = `
-                ${medal} ${emp.user.toUpperCase()}
-                <span>⭐ ${emp.puntos}</span>
-                <span>📊 ${emp.porcentaje.toFixed(0)}%</span>
+               ${medal} ${emp.user.toUpperCase()}
+<span>⏱️ ${emp.puntos.toFixed(1)} hrs</span>
+<span>📊 ${emp.asistencias} días completos</span>
             `;
 
             cont.appendChild(div);
@@ -1246,6 +1248,18 @@ cargarRanking();
 window.toggleMenu = function () {
     document.querySelector("header nav").classList.toggle("active");
 };
+
+function obtenerInicioSemana() {
+    let hoy = new Date();
+    let dia = hoy.getDay(); // 0=domingo, 1=lunes...
+
+    let diff = hoy.getDate() - dia + (dia === 0 ? -6 : 1); // lunes
+
+    let lunes = new Date(hoy.setDate(diff));
+    lunes.setHours(0,0,0,0);
+
+    return lunes;
+}
 </script>
 </body>
 </html>
