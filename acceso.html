@@ -146,172 +146,68 @@ button {
     </div>
 </div>
 
-<script>
+<script type="module">
+// Importamos lo necesario de Firebase (usa la misma versión que en tu panel)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-// 🔥 MENU MOBILE
+// Tu configuración (la misma que usas en el panel)
+const firebaseConfig = {
+    apiKey: "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
+    authDomain: "trujillo-digital-hub.firebaseapp.com",
+    projectId: "trujillo-digital-hub",
+    storageBucket: "trujillo-digital-hub.firebasestorage.app",
+    messagingSenderId: "162799375782",
+    appId: "1:162799375782:web:2be9127bfeaa613fd6ab67"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Hacemos la función login global para que el botón la encuentre
+window.login = async function() {
+    let u = document.getElementById("user").value.toLowerCase().trim();
+    let p = document.getElementById("pass").value.trim();
+
+    if (!u || !p) {
+        alert("Por favor llena ambos campos");
+        return;
+    }
+
+    try {
+        // Buscamos el documento que tiene como ID el nombre de usuario
+        const docRef = doc(db, "empleados", u);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            let datosEmpleado = docSnap.data();
+
+            // Validamos la contraseña que viene de la base de datos
+            if (datosEmpleado.pass === p) {
+                sessionStorage.setItem("acceso", "ok");
+                sessionStorage.setItem("empleado", JSON.stringify({
+                    user: u,
+                    ...datosEmpleado
+                }));
+                window.location.href = "panel.html";
+            } else {
+                alert("❌ Contraseña incorrecta");
+            }
+        } else {
+            alert("❌ Usuario no encontrado");
+        }
+    } catch (error) {
+        console.error("Error al entrar:", error);
+        alert("Ocurrió un error en la conexión");
+    }
+}
+</script>
+
+<script>
+// Mantén tu función de menú fuera del módulo para que funcione siempre
 function toggleMenu() {
     document.querySelector("nav").classList.toggle("active");
 }
-
-// 🔥 EMPLEADOS
-const empleados = [
-    {
-        user: "ofe",
-        pass: "4090",
-        nombre: "Ofe",
-        puesto: "Dueña",
-         telefono: "9221640747",
-        horario: "10:00 am - 7:00 pm",
-        area: "Administración",
-        estado: "Activo",
-        id: "SOT001",
-        tareas: ["Supervisar", "Ventas", "Decisiones"],
-         notificaciones: ["Ninguna"],
-    },
-    {
-        user: "samm",
-        pass: "369963",
-        nombre: "Victor",
-        puesto: "Programador",
-        telefono: "9222081087",
-        horario: "6:00 pm - 7:00 am",
-        area: "Programación",
-        estado: "Activo",
-        id: "SOT002",
-        tareas: [
-            "Actualizar página webs",
-            "Corregir errores",
-            "Mejorar diseño"
-        ],
-         notificaciones: ["Retardo", "Ascendido a gerente de el area de programacion"],
-    },
-    {
-        user: "sol",
-        pass: "5656",
-        nombre: "Sol",
-        puesto: "Gerente, Asesora de foraneas",
-        telefono: "9222136931",
-        horario: "10:00 am - 7:00 pm",
-        area: "Administración",
-        estado: "Activo",
-        id: "SOT003",
-        tareas: ["Atender clientes", "WhatsApp", "Toma de deciciones medias","Limpieza", "Embolsar","Notas",],
-         notificaciones: ["Ninguna"],
-    },
-    {
-        user: "pao",
-        pass: "9090",
-        nombre: "Pao",
-        puesto: "Asesora de Mina, Vendedora ",
-        telefono: "9221589784",
-        horario: "10:00 am - 7:00 pm",
-        area: "Administración",
-        estado: "Activo",
-        id: "SOT004",
-        tareas: ["Atender clientes", "WhatsApp", "Toma de deciciones basicas","Limpieza", "Embolsar","Notas",],
-         notificaciones: ["Ninguna"],
-    },
-
-    {
-        user: "angy",
-        pass: "2580",
-        nombre: "Angy",
-        puesto: "Vendedora",
-        telefono: "9221251906",
-        horario: "10:00 am - 7:00 pm",
-        area: "Ventas",
-        estado: "Activo",
-        id: "SOT005",
-        tareas: ["Atender clientes", "Embolsar","Notas", "Lives", "Limpieza"],
-         notificaciones: ["Ninguna"],
-    },
-
-    {
-        user: "000",
-        pass: "0008888",
-        nombre: "Sin asignar",
-        puesto: "Vendedora",
-        telefono: "",
-        horario: "10:00 am - 7:00 pm",
-        area: "Ventas",
-        estado: "Activo",
-        id: "SOT006",
-        tareas: ["Atender clientes", "Embolsar","Notas", "Lives", "Limpieza"],
-         notificaciones: ["Ninguna"],
-    },
-
-    {
-        user: "nao",
-        pass: "1478",
-        nombre: "Naomi",
-        puesto: "Vendedora",
-        telefono: "9221721390",
-        horario: "10:00 am - 7:00 pm",
-        area: "Ventas",
-        estado: "Activo",
-        id: "SOT007",
-        tareas: ["Atender clientes", "Embolsar","Notas", "Lives", "Limpieza"],
-         notificaciones: ["Ninguna"],
-    },
-    {
-        user: "paty",
-        pass: "1212",
-        nombre: "Patricia",
-        puesto: "Cajera, Vendedora",
-        telefono: "9222038139",
-        horario: "10:00 am - 7:00 pm",
-        area: "Ventas",
-        estado: "Activo",
-        id: "SOT008",
-        tareas: ["Atender clientes", "Embolsar","Notas", "Lives", "Limpieza"],
-         notificaciones: ["Ninguna"],
-    },
-    {
-        user: "lety",
-        pass: "7878",
-        nombre: "Leticia",
-        puesto: "Vendedora",
-        telefono: "9221307100",
-        horario: "10:00 am - 7:00 pm",
-        area: "Ventas",
-        estado: "Activo",
-        id: "SOT009",
-        tareas: ["Atender clientes", "Embolsar","Notas", "Lives", "Limpieza"],
-        notificaciones: ["Ninguna"],
-    },
-
-    {
-        user: "luis",
-        pass: "1404",
-        nombre: "Luis",
-        puesto: "Mantenimiento",
-        telefono: "9222098471",
-        horario: "10:00 am - 7:00 pm",
-        area: "Mantenimiento",
-        estado: "Activo",
-        id: "SOT0010",
-        tareas: ["Atender clientes", "Embolsar","Notas", "Lives", "Limpieza"],
-        notificaciones: ["Ninguna"],
-    },
-
-];
-
-// 🔥 LOGIN
-function login() {
-    let u = document.getElementById("user").value;
-    let p = document.getElementById("pass").value;
-
-    let encontrado = empleados.find(e => e.user === u && e.pass === p);
-
-    if(encontrado) {
-        sessionStorage.setItem("acceso", "ok");
-        sessionStorage.setItem("empleado", JSON.stringify(encontrado));
-        window.location.href = "panel.html";
-    } else {
-        alert("❌ Datos incorrectos");
-    }
-}
-
 </script>
 
 </body>

@@ -170,7 +170,6 @@ if(acceso !== "ok") {
 
 <div class="container">
 
-<!-- PERFIL -->
 <div class="card">
     <h2>👤 Perfil</h2>
     <p id="nombre"></p>
@@ -197,7 +196,6 @@ if(acceso !== "ok") {
     <button onclick="registrarSalida()">🔴 Registrar salida</button>
 </div>
 
-<!-- TAREAS DINÁMICAS -->
 <div class="card">
     <h2>📋 Tareas asignadas</h2>
     <ul id="tareas"></ul>
@@ -232,7 +230,6 @@ if(acceso !== "ok") {
 <hr>
 <br>
 
-<!-- Rol de limpieza -->
 <div class="card">
     <h2>🧹 Rol de Limpieza Abril</h2>
     <p>Lunes: Paty</p>
@@ -276,7 +273,6 @@ if(acceso !== "ok") {
 
         
 
-        <!-- 🧾 TAREAS -->
         <div class="admin-box">
             <h3>📋 Asignar tareas</h3>
 
@@ -296,7 +292,6 @@ if(acceso !== "ok") {
             <button class="btn-tarea" onclick="agregarTarea()">Agregar tarea</button>
         </div>
 
-        <!-- 🔔 NOTIFICACIONES -->
         <div class="admin-box">
             <h3>🔔 Enviar notificaciones</h3>
 
@@ -316,6 +311,19 @@ if(acceso !== "ok") {
         </div>
 
     </div>
+    <div class="admin-box" style="margin-top:20px; border: 2px solid #ff4da6; padding: 15px; border-radius: 15px;">
+    <h3>👤 Registrar Nuevo Empleado</h3>
+    <input type="text" id="regUser" placeholder="Usuario (ej: ana)">
+    <input type="text" id="regNombre" placeholder="Nombre Completo">
+    <input type="password" id="regPass" placeholder="Contraseña">
+    <input type="text" id="regPuesto" placeholder="Puesto">
+    <input type="text" id="regTelefono" placeholder="Teléfono">
+    <input type="text" id="regHorario" placeholder="Horario (10:00-7:00)" value="10:00-7:00">
+    <input type="text" id="regArea" placeholder="Área (Ventas, Programación, etc.)">
+    <input type="text" id="regID" placeholder="ID (SOT00X)">
+    
+    <button style="background: #4caf50;" onclick="registrarEmpleadoBD()">💾 Guardar en Base de Datos</button>
+</div>
 
 </div>
 
@@ -371,7 +379,10 @@ if(acceso !== "ok") {
 
 <div class="card">
     <h2>🗑️ Eliminar productos</h2>
-    <div id="listaProductos"></div>
+    <button id="btnMostrarProductos" onclick="toggleListaProductos()">Mostrar lista de productos</button>
+    <div id="contenedorListaProductos" style="display: none; margin-top: 15px;">
+        <div id="listaProductos"></div>
+    </div>
 </div>
 
 <div class="card" id="editarBox" style="display:none;">
@@ -401,7 +412,6 @@ if(acceso !== "ok") {
   
 </div>
 
-<!-- INFO -->
 <div class="card">
     <h2>🏪 Información de la Empresa</h2>
     <p>📍 Minatitlán, Veracruz</p>
@@ -414,7 +424,66 @@ if(acceso !== "ok") {
 </div>
 
 <script src="https://unpkg.com/html5-qrcode"></script>
+<script>
+    // Función para mostrar/ocultar lista de productos
+    function toggleListaProductos() {
+        const lista = document.getElementById('contenedorListaProductos');
+        const boton = document.getElementById('btnMostrarProductos');
+        if (lista.style.display === 'none') {
+            lista.style.display = 'block';
+            boton.textContent = 'Ocultar lista de productos';
+        } else {
+            lista.style.display = 'none';
+            boton.textContent = 'Mostrar lista de productos';
+        }
+    }
+</script>
+
 <script type="module">
+
+    // 🔥 FUNCIÓN PARA DAR DE ALTA EMPLEADOS
+window.registrarEmpleadoBD = async () => {
+    // Verificamos quién intenta registrar (Protección extra)
+    let admin = JSON.parse(sessionStorage.getItem("empleado"));
+    if (admin.user !== "samm" && admin.user !== "ofe") {
+        return alert("❌ No tienes permisos para esta acción");
+    }
+
+    const user = document.getElementById("regUser").value.toLowerCase().trim();
+    const nombre = document.getElementById("regNombre").value.trim();
+    const pass = document.getElementById("regPass").value.trim();
+    const puesto = document.getElementById("regPuesto").value.trim();
+    const telefono = document.getElementById("regTelefono").value.trim();
+    const horario = document.getElementById("regHorario").value.trim();
+    const area = document.getElementById("regArea").value.trim();
+    const idEmp = document.getElementById("regID").value.trim();
+
+    if (!user || !nombre || !pass) {
+        return alert("❌ Usuario, Nombre y Contraseña son obligatorios");
+    }
+
+    try {
+        // Importante: Usamos setDoc para definir nosotros el ID (que será el usuario)
+        await setDoc(doc(db, "empleados", user), {
+            nombre: nombre,
+            pass: pass,
+            puesto: puesto,
+            telefono: telefono,
+            horario: horario,
+            area: area,
+            estado: "Activo", // Por defecto activo
+            id: idEmp
+        });
+
+        alert(`✅ Empleado ${nombre} registrado con éxito`);
+        
+        // Limpiar campos
+        document.querySelectorAll(".admin-box input").forEach(i => i.value = "");
+    } catch (error) {
+        console.error("Error al registrar:", error);
+        alert("❌ Error al guardar en Firebase");
+    }
+};
 const empleados = [
     { user: "ofe", nombre: "Ofe", telefono: "9221640747" },
     { user: "samm", nombre: "Samm", telefono: "9222081087" },
