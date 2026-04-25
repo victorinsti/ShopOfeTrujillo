@@ -923,8 +923,18 @@ function obtenerFechaHoy() {
     return new Date().toISOString().split("T")[0];
 }
 
-// 🟢 ENTRADA
+// 🟢 ENTRADA CON REGLA 9:50 AM
+// 🟢 ENTRADA CON REGLA 9:50 AM
 window.registrarEntrada = async () => {
+    let ahora = new Date();
+    let hora = ahora.getHours();
+    let minutos = ahora.getMinutes();
+
+    // 🛑 Bloqueo antes de las 9:50 AM
+    if (hora < 9 || (hora === 9 && minutos < 50)) {
+        alert("❌ No puedes registrar entrada antes de las 9:50 AM");
+        return;
+    }
 
     let emp = JSON.parse(sessionStorage.getItem("empleado"));
     let fecha = obtenerFechaHoy();
@@ -939,7 +949,6 @@ window.registrarEntrada = async () => {
 
     try {
         navigator.geolocation.getCurrentPosition(async (pos) => {
-
             const ubicacion = {
                 lat: pos.coords.latitude,
                 lng: pos.coords.longitude
@@ -948,9 +957,9 @@ window.registrarEntrada = async () => {
             await setDoc(ref, {
                 usuario: emp.user,
                 nombre: emp.nombre,
-                entrada: new Date(),
+                entrada: ahora,
                 salida: null,
-                ubicacionEntrada: ubicacion // 🔥 AQUÍ
+                ubicacionEntrada: ubicacion 
             });
 
             alert("✅ Entrada registrada con ubicación");
@@ -1215,103 +1224,77 @@ window.cargarCalendario = async () => {
 };
 
 async function cargarRanking() {
-
     const cont = document.getElementById("ranking");
     cont.innerHTML = "⏳ Cargando ranking...";
 
     let empleadosData = {};
-
-    const lista = [
-        "ofe","samm","sol","pao","angy","nao","paty","lety","luis"
-    ];
+    const lista = ["ofe","samm","sol","pao","angy","nao","paty","lety","luis"];
 
     lista.forEach(u => {
-        empleadosData[u] = {
-            puntos: 0,
-            asistencias: 0,
-            retardos: 0,
-            faltas: 0,
-            totalDias: 0
-        };
+        empleadosData[u] = { puntos: 0, asistencias: 0, retardos: 0, faltas: 0, totalDias: 0 };
     });
 
     try {
+        const snap = await getDocs(collection(db, "asistencia"));
+        let inicioSemana = obtenerInicioSemana();
 
-       const snap = await getDocs(collection(db, "asistencia"));
+        snap.forEach(doc => {
+            let a = doc.data();
+            let user = (a.usuario || "").toLowerCase();
+            if(!empleadosData[user]) return;
 
-       let inicioSemana = obtenerInicioSemana();
+            let fechaE = a.entrada?.toDate();
+            let fechaS = a.salida?.toDate ? a.salida.toDate() : (a.salida ? new Date(a.salida) : null);
+            if(!fechaE) return;
 
-snap.forEach(doc => {
-    let a = doc.data();
+            // FILTRAR SOLO ESTA SEMANA
+            if (fechaE < inicioSemana) return;
 
-    let user = (a.usuario || "").toLowerCase();
-    if(!empleadosData[user]) return;
+            let dia = fechaE.getDay();
 
-    let fecha = a.entrada?.toDate();
-if(!fecha) return;
+            // 🔥 REGLA DE SALIDA MÁXIMA 7:15 PM (Martes a Viernes)
+            if (dia >= 2 && dia <= 5 && fechaS) {
+                let horaSalida = fechaS.getHours();
+                let minSalida = fechaS.getMinutes();
+                let totalMinutos = (horaSalida * 60) + minSalida;
+                let limiteMinutos = (19 * 60) + 15; // 7:15 PM
 
-// 🔥 FILTRAR SOLO ESTA SEMANA
-if (fecha < inicioSemana) return;
+                // Si sale DESPUÉS de las 7:15 (19:16 en adelante), no se cuenta el día
+                if (totalMinutos > limiteMinutos) return; 
+            }
 
-    let dia = fecha.getDay();
+            // SOLO LUNES A VIERNES PARA EL CONTEO
+            if(dia === 0 || dia === 6) return;
 
-    // 🔥 SOLO LUNES A VIERNES
-    if(dia === 0 || dia === 6) return;
+            empleadosData[user].totalDias++;
+            let horas = parseFloat(a.horasTrabajadas || 0);
 
-    empleadosData[user].totalDias++;
+            // SUMAR HORAS REALES
+            empleadosData[user].puntos += horas;
 
-    let horas = parseFloat(a.horasTrabajadas || 0);
+            if(horas >= 8) empleadosData[user].asistencias++;
+            else if(horas > 0) empleadosData[user].retardos++;
+            else empleadosData[user].faltas++;
+        });
 
-    // 🔥 CASO: SOLO ENTRADA (SIN SALIDA)
-    // 🔥 SUMAR HORAS REALES
-empleadosData[user].puntos += horas;
-
-// métricas opcionales
-if(horas >= 8){
-    empleadosData[user].asistencias++;
-}
-else if(horas > 0){
-    empleadosData[user].retardos++;
-}
-else{
-    empleadosData[user].faltas++;
-}
-});
         let ranking = Object.keys(empleadosData).map(user => {
-
             let emp = empleadosData[user];
-
-           let porcentaje = (emp.asistencias + emp.retardos) * 20;
-            return {
-                user,
-                ...emp,
-                porcentaje
-            };
+            return { user, ...emp };
         });
 
         ranking.sort((a,b) => b.puntos - a.puntos);
-
         cont.innerHTML = "";
 
         ranking.forEach((emp, i) => {
-
-            if(emp.totalDias === 0) return; // 🔥 oculta vacíos
-
-            let medal = "";
-
-            if(i === 0) medal = "🥇";
-            else if(i === 1) medal = "🥈";
-            else if(i === 2) medal = "🥉";
-
+            if(emp.totalDias === 0) return; 
+            let medal = (i === 0) ? "🥇" : (i === 1) ? "🥈" : (i === 2) ? "🥉" : "";
             let div = document.createElement("div");
             div.className = "venta";
-
             div.innerHTML = `
-               ${medal} ${emp.user.toUpperCase()}
-<span>⏱️ ${emp.puntos.toFixed(1)} hrs</span>
-<span>📊 ${emp.asistencias} días completos</span>
+                ${medal} ${emp.user.toUpperCase()}
+                <span>⏱️ ${emp.puntos.toFixed(1)} hrs</span>
+                <span>📊 ${emp.asistencias} días completos</span>
             `;
-
             cont.appendChild(div);
         });
 
@@ -1323,7 +1306,7 @@ else{
 
 cargarRanking();
 
-// 🔥 MENU GLOBAL
+// MENU GLOBAL
 window.toggleMenu = function () {
     document.querySelector("header nav").classList.toggle("active");
 };
@@ -1342,3 +1325,4 @@ function obtenerInicioSemana() {
 </script>
 </body>
 </html>
+
