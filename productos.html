@@ -123,13 +123,7 @@
             `;
         });
     }
-// Por si acaso a.js tarda en cargar, definimos la función aquí también
-        function toggleMenu() {
-            const nav = document.querySelector("header nav");
-            if (nav) {
-                nav.classList.toggle("active");
-            }
-        }
+
     window.filtrar = (tipo, btn) => {
         // Estética de botones
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -146,9 +140,18 @@
 
     cargarCatalogo();
 
+    
+</script>
+<script>
     function toggleMenu() {
-        document.querySelector("nav").classList.toggle("active");
+    // Buscamos el nav dentro del header
+    const nav = document.querySelector("header nav");
+    
+    if (nav) {
+        // Intercambia la clase 'active'
+        nav.classList.toggle("active");
     }
+}
 </script>
 
 </body>
