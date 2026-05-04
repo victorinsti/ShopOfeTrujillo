@@ -14,7 +14,48 @@
     --shadow-light: 0 5px 15px rgba(0,0,0,0.08);
     --shadow-dark: 0 8px 20px rgba(0,0,0,0.2);
 }
+/* Contenedor principal */
+.top-bar {
+    background-color: #ff4da6; /* O el color que prefieras */
+    color: white;
+    overflow: hidden; /* Esconde lo que sale de la pantalla */
+    white-space: nowrap;
+    position: relative;
+    padding: 10px 0;
+}
 
+/* Contenedor que se mueve */
+.scrolling-content {
+    display: flex;
+    width: max-content;
+    animation: scroll 30s linear infinite; /* Velocidad en PC */
+}
+
+.scrolling-content p {
+    display: inline-block;
+    padding-right: 50px;
+    margin: 0;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Animación principal */
+@keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+/* 🔥 OPTIMIZACIÓN PARA TELÉFONOS */
+@media (max-width: 768px) {
+    .scrolling-content {
+        /* Bajamos el tiempo (de 30s a 15s) para que vaya más rápido */
+        animation: scroll 15s linear infinite; 
+    }
+    
+    .scrolling-content p {
+        font-size: 12px; /* Un poco más pequeño para que quepa mejor */
+    }
+}
 * {
     margin: 0;
     padding: 0;
