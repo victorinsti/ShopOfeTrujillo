@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo | Shop Ofe Trujillo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root { --rosa: #ff4da6; --rosa-claro: #ffe4ec; }
+        body { background: #fafafa; font-family: 'Open Sans', sans-serif; }
+        .shop-header { background: white; padding: 40px 20px; text-align: center; border-bottom: 1px solid #eee; }
+        .shop-header h1 { font-family: 'Playfair Display', serif; color: var(--rosa); font-size: 2.5rem; }
+        
+        .filter-bar { 
+    display: flex; 
+    justify-content: center; 
+    gap: 10px; 
+    padding: 20px; 
+    /* Cambia 'sticky;' por lo siguiente: */
+    position: sticky; 
+    top: 0; 
+    background: #fafafa; 
+    z-index: 10; 
+    border-bottom: 1px solid #eee;
+}
+        .filter-btn { padding: 10px 20px; border: 1px solid var(--rosa); border-radius: 25px; background: white; color: var(--rosa); cursor: pointer; transition: 0.3s; }
+        .filter-btn.active { background: var(--rosa); color: white; }
+
+        .catalog-container { max-width: 1200px; margin: auto; padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; }
+        
+        .item-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .item-card:hover { transform: translateY(-5px); }
+        .item-img { width: 100%; height: 280px; object-fit: cover; }
+        .item-info { padding: 15px; text-align: center; }
+        .item-info h3 { margin: 10px 0; font-size: 1.1rem; color: #333; }
+        .item-price { color: var(--rosa); font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; }
+        
+        .btn-wa { display: block; background: #25d366; color: white; text-decoration: none; padding: 10px; border-radius: 8px; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="logo">
+            <a href="#">Shop Ofe Trujillo</a>
+        </div>
+
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+              <li><a href="productos.html">Productos</a></li>
+                <li><a href="index.html#envios">Envíos</a></li>
+                <li><a href="index.html#novedades">Nosotros</a></li>
+                <li><a href="login.html">Clientes</a></li>
+                <li><a href="galeria.html#anuncios">Anuncios</a></li>
+                <li><a href="galeria.html#galeria">Galeria</a></li>
+                <li><a href="index.html#contacto">Contacto</a></li>
+                <li><a href="acceso.html">Acceso</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="shop-header">
+    <h1>Nuestra Colección</h1>
+    <p>Calidad y estilo en cada detalle</p>
+</div>
+
+<div class="filter-bar">
+    <button class="filter-btn active" onclick="filtrar('todos', this)">Todos</button>
+    <button class="filter-btn" onclick="filtrar('producto', this)">Productos</button>
+    <button class="filter-btn" onclick="filtrar('accesorio', this)">Accesorios</button>
+</div>
+
+<div class="catalog-container" id="catalogo">
+    </div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
+        authDomain: "trujillo-digital-hub.firebaseapp.com",
+        projectId: "trujillo-digital-hub",
+        storageBucket: "trujillo-digital-hub.firebasestorage.app",
+        messagingSenderId: "162799375782",
+        appId: "1:162799375782:web:2be9127bfeaa613fd6ab67"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    let todosLosProductos = [];
+
+    async function cargarCatalogo() {
+        const querySnapshot = await getDocs(collection(db, "productos"));
+        todosLosProductos = querySnapshot.docs.map(doc => doc.data());
+        renderizar(todosLosProductos);
+    }
+
+    function renderizar(lista) {
+        const container = document.getElementById("catalogo");
+        container.innerHTML = "";
+        
+        lista.forEach(item => {
+            container.innerHTML += `
+                <div class="item-card">
+                    <img src="${item.imagen}" class="item-img" alt="${item.nombre}">
+                    <div class="item-info">
+                        <h3>${item.nombre}</h3>
+                        <p class="item-price">$${item.precio}</p>
+                        <a href="https://wa.me/529222174646?text=Hola! Me interesa: ${item.nombre}" class="btn-wa">
+                            <i class="fab fa-whatsapp"></i> Preguntar
+                        </a>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    window.filtrar = (tipo, btn) => {
+        // Estética de botones
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Filtrado lógico
+        if(tipo === 'todos') {
+            renderizar(todosLosProductos);
+        } else {
+            const filtrados = todosLosProductos.filter(p => p.tipo === tipo);
+            renderizar(filtrados);
+        }
+    }
+
+    cargarCatalogo();
+</script>
+
+</body>
+</html>
