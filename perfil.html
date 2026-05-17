@@ -169,11 +169,24 @@ body {
             </div>
         </div>
 
-        <div class="section">
-            <h3>🔔 Notificaciones</h3>
-            <ul id="listaNotis"></ul>
-        </div>
+        
+<div class="section" style="background:#fff; padding:20px; border-radius:20px; border:2px solid #ff4da6;">
+    <h3 style="color:#ff4da6;">💬 Encuesta de satisfacción</h3>
 
+    <label>¿Cómo fue tu experiencia?</label>
+    <select id="calificacion">
+        <option value="5">⭐⭐⭐⭐⭐ Excelente</option>
+        <option value="4">⭐⭐⭐⭐ Buena</option>
+        <option value="3">⭐⭐⭐ Regular</option>
+        <option value="2">⭐⭐ Mala</option>
+        <option value="1">⭐ Muy mala</option>
+    </select>
+<br>
+    <label style="margin-top:10px;">Comentario</label><br>
+    <input type="text" id="comentarioEncuesta" placeholder="Cuéntanos tu experiencia">
+
+    <button class="btn btn-primary" onclick="enviarEncuesta()">Enviar encuesta 💖</button>
+</div>
         <button class="btn btn-primary" onclick="guardar()">💾 Guardar cambios</button>
         <button class="btn btn-secondary" onclick="logout()">🚪 Cerrar sesión</button>
 
@@ -354,6 +367,25 @@ function cargarNotificaciones(){
         li.textContent = n;
         lista.appendChild(li);
     });
+}
+window.enviarEncuesta = async function() {
+    const usuarioLocal = JSON.parse(localStorage.getItem("usuario"));
+
+    const calificacion = document.getElementById("calificacion").value;
+    const comentario = document.getElementById("comentarioEncuesta").value;
+
+    if (!usuarioLocal) return alert("Error de usuario");
+
+    await addDoc(collection(db, "encuestas"), {
+        email: usuarioLocal.email,
+        nombre: document.getElementById("nombre").innerText,
+        calificacion: Number(calificacion),
+        comentario: comentario,
+        fecha: new Date()
+    });
+
+    alert("💖 ¡Gracias por tu opinión!");
+    document.getElementById("comentarioEncuesta").value = "";
 }
 </script>
 </body>

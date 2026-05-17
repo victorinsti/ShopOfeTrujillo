@@ -49,6 +49,7 @@ async function cargarProductos() {
         cont.appendChild(div);
     });
 }
+render();
 
 // 🛒 AGREGAR (🔥 FIX IMPORTANTE)
 function agregar(p) {
@@ -67,6 +68,7 @@ function agregar(p) {
 function render() {
     const lista = document.getElementById("listaCarrito");
     const totalSpan = document.getElementById("total");
+    const extra = Number(document.getElementById("extra").value) || 0;
 
     lista.innerHTML = "";
 
@@ -76,7 +78,10 @@ function render() {
         lista.appendChild(li);
     });
 
-    totalSpan.textContent = total.toFixed(2); // 🔥 FIX
+    // 🔥 IMPORTANTE: siempre suma, aunque carrito esté vacío
+    let totalFinal = total + extra;
+
+    totalSpan.textContent = totalFinal.toFixed(2);
 }
 
 // 🔍 BUSCAR CLIENTA (CORREGIDO)
@@ -115,9 +120,9 @@ window.cobrar = async function() {
     const extra = Number(document.getElementById("extra").value) || 0;
 
     if (carrito.length === 0 && extra <= 0) {
-        alert("Agrega productos o dinero");
-        return;
-    }
+    alert("Agrega productos o dinero");
+    return;
+}
 
     let totalFinal = total + extra;
 
@@ -159,18 +164,7 @@ window.cobrar = async function() {
     render();
 }
 
-// 💵 CALCULAR CAMBIO
-window.calcularCambio = function() {
-    let pago = parseFloat(document.getElementById("pago").value);
 
-    if (isNaN(pago)) {
-        alert("Ingresa el pago");
-        return;
-    }
-
-    let cambio = pago - total;
-    document.getElementById("cambio").textContent = cambio.toFixed(2);
-}
 
 // 💾 GUARDAR VENTA (OPCIONAL)
 window.guardarVenta = async function() {

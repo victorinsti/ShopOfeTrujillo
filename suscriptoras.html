@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Club VIP 💎</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(135deg,#ff4da6,#ff99cc);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.box{
+    width:90%;
+    max-width:400px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+h1{
+    text-align:center;
+    color:#ff4da6;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:none;
+    border-radius:12px;
+    background:#ff4da6;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.msg{
+    margin-top:15px;
+    text-align:center;
+    color:#666;
+}
+
+</style>
+</head>
+<body>
+
+<div class="box">
+
+<h1>💎 Club VIP</h1>
+
+<input type="email" id="email" placeholder="Correo">
+<input type="password" id="pass" placeholder="Contraseña">
+
+
+<button onclick="registrar()">✨ Crear cuenta</button>
+
+<button onclick="login()">🔐 Iniciar sesión</button>
+
+<div class="msg" id="msg"></div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+setDoc,
+getDoc
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
+  authDomain: "trujillo-digital-hub.firebaseapp.com",
+  projectId: "trujillo-digital-hub",
+  storageBucket: "trujillo-digital-hub.firebasestorage.app",
+  messagingSenderId: "162799375782",
+  appId: "1:162799375782:web:2be9127bfeaa613fd6ab67"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.registrar = async () => {
+
+let email = document.getElementById("email").value;
+let pass = document.getElementById("pass").value;
+
+if(!email || !pass){
+    return alert("Completa todos los campos");
+}
+
+await setDoc(doc(db,"vip_clientas",email),{
+
+email,
+pass,
+
+nombre:"",
+telefono:"",
+cumpleanos:"",
+ciudad:"",
+
+foto:"img/vip-logo.png",
+
+nivel:"Silver",
+estado:"pendiente",
+puntos:0,
+
+aprobada:false,
+
+fechaRegistro:new Date().toISOString(),
+ultimaConexion:new Date().toLocaleString()
+
+});
+
+document.getElementById("msg").innerHTML =
+"⏳ Cuenta enviada para aprobación";
+
+};
+
+window.login = async () => {
+
+let email = document.getElementById("email").value;
+let pass = document.getElementById("pass").value;
+
+const ref = doc(db,"vip_clientas",email);
+
+const snap = await getDoc(ref);
+
+if(!snap.exists()){
+    return alert("Cuenta no encontrada");
+}
+
+let data = snap.data();
+
+if(data.pass !== pass){
+    return alert("Contraseña incorrecta");
+}
+
+if(!data.aprobada){
+    return alert("⏳ Tu cuenta aún no ha sido aprobada");
+}
+
+sessionStorage.setItem("vip",email);
+
+window.location="vip.html";
+
+};
+
+</script>
+<script src="a.js"></script>
+
+</body>
+</html>

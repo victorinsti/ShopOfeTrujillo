@@ -270,8 +270,90 @@ if(acceso !== "ok") {
     <h2>⚙️ Panel Administrativo</h2>
 
     <div class="admin-grid">
+       <div class="card">
 
-        
+<h2>💎 Solicitudes VIP</h2>
+
+<div id="listaVIP">
+Cargando suscriptoras...
+</div>
+
+</div>
+
+<!-- 🔥 PUBLICAR CONTENIDO VIP -->
+<div class="card">
+
+<h2>🔥 Publicar contenido VIP</h2>
+
+<input type="text"
+id="tituloVIP"
+placeholder="Título del contenido">
+
+<input type="text"
+id="imagenVIP"
+placeholder="URL de imagen">
+
+<textarea
+id="descripcionVIP"
+placeholder="Descripción"
+style="
+width:100%;
+height:120px;
+padding:15px;
+border-radius:15px;
+border:1px solid #ddd;
+margin-top:10px;
+"></textarea>
+
+<input type="datetime-local"
+id="fechaVIP">
+
+<select id="nivelVIP">
+
+<option value="Silver">
+Silver
+</option>
+
+<option value="Gold">
+Gold
+</option>
+
+<option value="Diamond">
+Diamond
+</option>
+
+</select>
+
+<button onclick="subirContenidoVIP()">
+🚀 Publicar contenido
+</button>
+
+</div>
+
+<!-- 🗑️ ADMINISTRAR CONTENIDO -->
+<div class="card">
+
+<h2>🗑️ Administrar contenido VIP</h2>
+
+<div id="listaContenidoVIP">
+
+⏳ Cargando contenido...
+
+</div>
+
+</div>
+
+        <div class="admin-box" style="margin-top:20px;">
+    <h3>💬 Encuestas de clientes</h3>
+
+    <button onclick="toggleEncuestas()" id="btnEncuestas">
+        Ver encuestas 👁️
+    </button>
+
+    <div id="listaEncuestas" style="display:none; margin-top:10px;">
+        Cargando...
+    </div>
+</div>
 
         <div class="admin-box">
             <h3>📋 Asignar tareas</h3>
@@ -441,6 +523,8 @@ if(acceso !== "ok") {
 
 <script type="module">
 
+
+
     // 🔥 FUNCIÓN PARA DAR DE ALTA EMPLEADOS
 window.registrarEmpleadoBD = async () => {
     // Verificamos quién intenta registrar (Protección extra)
@@ -499,9 +583,23 @@ const empleados = [
 
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import {
+  getMessaging,
+  getToken,
+  onMessage,
+} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-messaging.js";
 import { 
-  getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc,
-  setDoc, getDoc
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  updateDoc,
+  setDoc,
+  getDoc,
+  query,
+  orderBy
 } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 // 🔥 CONFIG
@@ -515,7 +613,32 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
 const db = getFirestore(app);
+// 🔥 PEDIR PERMISOS DE NOTIFICACIONES
+Notification.requestPermission().then(async (permission) => {
+
+  if (permission === "granted") {
+
+    console.log("✅ Permisos OK");
+
+    const registration = await navigator.serviceWorker.ready;
+
+    const token = await getToken(messaging, {
+      vapidKey: "BNXdDBrsHmv88YjzUWpIR9_fRETeDqHHaedktV0pNIUd06UGkV6itW5sNMGieMwV0Upol46FOvNibgQmQc93iIA",
+      serviceWorkerRegistration: registration
+    });
+
+    console.log("🔥 TOKEN:");
+    console.log(token);
+
+  } else {
+
+    console.log("❌ Sin permisos");
+
+  }
+
+});
 let datosAsistencia = [];
 let historialVisible = false;
 
@@ -678,7 +801,9 @@ Código: ${data.codigo || "N/A"}
 
     listaProductos.appendChild(div);
 });
-
+// 🔥 CARGAR SOLICITUDES VIP
+cargarVIP();
+cargarContenidoVIPAdmin();
     // 🔥 SUBIR PRODUCTO
     window.subirProducto = async () => {
 
@@ -1059,7 +1184,9 @@ function obtenerFechaHoy() {
     return `${year}-${month}-${day}`;
 }
 
-
+if (emp.user === "ofe" || emp.user === "samm") {
+    cargarEncuestas();
+}
 
 const select = document.getElementById("filtroEmpleado");
 
@@ -1322,7 +1449,262 @@ function obtenerInicioSemana() {
 
     return lunes;
 }
+async function cargarEncuestas() {
+    const cont = document.getElementById("listaEncuestas");
+
+    const snap = await getDocs(collection(db, "encuestas"));
+
+    let encuestas = [];
+
+    snap.forEach(docSnap => {
+        encuestas.push(docSnap.data());
+    });
+
+    // 🔥 ORDENAR POR FECHA (más recientes primero)
+    encuestas.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+    cont.innerHTML = "";
+
+    encuestas.forEach(e => {
+
+        let fecha = e.fecha?.toDate 
+            ? e.fecha.toDate().toLocaleString()
+            : new Date(e.fecha).toLocaleString();
+
+        cont.innerHTML += `
+            <div style="border-bottom:1px solid #eee; padding:10px;">
+                <b>${e.nombre}</b><br>
+                ⭐ ${e.calificacion}/5 <br>
+                💬 ${e.comentario || "Sin comentario"} <br>
+                <small style="color:#999;">📅 ${fecha}</small>
+            </div>
+        `;
+    });
+
+    if (encuestas.length === 0) {
+        cont.innerHTML = "<p>No hay encuestas aún</p>";
+    }
+}
+let encuestasVisibles = false;
+
+window.toggleEncuestas = async function() {
+    const cont = document.getElementById("listaEncuestas");
+    const btn = document.getElementById("btnEncuestas");
+
+    if (encuestasVisibles) {
+        cont.style.display = "none";
+        btn.textContent = "Ver encuestas 👁️";
+        encuestasVisibles = false;
+        return;
+    }
+
+    cont.style.display = "block";
+    btn.textContent = "Ocultar encuestas 🙈";
+    encuestasVisibles = true;
+
+    await cargarEncuestas();
+}
+// 💎 CARGAR SUSCRIPTORAS
+async function cargarVIP(){
+
+    const cont = document.getElementById("listaVIP");
+
+    if(!cont) return;
+
+    cont.innerHTML = "⏳ Cargando...";
+const snap = await getDocs(collection(db,"vip_clientas"));
+
+    cont.innerHTML = "";
+
+    snap.forEach(docSnap=>{
+
+        let data = docSnap.data();
+
+        // SOLO PENDIENTES
+        if(data.aprobada) return;
+
+        let div = document.createElement("div");
+
+        div.style.background = "white";
+        div.style.padding = "15px";
+        div.style.marginBottom = "10px";
+        div.style.borderRadius = "15px";
+        div.style.boxShadow = "0 5px 10px rgba(0,0,0,.1)";
+
+        div.innerHTML = `
+
+        💖 ${data.email}
+
+        <br><br>
+
+        <button onclick="aprobarVIP('${docSnap.id}')">
+        ✅ Aprobar
+        </button>
+
+        `;
+
+        cont.appendChild(div);
+
+    });
+
+}
+
+// ✅ APROBAR
+// 🔥 SUBIR CONTENIDO VIP
+window.subirContenidoVIP = async()=>{
+
+    let titulo =
+    document.getElementById("tituloVIP").value;
+
+    let imagen =
+    document.getElementById("imagenVIP").value;
+
+    let descripcion =
+    document.getElementById("descripcionVIP").value;
+
+    let fecha =
+    document.getElementById("fechaVIP").value;
+
+    let nivel =
+    document.getElementById("nivelVIP").value;
+
+    if(!titulo || !imagen || !descripcion){
+
+        return alert("❌ Completa todos los campos");
+
+    }
+
+    try{
+
+        await addDoc(collection(db,"vip_contenido"),{
+
+            titulo,
+            imagen,
+            descripcion,
+            fecha,
+            nivel,
+
+            activo:true,
+
+            creado:new Date()
+
+        });
+
+        alert("💖 Contenido VIP publicado");
+
+        // 🔥 LIMPIAR
+        document.getElementById("tituloVIP").value = "";
+        document.getElementById("imagenVIP").value = "";
+        document.getElementById("descripcionVIP").value = "";
+        document.getElementById("fechaVIP").value = "";
+
+    }catch(error){
+
+        console.error(error);
+
+        alert("❌ Error al publicar");
+
+    }
+
+};
+// 🔥 CARGAR CONTENIDO VIP
+async function cargarContenidoVIPAdmin(){
+
+    const box =
+    document.getElementById("listaContenidoVIP");
+
+    if(!box) return;
+
+    box.innerHTML =
+    "⏳ Cargando contenido...";
+
+    const q = query(
+        collection(db,"vip_contenido"),
+        orderBy("fecha","desc")
+    );
+
+    const snap =
+    await getDocs(q);
+
+    box.innerHTML = "";
+
+    snap.forEach(docSnap=>{
+
+        let c = docSnap.data();
+
+        box.innerHTML += `
+
+        <div style="
+        background:#fff0f7;
+        padding:15px;
+        border-radius:15px;
+        margin-top:10px;
+        ">
+
+        <img
+        src="${c.imagen}"
+        style="
+        width:100%;
+        border-radius:15px;
+        ">
+
+        <h3>${c.titulo}</h3>
+
+        <p>${c.descripcion}</p>
+
+        <p>
+        💎 ${c.nivel}
+        </p>
+
+        <button
+        onclick="eliminarContenidoVIP('${docSnap.id}')"
+        style="
+        background:#ff1744;
+        ">
+
+        🗑️ Eliminar
+
+        </button>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+// 🗑️ ELIMINAR CONTENIDO
+window.eliminarContenidoVIP = async(id)=>{
+
+    if(!confirm("¿Eliminar contenido VIP?")){
+        return;
+    }
+
+    await deleteDoc(doc(db,"vip_contenido",id));
+
+    alert("🗑️ Contenido eliminado");
+
+    cargarContenidoVIPAdmin();
+
+};
+
+// ✅ APROBAR VIP
+window.aprobarVIP = async(id)=>{
+
+    await updateDoc(doc(db,"vip_clientas",id),{
+
+        aprobada:true
+
+    });
+
+    alert("💎 Suscriptora aprobada");
+
+    cargarVIP();
+cargarContenidoVIPAdmin();
+};
 </script>
+
 </body>
 </html>
 

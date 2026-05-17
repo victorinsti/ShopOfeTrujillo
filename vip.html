@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+
+<title>Zona VIP</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:#fff5fa;
+    color:#333;
+}
+
+/* HEADER */
+.header{
+    background:linear-gradient(135deg,#ff1493,#ff69b4);
+    padding:30px 20px;
+    color:white;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(255,20,147,.3);
+}
+
+.header h1{
+    margin:0;
+    font-size:32px;
+}
+
+.header p{
+    margin-top:10px;
+    opacity:.9;
+}
+
+/* PERFIL */
+.profile{
+    margin:20px;
+    background:white;
+    border-radius:25px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.avatar{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    border:5px solid #ff69b4;
+    margin-bottom:15px;
+}
+
+.level{
+    display:inline-block;
+    padding:8px 20px;
+    border-radius:50px;
+    background:linear-gradient(135deg,#ffd700,#ffb700);
+    color:#000;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+/* TARJETAS */
+.card{
+    background:white;
+    margin:20px;
+    padding:25px;
+    border-radius:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+/* TITULOS */
+h2{
+    color:#ff1493;
+    margin-top:0;
+}
+
+/* BENEFICIOS */
+.benefit{
+    padding:15px;
+    border-radius:15px;
+    background:#fff0f7;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+/* BOTONES */
+button{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:15px;
+    background:linear-gradient(135deg,#ff1493,#ff69b4);
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.02);
+}
+
+/* STATS */
+.stats{
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin-top:20px;
+}
+
+.stat{
+    background:#fff0f7;
+    border-radius:20px;
+    padding:20px;
+    text-align:center;
+}
+
+.stat h3{
+    margin:0;
+    color:#ff1493;
+    font-size:24px;
+}
+
+.stat p{
+    margin:5px 0 0;
+}
+
+/* BANNER */
+.banner{
+    width:100%;
+    border-radius:20px;
+    margin-top:15px;
+}
+input{
+    width:100%;
+    padding:14px;
+    border-radius:15px;
+    border:1px solid #ddd;
+    margin-top:10px;
+    box-sizing:border-box;
+}
+/* ❤️ BOTONES REACCIONES */
+.reaccion-btn{
+
+    width:auto;
+    padding:8px 12px;
+    font-size:14px;
+    border-radius:12px;
+    margin-right:5px;
+    margin-top:10px;
+    display:inline-block;
+
+}
+/* 🎡 RULETA */
+#ruleta{
+
+    width:180px;
+    height:180px;
+
+    margin:20px auto;
+
+    border-radius:50%;
+
+    background:
+    conic-gradient(
+        #ff1493 0deg 72deg,
+        #ff69b4 72deg 144deg,
+        #ffd700 144deg 216deg,
+        #ff8c00 216deg 288deg,
+        #ff1493 288deg 360deg
+    );
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:60px;
+
+    color:white;
+
+    transition:transform 4s cubic-bezier(.17,.67,.19,.99);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+
+}
+</style>
+</head>
+<div class="header">
+    <h1>💎 Club VIP Exclusivo</h1>
+    <p>Bienvenida a tu espacio premium 💖</p>
+</div>
+
+<!-- PERFIL -->
+<div class="profile">
+
+    <img 
+class="avatar"
+src="img/logoshopppp.png"
+id="fotoPerfil">
+
+    <h2 id="nombre">Suscriptora VIP</h2>
+
+    <p id="correo"></p>
+
+    <div class="level" id="nivel">
+        💎 Silver Member
+    </div>
+
+    <div class="stats">
+
+        <div class="stat">
+            <h3 id="puntos">0</h3>
+            <p>Puntos</p>
+        </div>
+
+        <div class="stat">
+            <h3>VIP</h3>
+            <p>Estado</p>
+        </div>
+
+    </div>
+
+</div>
+<div class="card">
+
+<button onclick="togglePerfil()">
+⚙️ Modificar perfil
+</button>
+
+<div id="editarPerfilBox" style="display:none; margin-top:20px;">
+
+<input type="text" id="editNombre" placeholder="Nombre">
+
+<input type="tel" id="editTelefono" placeholder="Teléfono">
+
+<input type="date" id="editCumple">
+
+<input type="text" id="editCiudad" placeholder="Ciudad">
+
+<button onclick="guardarPerfil()">
+💾 Guardar cambios
+</button>
+
+</div>
+
+</div>
+<div class="card" id="cumpleBox">
+
+<h2>🎂 Cumpleaños VIP</h2>
+
+<div id="listaCumples">
+Cargando cumpleaños...
+</div>
+
+</div>
+<div class="stat">
+    <h3 id="diasVIP">0</h3>
+    <p>Días VIP</p>
+</div>
+
+<!-- CONTENIDO -->
+<div class="card">
+
+    <h2>🔥 Contenido exclusivo</h2>
+
+    <img 
+    class="banner"
+    src="img/portadaaavip.png">
+
+    <p>
+        Acceso exclusivo a contenido premium,
+        lives privados y sorpresas especiales 💖
+    </p>
+
+</div>
+<div class="card">
+
+<h2>🔒 Próximo contenido VIP</h2>
+
+<div id="contenidoProgramado">
+
+⏳ Cargando...
+
+</div>
+
+</div>
+<div class="card">
+
+<h2>💬 Muro VIP</h2>
+
+<textarea id="mensajeVIP"
+placeholder="Escribe algo para la comunidad VIP..."
+style="
+width:100%;
+height:100px;
+padding:15px;
+border-radius:15px;
+border:1px solid #ddd;
+resize:none;
+"></textarea>
+
+<button onclick="publicarVIP()">
+✨ Publicar
+</button>
+
+<div id="muroVIP"></div>
+
+</div>
+<div class="card">
+
+<h2>🎡 Ruleta VIP</h2>
+
+<p>
+Gira una vez al día y gana premios 💖
+</p>
+
+<div id="ruleta">
+
+🎁
+
+</div>
+
+<button id="btnRuleta"
+onclick="girarRuleta()">
+
+🎡 Girar Ruleta
+
+</button>
+
+<p id="premioVIP"></p>
+
+</div>
+<!-- BENEFICIOS -->
+<div class="card">
+
+    <h2>🎁 Beneficios VIP</h2>
+
+    <div class="benefit">
+        🎥 Lives privados semanales
+    </div>
+
+    <div class="benefit">
+        🎁 Sorteos exclusivos
+    </div>
+
+    <div class="benefit">
+        💬 Comunidad privada
+    </div>
+
+    <div class="benefit">
+        🔥 Contenido premium
+    </div>
+
+</div>
+
+<!-- EVENTOS -->
+<div class="card">
+
+    <h2>📅 Próximos eventos</h2>
+
+    <div class="benefit">
+      💔Sin Proximos Eventos
+    </div>
+
+    <div class="benefit">
+        
+    </div>
+
+</div>
+
+<!-- BOTÓN -->
+<div class="card">
+
+    <button onclick="logout()">
+        🚪 Cerrar sesión
+    </button>
+
+</div>
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+getDoc,
+updateDoc,
+collection,
+addDoc,
+getDocs,
+query,
+orderBy
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+// 🔥 FIREBASE
+const firebaseConfig = {
+
+apiKey: "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
+authDomain: "trujillo-digital-hub.firebaseapp.com",
+projectId: "trujillo-digital-hub",
+storageBucket: "trujillo-digital-hub.firebasestorage.app",
+messagingSenderId: "162799375782",
+appId: "1:162799375782:web:2be9127bfeaa613fd6ab67"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// 🔥 SESIÓN
+const email = sessionStorage.getItem("vip");
+
+if(!email){
+    window.location = "suscriptoras.html";
+}
+
+// 🔥 REFERENCIA
+const ref = doc(db,"vip_clientas",email);
+
+const snap = await getDoc(ref);
+
+let data = {};
+
+if(snap.exists()){
+
+    data = snap.data();
+
+    // 👤 PERFIL
+    document.getElementById("nombre").innerText =
+    data.nombre || "VIP Member";
+
+    document.getElementById("correo").innerText =
+    data.email || "";
+
+    document.getElementById("nivel").innerText =
+    "💎 " + (data.nivel || "Silver");
+
+    document.getElementById("puntos").innerText =
+    data.puntos || 0;
+
+    // 🔥 CONTADOR VIP
+    if(data.fechaRegistro){
+
+    let inicio =
+    Date.parse(data.fechaRegistro);
+
+    let hoy =
+    new Date().getTime();
+
+    let dias =
+    Math.floor(
+        (hoy - inicio)
+        /
+        (1000*60*60*24)
+    );
+
+    if(isNaN(dias)){
+        dias = 0;
+    }
+
+    let boxDias =
+    document.getElementById("diasVIP");
+
+    if(boxDias){
+        boxDias.innerText = dias;
+    }
+
+}
+
+    // 🎂 CARGAR CUMPLEAÑOS VIP
+async function cargarCumpleanos(){
+
+const lista =
+document.getElementById("listaCumples");
+
+const snap =
+await getDocs(collection(db,"vip_clientas"));
+
+lista.innerHTML = "";
+
+const hoy = new Date();
+
+const mesActual = hoy.getMonth()+1;
+const diaActual = hoy.getDate();
+
+let cumpleHoy = false;
+
+snap.forEach(docSnap=>{
+
+    let vip = docSnap.data();
+
+    if(!vip.cumpleanos) return;
+
+    let partes =
+    vip.cumpleanos.split("-");
+
+    let anio = partes[0];
+    let mes = parseInt(partes[1]);
+    let dia = parseInt(partes[2]);
+
+    let esHoy =
+    mes === mesActual
+    &&
+    dia === diaActual;
+
+    if(esHoy){
+        cumpleHoy = true;
+    }
+
+    lista.innerHTML += `
+
+    <div style="
+    background:${esHoy ? '#ffe066' : '#fff0f7'};
+    padding:15px;
+    border-radius:15px;
+    margin-top:10px;
+    ">
+
+    <b>
+    ${esHoy ? '🎉' : '🎂'}
+    ${vip.nombre || "VIP"}
+    </b>
+
+    <br><br>
+
+    📅 ${dia}/${mes}/${anio}
+
+    <br>
+
+    ${esHoy
+    ?
+    '💖 ¡Hoy es su cumpleaños!'
+    :
+    '✨ Próximo cumpleaños VIP'}
+
+    </div>
+
+    `;
+
+});
+
+if(!cumpleHoy){
+
+    lista.innerHTML += `
+
+    <div style="
+    margin-top:15px;
+    text-align:center;
+    color:#999;
+    ">
+
+    💖 Hoy no hay cumpleaños VIP
+
+    </div>
+
+    `;
+}
+
+}
+
+cargarCumpleanos();
+
+    // 🔥 ÚLTIMA CONEXIÓN
+    await updateDoc(ref,{
+        ultimaConexion:new Date().toLocaleString()
+    });
+
+}
+
+// 💬 PUBLICAR
+window.publicarVIP = async()=>{
+
+    let texto =
+    document.getElementById("mensajeVIP").value;
+
+    if(!texto) return;
+
+    await addDoc(collection(db,"vip_muro"),{
+
+        usuario:data.nombre || "VIP",
+        mensaje:texto,
+        fecha:new Date()
+
+    });
+
+    document.getElementById("mensajeVIP").value = "";
+
+    cargarMuro();
+
+};
+
+// 🔥 CARGAR MURO
+async function cargarMuro(){
+
+    const muro =
+    document.getElementById("muroVIP");
+
+    const q = query(
+        collection(db,"vip_muro"),
+        orderBy("fecha","desc")
+    );
+
+    const snap = await getDocs(q);
+
+    muro.innerHTML = "";
+
+    snap.forEach(docSnap=>{
+
+        let p = docSnap.data();
+
+        muro.innerHTML += `
+
+        <div style="
+        background:#fff0f7;
+        padding:15px;
+        border-radius:15px;
+        margin-top:10px;
+        ">
+
+        <b>💖 ${p.usuario}</b>
+
+        <br><br>
+
+        ${p.mensaje}
+
+        <br><br>
+
+        <button class="reaccion-btn"
+onclick="reaccion('❤️')">
+❤️
+</button>
+
+<button class="reaccion-btn"
+onclick="reaccion('🔥')">
+🔥
+</button>
+
+<button class="reaccion-btn"
+onclick="reaccion('💎')">
+💎
+</button>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+cargarMuro();
+
+// ❤️ REACCIONES
+window.reaccion = (emoji)=>{
+
+    alert("Reacción enviada " + emoji);
+
+};
+
+// 🎡 RULETA
+// 🎡 RULETA VIP
+window.girarRuleta = async()=>{
+
+    const hoy =
+    new Date().toISOString().split("T")[0];
+
+    if(data.ultimaRuleta === hoy){
+
+        alert("🎡 Ya giraste hoy 💖");
+
+        return;
+    }
+
+    const premios = [
+
+        {
+            texto:"50 puntos 💎",
+            puntos:50
+        },
+
+        {
+            texto:"100 puntos 🔥",
+            puntos:100
+        },
+
+        {
+            texto:"Sigue participando 😪",
+            puntos:0
+        },
+
+        {
+            texto:"Live privado 🎥",
+            puntos:25
+        },
+
+        {
+            texto:"Mensaje especial 💖",
+            puntos:10
+        }
+
+    ];
+
+    const rueda =
+    document.getElementById("ruleta");
+
+    // 🎡 ROTACIÓN
+    let grados =
+    3600 + Math.floor(Math.random()*360);
+
+    rueda.style.transform =
+    `rotate(${grados}deg)`;
+
+    // ⏳ ESPERAR ANIMACIÓN
+    setTimeout(async()=>{
+
+        let premio =
+        premios[
+        Math.floor(Math.random()*premios.length)
+        ];
+
+        document.getElementById("premioVIP")
+        .innerHTML = `
+        🎉 Ganaste:
+        <br><br>
+        <b>${premio.texto}</b>
+        `;
+
+        let nuevosPuntos =
+        (data.puntos || 0)
+        +
+        premio.puntos;
+
+        await updateDoc(ref,{
+
+            puntos:nuevosPuntos,
+            ultimaRuleta:hoy
+
+        });
+
+        data.puntos = nuevosPuntos;
+
+        document.getElementById("puntos")
+        .innerText = nuevosPuntos;
+
+    },4000);
+
+};
+
+// ⚙️ PERFIL
+let perfilVisible = false;
+
+window.togglePerfil = ()=>{
+
+    const box =
+    document.getElementById("editarPerfilBox");
+
+    perfilVisible = !perfilVisible;
+
+    box.style.display =
+    perfilVisible ? "block" : "none";
+
+};
+
+// 💾 GUARDAR PERFIL
+window.guardarPerfil = async()=>{
+
+    let nombre =
+    document.getElementById("editNombre").value;
+
+    let telefono =
+    document.getElementById("editTelefono").value;
+
+    let cumple =
+    document.getElementById("editCumple").value;
+
+    let ciudad =
+    document.getElementById("editCiudad").value;
+
+    await updateDoc(ref,{
+
+        nombre,
+        telefono,
+        cumpleanos:cumple,
+        ciudad
+
+    });
+
+    alert("💖 Perfil actualizado");
+
+    location.reload();
+
+};
+
+// 🚪 LOGOUT
+window.logout = ()=>{
+
+    sessionStorage.removeItem("vip");
+
+    window.location = "suscriptoras.html";
+
+};
+
+// 🔒 CONTENIDO PROGRAMADO
+// 🔥 CONTENIDO VIP DINÁMICO
+async function cargarContenidoProgramado(){
+
+const box =
+document.getElementById("contenidoProgramado");
+
+box.innerHTML =
+"⏳ Cargando contenido VIP...";
+
+const q = query(
+collection(db,"vip_contenido"),
+orderBy("fecha","desc")
+);
+
+const snap =
+await getDocs(q);
+
+box.innerHTML = "";
+
+const ahora =
+new Date();
+
+snap.forEach(docSnap=>{
+
+    let c = docSnap.data();
+
+    let fechaEstreno =
+    new Date(c.fecha);
+
+    // 🔒 CONTENIDO BLOQUEADO
+    if(ahora < fechaEstreno){
+
+        let tiempo =
+        fechaEstreno - ahora;
+
+        let dias =
+        Math.floor(
+        tiempo / (1000*60*60*24)
+        );
+
+        let horas =
+        Math.floor(
+        (tiempo % (1000*60*60*24))
+        /
+        (1000*60*60)
+        );
+
+        box.innerHTML += `
+
+        <div class="card">
+
+        <h3>🔒 ${c.titulo}</h3>
+
+        <p>
+        ⏳ Disponible en:
+        <br><br>
+
+        <b>
+        ${dias} días y ${horas} horas
+        </b>
+        </p>
+
+        </div>
+
+        `;
+
+        return;
+    }
+
+    // 🔥 CONTENIDO DISPONIBLE
+    box.innerHTML += `
+
+    <div class="card">
+
+    <img
+    class="banner"
+    src="${c.imagen}">
+
+    <h3>${c.titulo}</h3>
+
+    <p>${c.descripcion}</p>
+
+    <div class="level">
+    💎 ${c.nivel}
+    </div>
+
+    </div>
+
+    `;
+
+});
+
+}
+
+cargarContenidoProgramado();
+</script>
+<script src="a.js"></script>
+</body>
+</html>

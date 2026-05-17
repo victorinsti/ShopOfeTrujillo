@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <div class="burbujas"></div>
     <div class="top-bar">
     <div class="scrolling-content">
         <p>💖 ENVÍOS A TODO MÉXICO 🚚 | ✨ NUEVOS PRODUCTOS CADA SEMANA | 🔥 PROMOCIONES DISPONIBLES | 💖 MAS DE 20,000 CLIENTAS SATISFECHAS 🚚 &nbsp;</p>
@@ -174,7 +175,30 @@ Creemos en consentirte, escucharte y evolucionar contigo. Por eso, cada detalle 
 
     <script type="module">
 
+
+if ('serviceWorker' in navigator) {
+
+  navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    .then((registration) => {
+
+      console.log('✅ SW registrado:', registration);
+
+    })
+    .catch((error) => {
+
+      console.log('❌ Error SW:', error);
+
+    });
+
+}
+
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import {
+  getMessaging,
+  getToken,
+  onMessage
+} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-messaging.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -187,18 +211,36 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
 const db = getFirestore(app);
+// 🔥 PEDIR PERMISOS DE NOTIFICACIONES
+Notification.requestPermission().then(async (permission) => {
+
+  if (permission === "granted") {
+
+    console.log("✅ Permisos OK");
+
+    const registration = await navigator.serviceWorker.ready;
+
+    const token = await getToken(messaging, {
+      vapidKey: "BNXdDBrsHmv88YjzUWpIR9_fRETeDqHHaedktV0pNIUd06UGkV6itW5sNMGieMwV0Upol46FOvNibgQmQc93iIA",
+      serviceWorkerRegistration: registration
+    });
+
+    console.log("🔥 TOKEN:");
+    console.log(token);
+
+  } else {
+
+    console.log("❌ Sin permisos");
+
+  }
+
+});
 
 // CONTENEDORES
-const productGrid = document.querySelector(".product-grid");
-const accessoryGrid = document.querySelector(".accessory-grid");
-
-// CARGAR PRODUCTOS
-const productosSnap = await getDocs(collection(db, "productos"));
-
-// 🔥 LIMPIAR CONTENEDORES
-productGrid.innerHTML = "";
-accessoryGrid.innerHTML = "";
+if (productGrid) productGrid.innerHTML = "";
+if (accessoryGrid) accessoryGrid.innerHTML = "";
 
 productosSnap.forEach(doc => {
     let data = doc.data();
@@ -217,18 +259,43 @@ productosSnap.forEach(doc => {
         </a>
     </div>
     `;
-
-   if (data.tipo === "producto") {
-        productGrid.innerHTML += card;
-    } else {
-        accessoryGrid.innerHTML += card;
-    }
+if (data.tipo === "producto" && productGrid) {
+    productGrid.innerHTML += card;
+} 
+else if (accessoryGrid) {
+    accessoryGrid.innerHTML += card;
+}
 });
 
 // 🔥 MENU GLOBAL
 window.toggleMenu = function () {
     document.querySelector("header nav").classList.toggle("active");
 };
+window.addEventListener("DOMContentLoaded", () => {
+
+    const emojis = ["💄","💋","🎨","🧴","✨","💖","💅"];
+
+    function crearBurbuja() {
+        const contenedor = document.querySelector(".burbujas");
+
+        if (!contenedor) return;
+
+        let burbuja = document.createElement("div");
+        burbuja.classList.add("burbuja");
+
+        burbuja.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+
+        burbuja.style.left = Math.random() * 100 + "vw";
+        burbuja.style.fontSize = (30 + Math.random() * 50) + "px";
+        burbuja.style.animationDuration = (6 + Math.random() * 8) + "s";
+
+        contenedor.appendChild(burbuja);
+
+        setTimeout(() => burbuja.remove(), 12000);
+    }
+
+    setInterval(crearBurbuja, 400);
+});
 </script>
 
 
