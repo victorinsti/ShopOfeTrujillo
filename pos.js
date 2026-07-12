@@ -152,16 +152,50 @@ window.cobrar = async function() {
         alert("Venta guardada 💖");
     }
 
-    // RESET
-    carrito = [];
-    total = 0;
-    clientaEncontrada = null;
-    document.getElementById("cliente").value = "";
-    document.getElementById("extra").value = "";
-    document.getElementById("codigoCliente").value = "";
-    document.getElementById("statusCliente").innerText = "Venta general";
+    // ===== GENERAR TICKET =====
+let ticket = "";
 
-    render();
+ticket += "SHOP OFE TRUJILLO\n";
+ticket += "Minatitlán, Veracruz\n";
+ticket += "================================\n";
+ticket += "Fecha: " + new Date().toLocaleString() + "\n";
+ticket += "Cliente: " + cliente + "\n";
+ticket += "================================\n";
+
+carrito.forEach(producto => {
+    ticket += producto.nombre + "\n";
+    ticket += "$" + Number(producto.precio).toFixed(2) + "\n";
+});
+
+ticket += "--------------------------------\n";
+ticket += "Subtotal: $" + total.toFixed(2) + "\n";
+ticket += "Extra: $" + extra.toFixed(2) + "\n";
+ticket += "TOTAL: $" + totalFinal.toFixed(2) + "\n";
+ticket += "Método: " + metodo + "\n";
+
+if(clientaEncontrada){
+    const puntos = Math.floor(totalFinal / 10);
+    ticket += "Puntos ganados: " + puntos + "\n";
+}
+
+ticket += "================================\n";
+ticket += "Gracias por su compra\n";
+ticket += "WhatsApp: 9222174646\n\n\n\n\n";
+
+// Imprimir
+await imprimirTicket(ticket);
+
+// ===== LIMPIAR VENTA =====
+carrito = [];
+total = 0;
+clientaEncontrada = null;
+
+document.getElementById("cliente").value = "";
+document.getElementById("extra").value = "";
+document.getElementById("codigoCliente").value = "";
+document.getElementById("statusCliente").innerText = "Venta general";
+
+render();
 }
 
 
