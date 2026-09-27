@@ -4,7 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
 
 <title>Panel de Empleado | Shop Ofe Trujillo</title>
 
@@ -994,6 +994,311 @@ textarea{
 
 }
 
+
+/* =========================================================
+   COMPATIBILIDAD MÓVIL - SHOP OFE TRUJILLO
+   ========================================================= */
+
+html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+}
+
+body{
+    min-width:0;
+}
+
+img,
+video,
+canvas,
+svg{
+    max-width:100%;
+    height:auto;
+}
+
+button,
+input,
+select,
+textarea{
+    max-width:100%;
+    -webkit-appearance:none;
+    appearance:none;
+}
+
+button{
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;
+}
+
+.container{
+    width:min(1200px, calc(100% - 32px));
+}
+
+.card,
+.admin-box,
+#listaProductos > div,
+#listaAnuncios > div,
+#tablaAsistencia > div,
+#listaVIP > div,
+#listaContenidoVIP > div{
+    min-width:0;
+    max-width:100%;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+}
+
+.admin-grid{
+    min-width:0;
+}
+
+.admin-grid > *,
+.admin-box{
+    min-width:0;
+}
+
+#listaProductos > div,
+#listaAnuncios > div{
+    overflow:hidden;
+}
+
+#listaProductos > div{
+    grid-template-columns:minmax(0,1fr) auto auto;
+}
+
+#listaProductos > div > *{
+    min-width:0;
+}
+
+#listaAnuncios > div > *{
+    min-width:0;
+    max-width:100%;
+}
+
+#tablaAsistencia{
+    width:100%;
+    max-width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+}
+
+#tablaAsistencia > div{
+    min-width:650px;
+}
+
+#historialBox,
+#listaEncuestas,
+#listaVIP,
+#listaContenidoVIP{
+    width:100%;
+    max-width:100%;
+    overflow:hidden;
+}
+
+@media (max-width: 900px){
+    .container{
+        width:calc(100% - 28px);
+        padding:20px 0 40px;
+    }
+
+    .admin-grid{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .admin-box{
+        padding:17px;
+    }
+
+    .venta,
+    .ranking-item{
+        grid-template-columns:1fr;
+        gap:8px;
+    }
+
+    .venta span,
+    .ranking-item span{
+        display:block;
+    }
+}
+
+@media (max-width: 600px){
+    .header{
+        position:sticky;
+        top:0;
+        min-height:64px;
+        padding:12px 14px;
+        font-size:18px;
+        text-align:center;
+        line-height:1.2;
+    }
+
+    .header::before{
+        width:8px;
+        height:8px;
+        margin-right:7px;
+    }
+
+    .container{
+        width:calc(100% - 16px);
+        padding:12px 0 28px;
+    }
+
+    .card{
+        margin-bottom:12px;
+        padding:15px;
+        border-radius:15px;
+    }
+
+    .card h2{
+        font-size:19px;
+        line-height:1.25;
+        margin-bottom:13px;
+    }
+
+    .card h3{
+        font-size:15px;
+        line-height:1.35;
+    }
+
+    .card p,
+    .card li{
+        font-size:13px;
+    }
+
+    button,
+    input,
+    select,
+    textarea{
+        width:100%;
+        min-height:48px;
+        font-size:16px; /* evita zoom automático en iPhone */
+    }
+
+    button{
+        margin-top:7px;
+    }
+
+    button[onclick="registrarEntrada()"],
+    button[onclick="registrarSalida()"]{
+        width:100%;
+        margin-right:0;
+    }
+
+    #calendario{
+        grid-template-columns:repeat(7,minmax(0,1fr));
+        gap:3px;
+        width:100%;
+    }
+
+    .dia{
+        min-width:0;
+        min-height:36px;
+        border-radius:8px;
+        font-size:10px;
+    }
+
+    .btn-impuntuales{
+        width:100%;
+        min-height:62px;
+        padding:13px;
+        gap:9px;
+        font-size:13px;
+        text-align:center;
+    }
+
+    .btn-impuntuales i{
+        font-size:18px;
+        flex:0 0 auto;
+    }
+
+    #listaProductos > div{
+        grid-template-columns:1fr;
+        gap:8px;
+    }
+
+    #listaProductos button,
+    #listaAnuncios button{
+        width:100%;
+        margin-top:5px;
+    }
+
+    #listaAnuncios > div{
+        flex-direction:column;
+        align-items:stretch;
+        gap:9px;
+    }
+
+    #listaAnuncios > div span{
+        width:100%;
+    }
+
+    .admin-box{
+        padding:15px;
+    }
+
+    .admin-box h3{
+        font-size:15px;
+        line-height:1.3;
+    }
+
+    #listaVIP img,
+    #listaContenidoVIP img{
+        width:100%;
+        max-width:100%;
+        height:auto;
+        object-fit:contain;
+    }
+
+    .container > button[onclick="logout()"]{
+        min-height:52px;
+        margin-top:3px;
+    }
+}
+
+@media (max-width: 390px){
+    .container{
+        width:calc(100% - 10px);
+    }
+
+    .card{
+        padding:13px;
+    }
+
+    .header{
+        padding:11px 8px;
+        font-size:17px;
+    }
+
+    .card h2{
+        font-size:18px;
+    }
+
+    .card p,
+    .card li{
+        font-size:12.5px;
+    }
+
+    .dia{
+        min-height:32px;
+        font-size:9px;
+    }
+}
+
+@media (hover:none){
+    .card:hover,
+    .dia:hover,
+    button:hover{
+        transform:none;
+    }
+}
+
 </style>
 
 <script>
@@ -1630,52 +1935,74 @@ const firebaseConfig={
 const app=
     initializeApp(firebaseConfig);
 
-const messaging=
-    getMessaging(app);
+let messaging=null;
+
+try{
+    if("Notification" in window &&
+       "serviceWorker" in navigator){
+        messaging=getMessaging(app);
+    }
+}catch(error){
+    console.warn("Firebase Messaging no disponible en este dispositivo:",error);
+}
 
 const db=
     getFirestore(app);
 
 
-Notification.requestPermission()
-.then(async permission=>{
+if(
+    messaging &&
+    "Notification" in window &&
+    "serviceWorker" in navigator
+){
 
-    if(permission==="granted"){
+    Notification.requestPermission()
+    .then(async permission=>{
 
-        console.log("✅ Permisos OK");
+        if(permission==="granted"){
 
-        try{
+            console.log("✅ Permisos OK");
 
-            const registration=
-                await navigator.serviceWorker.ready;
+            try{
 
-            const token=
-                await getToken(
-                    messaging,
-                    {
-                        vapidKey:
-                        "BNXdDBrsHmv88YjzUWpIR9_fRETeDqHHaedktV0pNIUd06UGkV6itW5sNMGieMwV0Upol46FOvNibgQmQc93iIA",
+                const registration=
+                    await navigator.serviceWorker.ready;
 
-                        serviceWorkerRegistration:
-                        registration
-                    }
+                const token=
+                    await getToken(
+                        messaging,
+                        {
+                            vapidKey:
+                            "BNXdDBrsHmv88YjzUWpIR9_fRETeDqHHaedktV0pNIUd06UGkV6itW5sNMGieMwV0Upol46FOvNibgQmQc93iIA",
+
+                            serviceWorkerRegistration:
+                            registration
+                        }
+                    );
+
+                console.log("🔥 TOKEN:");
+                console.log(token);
+
+            }catch(error){
+
+                console.warn(
+                    "Notificaciones no disponibles:",
+                    error
                 );
 
-            console.log("🔥 TOKEN:");
-            console.log(token);
-
-        }catch(error){
-
-            console.error(
-                "Error obteniendo token:",
-                error
-            );
+            }
 
         }
 
-    }
+    })
+    .catch(error=>{
+        console.warn(
+            "Permiso de notificaciones no disponible:",
+            error
+        );
+    });
 
-});
+}
 
 
 let datosAsistencia=[];
@@ -2773,7 +3100,7 @@ async()=>{
                 error=>{
 
                     alert(
-                        "❌ No se pudo obtener ubicación"
+                        "⚠️ No se pudo obtener la ubicación. Revisa los permisos de ubicación del navegador."
                     );
 
                     console.error(error);
