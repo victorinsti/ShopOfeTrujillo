@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shop Ofe Trujillo | Cosméticos, Accesorios y Novedades</title>
+
+    <meta name="description"
+        content="Shop Ofe Trujillo. Cosméticos, accesorios, novedades y mucho más. Envíos a toda la República Mexicana.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #fff8fb;
+            color: #3d2430;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.97);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #d63384;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: #6f3150;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #d63384;
+        }
+
+        .menu-btn {
+            display: none;
+            border: none;
+            background: #d63384;
+            color: white;
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 620px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 20px;
+            background:
+                radial-gradient(circle at top left, #ffd6e9, transparent 35%),
+                radial-gradient(circle at bottom right, #f8c5dc, transparent 35%),
+                linear-gradient(135deg, #fff7fb, #ffeaf3);
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: #ffffff;
+            color: #d63384;
+            padding: 9px 18px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(214, 51, 132, 0.12);
+        }
+
+        .hero h1 {
+            font-size: clamp(45px, 8vw, 82px);
+            line-height: 0.95;
+            margin-bottom: 25px;
+            color: #6f3150;
+        }
+
+        .hero h1 span {
+            color: #d63384;
+        }
+
+        .hero h2 {
+            font-size: clamp(22px, 4vw, 35px);
+            margin-bottom: 15px;
+            color: #4c2938;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.7;
+            max-width: 650px;
+            margin: 0 auto 30px;
+            color: #70495a;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: #d63384;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(214, 51, 132, 0.25);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #d63384;
+            border: 2px solid #d63384;
+        }
+
+        .btn-secondary:hover {
+            background: #d63384;
+            color: white;
+        }
+
+        /* SECCIONES */
+
+        section {
+            padding: 80px 20px;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 38px;
+            color: #6f3150;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #80616e;
+        }
+
+        /* RESEÑAS */
+
+        .reviews {
+            background: white;
+        }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .review {
+            background: #fff8fb;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .stars {
+            color: #f5b400;
+            font-size: 22px;
+            margin-bottom: 18px;
+        }
+
+        .review p {
+            font-size: 17px;
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .review strong {
+            color: #d63384;
+        }
+
+        /* ENVÍOS */
+
+        .shipping {
+            background: linear-gradient(135deg, #fff0f7, #ffe5f0);
+        }
+
+        .shipping-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .shipping-card {
+            background: white;
+            padding: 35px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .shipping-card h3 {
+            color: #d63384;
+            margin-bottom: 15px;
+            font-size: 23px;
+        }
+
+        .shipping-card p {
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .shipping-card ul {
+            padding-left: 20px;
+            line-height: 1.9;
+        }
+
+        /* NOSOTROS */
+
+        .about {
+            background: white;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #684857;
+        }
+
+        .highlight {
+            color: #d63384;
+            font-weight: bold;
+        }
+
+        /* LLAMADO */
+
+        .cta {
+            background: #d63384;
+            color: white;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            max-width: 650px;
+            margin: 0 auto 30px;
+            line-height: 1.7;
+            font-size: 18px;
+        }
+
+        .cta .btn {
+            background: white;
+            color: #d63384;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #3d2430;
+            color: white;
+            padding: 55px 20px 25px;
+        }
+
+        .footer-grid {
+            max-width: 1150px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        footer h3 {
+            margin-bottom: 18px;
+            color: #ffb5d5;
+        }
+
+        footer p {
+            line-height: 1.7;
+            color: #ead9e0;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer li {
+            margin-bottom: 10px;
+        }
+
+        footer a {
+            color: #ead9e0;
+            transition: 0.3s;
+        }
+
+        footer a:hover {
+            color: #ffb5d5;
+        }
+
+        .copyright {
+            max-width: 1150px;
+            margin: 40px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            text-align: center;
+            color: #d9c7cf;
+            font-size: 14px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 25px;
+                display: none;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .review-grid,
+            .shipping-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: 550px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .nav-container {
+                padding: 13px 18px;
+            }
+
+            .logo {
+                font-size: 19px;
+            }
+
+            section {
+                padding: 60px 18px;
+            }
+
+            .hero {
+                padding: 60px 18px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .section-title h2 {
+                font-size: 30px;
+            }
+
+            .cta h2 {
+                font-size: 32px;
+            }
+
+            .shipping-card,
+            .review {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+
+            <a href="index.html" class="logo">
+                Shop <span>Ofe Trujillo</span>
+            </a>
+
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="#envios">Envíos</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="login.html">Clientes</a></li>
+                <li><a href="galeria.html#anuncios">Anuncios</a></li>
+                <li><a href="galeria.html#galeria">Galería</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+
+                <!-- ACCESO EXCLUSIVO PARA EMPLEADOS -->
+                <li>
+                    <a href="acceso.html">Acceso</a>
+                </li>
+            </ul>
+
+        </div>
+    </header>
+
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                ✨ Bienvenida a Shop Ofe Trujillo
+            </div>
+
+            <h1>
+                Shop <span>Ofe</span><br>
+                Trujillo
+            </h1>
+
+            <h2>Dios es Bueno 💖</h2>
+
+            <p>
+                Nunca olvides lo bonita que eres.
+                Descubre cosméticos, accesorios, novedades
+                y productos pensados especialmente para ti.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="productos.html" class="btn btn-primary">
+                    Ver productos
+                </a>
+
+                <a href="#nosotros" class="btn btn-secondary">
+                    Conócenos
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- RESEÑAS -->
+    <section class="reviews">
+
+        <div class="container">
+
+            <div class="section-title">
+                <h2>💖 Reseñas de nuestras clientas</h2>
+                <p>Puedes conocer las experiencias de nuestra comunidad.</p>
+            </div>
+
+            <div class="review-grid">
+
+                <div class="review">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+
+                    <p>
+                        "Excelente calidad y atención hermosa"
+                    </p>
+
+                    <strong>Ana Morgan</strong>
+                </div>
+
+                <div class="review">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+
+                    <p>
+                        "Me encantaron los productos 😍"
+                    </p>
+
+                    <strong>Kary Rueda</strong>
+                </div>
+
+                <div class="review">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+
+                    <p>
+                        "Todo llegó rápido y súper bonito"
+                    </p>
+
+                    <strong>Paola Sandoval</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ENVÍOS -->
+    <section class="shipping" id="envios">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <h2>🚚 Envíos y puntos de recolección</h2>
+
+                <p>
+                    Queremos que recibas tus productos de manera fácil y segura.
+                </p>
+
+            </div>
+
+            <div class="shipping-grid">
+
+                <div class="shipping-card">
+
+                    <h3>🇲🇽 Envíos a toda la República Mexicana</h3>
+
+                    <p>
+                        Llevamos tu pedido a cualquier rincón de México.
+                    </p>
+
+                    <ul>
+                        <li>
+                            <strong>Envío estándar:</strong>
+                            3 a 5 días hábiles.
+                        </li>
+
+                        <li>
+                            <strong>Costo fijo:</strong>
+                            $260 MXN.
+                        </li>
+                    </ul>
+
+                </div>
+
+
+                <div class="shipping-card">
+
+                    <h3>📍 Punto de recolección</h3>
+
+                    <p>
+                        Si te encuentras en Minatitlán, Veracruz,
+                        puedes recoger tu pedido en:
+                    </p>
+
+                    <p>
+                        <strong>
+                            Calle José Arenas 9,
+                            frente a la Picadita Jarocha del centro.
+                        </strong>
+                    </p>
+
+                    <ul>
+                        <li>Lunes: 10:00 a 15:00 hrs.</li>
+                        <li>Martes a viernes: 10:00 a 19:00 hrs.</li>
+                        <li>Sábado: 10:00 a 18:00 hrs.</li>
+                    </ul>
+
+                </div>
+
+
+                <div class="shipping-card">
+
+                    <h3>🤝 Puntos de entrega</h3>
+
+                    <p>
+                        En algunos lugares de Veracruz y Puebla
+                        podemos realizar entrega presencial sin costo.
+                    </p>
+
+                    <ul>
+                        <li>Coatzacoalcos</li>
+                        <li>Cosoleacaque</li>
+                        <li>Naranjito</li>
+                        <li>Acayucan</li>
+                        <li>Nanchital</li>
+                        <li>Ixhuatlán</li>
+                        <li>Mundo Nuevo</li>
+                        <li>Jáltipan</li>
+                        <li>Puebla</li>
+                    </ul>
+
+                </div>
+
+
+                <div class="shipping-card">
+
+                    <h3>📦 ¿Quieres conocer todos los detalles?</h3>
+
+                    <p>
+                        Consulta nuestras políticas completas
+                        antes de realizar tu compra.
+                    </p>
+
+                    <a href="politicas.html" class="btn btn-primary">
+                        Ver políticas
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- NOSOTROS -->
+    <section class="about" id="nosotros">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <h2>Shop Ofe Trujillo</h2>
+
+                <p>
+                    Mucho más que una tienda 💕
+                </p>
+
+            </div>
+
+            <div class="about-content">
+
+                <p>
+                    En <span class="highlight">Shop Ofe Trujillo</span>
+                    creamos mucho más que una tienda:
+                    construimos una experiencia pensada para resaltar
+                    tu belleza, estilo y esencia.
+                </p>
+
+                <p>
+                    Nos especializamos en cosméticos, accesorios y
+                    novedades cuidadosamente seleccionados,
+                    combinando tendencias, calidad y ese toque especial
+                    que nos distingue.
+                </p>
+
+                <p>
+                    Gracias a la confianza de más de
+                    <span class="highlight">30,000 seguidoras</span>,
+                    hoy somos una comunidad sólida que crece día a día.
+                </p>
+
+                <p>
+                    Nos encanta conectar contigo de forma cercana y auténtica,
+                    por eso mantenemos una comunicación constante a través
+                    de redes sociales y lives, donde compartimos productos,
+                    tips y lo último en tendencias.
+                </p>
+
+                <p>
+                    Creemos en consentirte, escucharte y evolucionar contigo.
+                    Por eso, cada detalle está pensado para brindarte
+                    una experiencia única, femenina y especial en cada visita.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CTA -->
+    <section class="cta" id="contacto">
+
+        <div class="container">
+
+            <h2>¿Lista para descubrir algo bonito? 💕</h2>
+
+            <p>
+                Explora nuestros productos y encuentra ese detalle
+                especial que estabas buscando.
+            </p>
+
+            <a href="productos.html" class="btn">
+                Ver catálogo
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="footer-grid">
+
+            <div>
+
+                <h3>Shop Ofe Trujillo</h3>
+
+                <p>
+                    Realzando tu belleza natural con productos de calidad.
+                    Gracias por formar parte de nuestra comunidad.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <h3>Enlaces rápidos</h3>
+
+                <ul>
+
+                    <li>
+                        <a href="productos.html">
+                            Productos
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="productos.html">
+                            Accesorios
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#envios">
+                            Envíos
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#nosotros">
+                            Nosotros
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#contacto">
+                            Contacto
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div>
+
+                <h3>Síguenos</h3>
+
+                <ul>
+
+                    <li>
+                        <a href="galeria.html">
+                            Facebook
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="galeria.html">
+                            Instagram
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="galeria.html">
+                            TikTok
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="galeria.html">
+                            WhatsApp
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <div class="copyright">
+
+            © 2026 Shop Ofe Trujillo.
+            Todos los derechos reservados.
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        function toggleMenu() {
+
+            const menu = document.getElementById("navLinks");
+
+            menu.classList.toggle("active");
+
+        }
+
+        document.querySelectorAll(".nav-links a").forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                document.getElementById("navLinks")
+                    .classList.remove("active");
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

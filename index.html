@@ -2,4291 +2,2234 @@
 <html lang="es">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Panel de Empleado | Shop Ofe Trujillo</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-<style>
-
-:root{
-    --rosa:#ff2f92;
-    --rosa-claro:#ff72b8;
-    --rosa-suave:#fff0f7;
-    --morado:#8e44ad;
-    --morado-oscuro:#642d7c;
-    --oscuro:#15111a;
-    --oscuro-2:#211827;
-    --blanco:#fff;
-    --gris:#77727d;
-    --gris-claro:#f8f7fa;
-    --verde:#31a968;
-    --rojo:#ef4b63;
-    --naranja:#ff9800;
-    --azul:#4d7cff;
-    --borde:rgba(21,17,26,.08);
-    --sombra:0 18px 50px rgba(21,17,26,.08);
-    --radio:20px;
-}
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    min-height:100vh;
-    font-family:"DM Sans",sans-serif;
-    color:var(--oscuro);
-    background:
-        radial-gradient(circle at 0% 0%,rgba(255,47,146,.10),transparent 25%),
-        radial-gradient(circle at 100% 20%,rgba(142,68,173,.09),transparent 28%),
-        linear-gradient(135deg,#fff8fb,#f8f5fa);
-    overflow-x:hidden;
-}
-
-body::before{
-    content:"";
-    position:fixed;
-    z-index:-1;
-    width:400px;
-    height:400px;
-    right:-180px;
-    bottom:-160px;
-    border-radius:50%;
-    background:rgba(255,47,146,.07);
-    filter:blur(5px);
-    pointer-events:none;
-}
-
-button,
-input,
-select,
-textarea{
-    font-family:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-hr{
-    height:1px;
-    margin:30px 0;
-    border:0;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,47,146,.20),
-        transparent
-    );
-}
-
-/* =========================================
-   HEADER
-========================================= */
-
-.header{
-    position:sticky;
-    top:0;
-    z-index:2000;
-    min-height:78px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:16px 25px;
-    color:#fff;
-    background:
-        radial-gradient(circle at 90% 0%,rgba(255,47,146,.22),transparent 25%),
-        linear-gradient(135deg,var(--oscuro),var(--oscuro-2));
-    border-bottom:1px solid rgba(255,255,255,.08);
-    box-shadow:0 12px 35px rgba(21,17,26,.18);
-    backdrop-filter:blur(18px);
-}
-
-.header::before{
-    content:"";
-    width:10px;
-    height:10px;
-    margin-right:10px;
-    border-radius:50%;
-    background:var(--rosa);
-    box-shadow:0 0 20px rgba(255,47,146,.8);
-}
-
-.header{
-    font-family:"Playfair Display",serif;
-    font-size:clamp(21px,3vw,29px);
-    font-weight:700;
-    letter-spacing:-.5px;
-}
-
-/* =========================================
-   CONTENEDOR PRINCIPAL
-========================================= */
-
-.container{
-    width:min(1200px,calc(100% - 40px));
-    margin:0 auto;
-    padding:32px 0 55px;
-}
-
-/* =========================================
-   TARJETAS
-========================================= */
-
-.card{
-    position:relative;
-    overflow:hidden;
-    margin-bottom:20px;
-    padding:25px;
-    border:1px solid var(--borde);
-    border-radius:var(--radio);
-    background:rgba(255,255,255,.92);
-    box-shadow:var(--sombra);
-    transition:.25s ease;
-}
-
-.card:hover{
-    box-shadow:0 24px 60px rgba(21,17,26,.11);
-}
-
-.card::after{
-    content:"";
-    position:absolute;
-    width:100px;
-    height:100px;
-    right:-55px;
-    bottom:-55px;
-    border-radius:50%;
-    background:rgba(255,47,146,.035);
-    pointer-events:none;
-}
-
-.card h2{
-    position:relative;
-    z-index:1;
-    margin-bottom:16px;
-    color:var(--oscuro);
-    font-family:"Playfair Display",serif;
-    font-size:24px;
-    letter-spacing:-.3px;
-}
-
-.card h2::first-letter{
-    color:var(--rosa);
-}
-
-.card h3{
-    position:relative;
-    z-index:1;
-    margin-bottom:12px;
-}
-
-.card p{
-    position:relative;
-    z-index:1;
-    margin:7px 0;
-    color:#5f5963;
-    line-height:1.55;
-}
-
-.card ul{
-    position:relative;
-    z-index:1;
-    padding-left:22px;
-}
-
-.card li{
-    margin:8px 0;
-    color:#5f5963;
-    line-height:1.5;
-}
-
-/* =========================================
-   PERFIL
-========================================= */
-
-.card:first-of-type{
-    background:
-        radial-gradient(circle at 100% 0%,rgba(255,47,146,.10),transparent 28%),
-        #fff;
-}
-
-.card:first-of-type h2{
-    color:var(--rosa);
-}
-
-/* =========================================
-   BOTONES
-========================================= */
-
-button{
-    min-height:48px;
-    padding:12px 18px;
-    border:0;
-    border-radius:13px;
-    color:#fff;
-    background:linear-gradient(135deg,var(--rosa),var(--morado));
-    font-size:13px;
-    font-weight:700;
-    box-shadow:0 10px 24px rgba(255,47,146,.14);
-    transition:.25s ease;
-}
-
-button:hover{
-    transform:translateY(-2px);
-    box-shadow:0 15px 30px rgba(255,47,146,.22);
-}
-
-button:active{
-    transform:translateY(0);
-}
-
-/* =========================================
-   BOTONES ASISTENCIA
-========================================= */
-
-button[onclick="registrarEntrada()"]{
-    background:linear-gradient(135deg,#27ae60,#42c979);
-    margin-right:8px;
-}
-
-button[onclick="registrarSalida()"]{
-    background:linear-gradient(135deg,#ef405d,#ff6b81);
-}
-
-/* =========================================
-   RANKING
-========================================= */
-
-#ranking{
-    display:grid;
-    gap:10px;
-}
-
-.venta,
-.ranking-item{
-    position:relative;
-    display:grid;
-    grid-template-columns:minmax(110px,1fr) auto auto;
-    align-items:center;
-    gap:14px;
-    min-height:58px;
-    padding:13px 16px;
-    border:1px solid var(--borde);
-    border-radius:15px;
-    background:#faf9fb;
-    font-size:13px;
-    font-weight:700;
-}
-
-.venta span{
-    color:var(--gris);
-    font-size:12px;
-    font-weight:600;
-}
-
-.oro{
-    background:linear-gradient(135deg,#fff1a8,#ffd700);
-    color:#3b3000;
-}
-
-.plata{
-    background:linear-gradient(135deg,#f4f4f4,#c0c0c0);
-    color:#303030;
-}
-
-.bronce{
-    background:linear-gradient(135deg,#efbd91,#cd7f32);
-    color:#fff;
-}
-
-.normal{
-    background:#f5f5f5;
-}
-
-/* =========================================
-   ASISTENCIA
-========================================= */
-
-#estadoAsistencia{
-    margin-bottom:18px;
-    padding:15px;
-    border-radius:14px;
-    color:#5f5963;
-    background:var(--gris-claro);
-    font-size:14px;
-    font-weight:600;
-}
-
-#estadoAsistencia b{
-    color:var(--oscuro);
-}
-
-#calendario{
-    display:grid;
-    grid-template-columns:repeat(7,minmax(0,1fr));
-    gap:7px;
-    margin-top:15px;
-}
-
-.dia{
-    min-height:45px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:1px solid var(--borde);
-    border-radius:11px;
-    background:#f4f2f5;
-    color:#6f6972;
-    font-size:12px;
-    font-weight:700;
-    transition:.2s ease;
-}
-
-.dia:hover{
-    transform:translateY(-2px);
-}
-
-.asistio{
-    background:linear-gradient(135deg,#32b86c,#59d98d);
-    color:#fff;
-    border-color:transparent;
-}
-
-.falta{
-    background:linear-gradient(135deg,#ef405d,#ff7188);
-    color:#fff;
-    border-color:transparent;
-}
-
-.retardo{
-    background:linear-gradient(135deg,#ff9800,#ffb52e);
-    color:#fff;
-    border-color:transparent;
-}
-
-/* =========================================
-   SELECTS
-========================================= */
-
-select{
-    width:100%;
-    min-height:48px;
-    margin:7px 0;
-    padding:0 14px;
-    border:1px solid var(--borde);
-    border-radius:13px;
-    outline:none;
-    color:var(--oscuro);
-    background:#faf9fb;
-    transition:.25s ease;
-}
-
-select:focus{
-    border-color:rgba(255,47,146,.45);
-    background:#fff;
-    box-shadow:0 0 0 4px rgba(255,47,146,.07);
-}
-
-/* =========================================
-   INPUTS
-========================================= */
-
-input,
-textarea{
-    width:100%;
-    min-height:48px;
-    margin:7px 0;
-    padding:13px 14px;
-    border:1px solid var(--borde);
-    border-radius:13px;
-    outline:none;
-    color:var(--oscuro);
-    background:#faf9fb;
-    transition:.25s ease;
-}
-
-input:focus,
-textarea:focus{
-    border-color:rgba(255,47,146,.45);
-    background:#fff;
-    box-shadow:0 0 0 4px rgba(255,47,146,.07);
-}
-
-textarea{
-    min-height:100px;
-    resize:vertical;
-}
-
-/* =========================================
-   TAREAS Y NOTIFICACIONES
-========================================= */
-
-#tareas,
-#notificaciones{
-    display:grid;
-    gap:8px;
-    padding-left:0;
-    list-style:none;
-}
-
-#tareas li,
-#notificaciones li{
-    margin:0;
-    padding:13px 15px;
-    border-radius:13px;
-    border:1px solid var(--borde);
-    background:#faf9fb;
-}
-
-#notificaciones li{
-    border-color:rgba(255,47,146,.12);
-    background:#fff4fa;
-}
-
-/* =========================================
-   BOTÓN IMPUNTUALES
-========================================= */
-
-.btn-impuntuales{
-    width:100%;
-    min-height:72px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:14px;
-    padding:18px 22px;
-    border:0;
-    border-radius:18px;
-    color:#fff;
-    background:
-        radial-gradient(circle at 10% 0%,rgba(255,255,255,.20),transparent 25%),
-        linear-gradient(135deg,#ff14e4,#f44336);
-    box-shadow:0 16px 35px rgba(244,67,54,.20);
-    font-size:15px;
-    font-weight:800;
-}
-
-.btn-impuntuales i{
-    font-size:22px;
-}
-
-/* =========================================
-   CAJA Y REPORTES
-========================================= */
-
-.card button[onclick*="pos.html"],
-.card button[onclick*="corte.html"],
-.card button[onclick*="reportes.html"],
-.card button[onclick*="validarpuntos.html"]{
-    width:100%;
-    margin-top:8px;
-}
-
-.card button[onclick*="pos.html"]{
-    background:linear-gradient(135deg,#ff2f92,#ff68b0);
-}
-
-.card button[onclick*="corte.html"]{
-    background:linear-gradient(135deg,#8e44ad,#aa62c7);
-}
-
-.card button[onclick*="reportes.html"]{
-    background:linear-gradient(135deg,#4d7cff,#6d93ff);
-}
-
-.card button[onclick*="validarpuntos.html"]{
-    background:linear-gradient(135deg,#15111a,#392a42)!important;
-    border:0!important;
-}
-
-/* =========================================
-   PANEL ADMINISTRATIVO
-========================================= */
-
-.admin-card{
-    border:1px solid rgba(255,47,146,.15);
-    background:
-        radial-gradient(circle at top right,rgba(255,47,146,.08),transparent 30%),
-        #fff;
-}
-
-.admin-card > h2{
-    color:var(--rosa);
-}
-
-.admin-grid{
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:18px;
-}
-
-.admin-box{
-    position:relative;
-    padding:20px;
-    border:1px solid var(--borde);
-    border-radius:17px;
-    background:#faf9fb;
-}
-
-.admin-box h3{
-    margin-bottom:13px;
-    color:var(--oscuro);
-    font-size:16px;
-}
-
-.admin-box button{
-    width:100%;
-    margin-top:8px;
-}
-
-.btn-tarea{
-    background:linear-gradient(135deg,#8e44ad,#aa62c7);
-}
-
-.btn-noti{
-    background:linear-gradient(135deg,#ff2f92,#ff65ae);
-}
-
-/* =========================================
-   ENCUESTAS
-========================================= */
-
-#listaEncuestas{
-    overflow:hidden;
-    border-radius:15px;
-}
-
-#listaEncuestas > div{
-    padding:15px!important;
-    border-bottom:1px solid var(--borde)!important;
-    background:#fff;
-}
-
-#listaEncuestas > div:last-child{
-    border-bottom:0!important;
-}
-
-/* =========================================
-   PRODUCTOS
-========================================= */
-
-#listaProductos{
-    display:grid;
-    gap:10px;
-}
-
-#listaProductos > div{
-    display:grid;
-    grid-template-columns:minmax(0,1fr) auto auto;
-    align-items:center;
-    gap:8px;
-    padding:15px!important;
-    border:1px solid var(--borde)!important;
-    border-radius:14px;
-    background:#faf9fb;
-}
-
-#listaProductos button{
-    width:auto;
-    min-height:40px;
-    margin:0;
-    padding:8px 12px;
-    font-size:11px;
-}
-
-#listaProductos button:first-of-type{
-    background:linear-gradient(135deg,#4d7cff,#7094ff);
-}
-
-#listaProductos button:last-of-type{
-    background:linear-gradient(135deg,#ef405d,#ff7188);
-}
-
-/* =========================================
-   ANUNCIOS
-========================================= */
-
-#listaAnuncios{
-    display:grid;
-    gap:10px;
-}
-
-#listaAnuncios > div{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
-    padding:15px!important;
-    border:1px solid var(--borde)!important;
-    border-radius:14px;
-    background:#faf9fb;
-}
-
-#listaAnuncios button{
-    width:auto;
-    min-height:40px;
-    margin:0;
-    padding:8px 13px;
-    background:linear-gradient(135deg,#ef405d,#ff7188);
-}
-
-/* =========================================
-   EDICIÓN
-========================================= */
-
-#editarBox{
-    border:1px solid rgba(77,124,255,.15);
-    background:
-        radial-gradient(circle at top right,rgba(77,124,255,.08),transparent 30%),
-        #fff;
-}
-
-/* =========================================
-   HISTORIAL
-========================================= */
-
-#historialBox{
-    margin-top:15px;
-    padding:18px;
-    border:1px solid var(--borde);
-    border-radius:16px;
-    background:#faf9fb;
-    line-height:1.8;
-    color:#5f5963;
-}
-
-#historialBox hr{
-    margin:12px 0;
-}
-
-/* =========================================
-   TABLA ASISTENCIA
-========================================= */
-
-#tablaAsistencia{
-    margin-top:15px;
-    overflow-x:auto;
-}
-
-#tablaAsistencia > div{
-    min-width:650px;
-    margin-bottom:8px;
-    padding:15px!important;
-    border:1px solid var(--borde)!important;
-    border-radius:14px;
-    background:#faf9fb;
-    line-height:1.7;
-}
-
-/* =========================================
-   VIP
-========================================= */
-
-#listaVIP,
-#listaContenidoVIP{
-    margin-top:15px;
-}
-
-#listaVIP > div{
-    border:1px solid var(--borde)!important;
-    background:#fff!important;
-    box-shadow:0 8px 25px rgba(21,17,26,.06)!important;
-}
-
-#listaVIP img,
-#listaContenidoVIP img{
-    display:block;
-    width:100%;
-    height:auto;
-    max-height:none;
-    object-fit:contain;
-    border-radius:14px;
-}
-
-#listaContenidoVIP > div{
-    background:linear-gradient(145deg,#fff0f7,#f7effb)!important;
-    border:1px solid rgba(255,47,146,.10);
-}
-
-/* =========================================
-   INFORMACIÓN EMPLEADO
-========================================= */
-
-.card:has(#usuario){
-    background:
-        radial-gradient(circle at 100% 0%,rgba(142,68,173,.08),transparent 30%),
-        #fff;
-}
-
-#nombre,
-#puesto,
-#usuario,
-#telefono,
-#horario,
-#area,
-#estado,
-#id{
-    display:flex;
-    align-items:center;
-    min-height:42px;
-    margin:7px 0;
-    padding:10px 13px;
-    border-radius:12px;
-    background:#faf9fb;
-    font-size:13px;
-    font-weight:600;
-}
-
-/* =========================================
-   EMPRESA
-========================================= */
-
-.card p strong{
-    color:var(--rosa);
-}
-
-/* =========================================
-   CERRAR SESIÓN
-========================================= */
-
-.container > button[onclick="logout()"]{
-    width:100%;
-    min-height:54px;
-    margin-top:5px;
-    background:linear-gradient(135deg,#15111a,#35253d);
-    box-shadow:0 15px 30px rgba(21,17,26,.15);
-}
-
-/* =========================================
-   RESPONSIVE 1100
-========================================= */
-
-@media(max-width:1100px){
-
-    .container{
-        width:min(100% - 32px,1000px);
-    }
-
-    .admin-grid{
-        grid-template-columns:1fr;
-    }
-
-    .venta,
-    .ranking-item{
-        grid-template-columns:1fr auto;
-    }
-
-    .venta span:last-child,
-    .ranking-item span:last-child{
-        grid-column:1/-1;
-    }
-
-}
-
-/* =========================================
-   RESPONSIVE 768
-========================================= */
-
-@media(max-width:768px){
-
-    .header{
-        min-height:68px;
-        padding:14px 16px;
-        font-size:21px;
-    }
-
-    .container{
-        width:calc(100% - 24px);
-        padding:20px 0 40px;
-    }
-
-    .card{
-        padding:19px;
-        border-radius:17px;
-    }
-
-    .card h2{
-        font-size:21px;
-    }
-
-    .admin-grid{
-        grid-template-columns:1fr;
-    }
-
-    .venta,
-    .ranking-item{
-        grid-template-columns:1fr;
-        gap:7px;
-    }
-
-    .venta span,
-    .ranking-item span{
-        display:block;
-    }
-
-    button{
-        width:100%;
-        margin-top:8px;
-    }
-
-    button[onclick="registrarEntrada()"]{
-        margin-right:0;
-    }
-
-    #calendario{
-        gap:4px;
-    }
-
-    .dia{
-        min-height:39px;
-        border-radius:9px;
-        font-size:11px;
-    }
-
-    #listaProductos > div{
-        grid-template-columns:1fr;
-    }
-
-    #listaProductos button{
-        width:100%;
-    }
-
-    #listaAnuncios > div{
-        align-items:stretch;
-        flex-direction:column;
-    }
-
-    #listaAnuncios button{
-        width:100%;
-    }
-
-}
-
-/* =========================================
-   RESPONSIVE 560
-========================================= */
-
-@media(max-width:560px){
-
-    .container{
-        width:calc(100% - 18px);
-        padding-top:14px;
-    }
-
-    .card{
-        margin-bottom:14px;
-        padding:16px;
-        border-radius:16px;
-    }
-
-    .card h2{
-        font-size:20px;
-        line-height:1.25;
-    }
-
-    .header{
-        font-size:19px;
-    }
-
-    #calendario{
-        gap:3px;
-    }
-
-    .dia{
-        min-height:35px;
-        font-size:10px;
-    }
-
-    .btn-impuntuales{
-        min-height:65px;
-        padding:14px;
-        font-size:13px;
-    }
-
-    .btn-impuntuales i{
-        font-size:19px;
-    }
-
-    #nombre,
-    #puesto,
-    #usuario,
-    #telefono,
-    #horario,
-    #area,
-    #estado,
-    #id{
-        font-size:12px;
-    }
-
-}
-
-/* =========================================
-   RESPONSIVE 390
-========================================= */
-
-@media(max-width:390px){
-
-    .container{
-        width:calc(100% - 12px);
-    }
-
-    .card{
-        padding:14px;
-    }
-
-    .header{
-        padding:13px 10px;
-        font-size:18px;
-    }
-
-    .card h2{
-        font-size:18px;
-    }
-
-    input,
-    select,
-    textarea{
-        font-size:13px;
-    }
-
-    button{
-        font-size:12px;
-    }
-
-    .dia{
-        min-height:31px;
-        font-size:9px;
-    }
-
-}
-
-/* =========================================
-   REDUCIR MOVIMIENTO
-========================================= */
-
-@media(prefers-reduced-motion:reduce){
-
-    *,
-    *::before,
-    *::after{
-        scroll-behavior:auto!important;
-        animation-duration:.01ms!important;
-        animation-iteration-count:1!important;
-        transition-duration:.01ms!important;
-    }
-
-}
-
-</style>
-
-<script>
-
-/* =========================================
-   PROTECCIÓN
-========================================= */
-
-let acceso=sessionStorage.getItem("acceso");
-
-if(acceso!=="ok"){
-    window.location.href="acceso.html";
-}
-
-</script>
-
-<style>
-
-/* =====================================================
-   NUEVO DISEÑO SIMPLE PARA EMPLEADAS
-   ===================================================== */
-:root{
-  --rosa:#ff2f92;
-  --rosa2:#ff70b5;
-  --morado:#8e44ad;
-  --azul:#4d7cff;
-  --naranja:#ff9800;
-  --verde:#31a968;
-  --rojo:#ef4b63;
-  --texto:#211827;
-  --gris:#77727d;
-  --fondo:#f8f7fa;
-  --blanco:#fff;
-}
-
-body{
-  background:#f7f6f9 !important;
-  color:var(--texto);
-  font-family:"DM Sans",sans-serif;
-}
-
-body::before{display:none !important;}
-
-.topbar{
-  position:sticky;
-  top:0;
-  z-index:2000;
-  min-height:70px;
-  padding:10px max(18px,calc((100% - 1050px)/2));
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:#211827;
-  color:#fff;
-  box-shadow:0 5px 20px rgba(21,17,26,.14);
-}
-
-.brand{display:flex;align-items:center;gap:11px;}
-.brand-icon{
-  width:42px;height:42px;border-radius:13px;
-  display:grid;place-items:center;
-  background:linear-gradient(135deg,#ff2f92,#8e44ad);
-  font-size:18px;
-}
-.brand strong{display:block;font-size:15px;}
-.brand small{display:block;color:#d8cfdc;font-size:11px;margin-top:2px;}
-
-.logout-mini{
-  width:auto !important;
-  min-height:40px !important;
-  margin:0 !important;
-  padding:8px 13px !important;
-  background:rgba(255,255,255,.10) !important;
-  border:1px solid rgba(255,255,255,.14) !important;
-  box-shadow:none !important;
-}
-
-.dashboard{
-  width:min(1050px,calc(100% - 28px));
-  margin:auto;
-  padding:22px 0 45px;
-}
-
-.welcome-card{
-  min-height:145px;
-  margin-bottom:14px;
-  padding:25px;
-  border-radius:24px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  color:#fff;
-  background:linear-gradient(135deg,#211827,#642d7c);
-  box-shadow:0 12px 35px rgba(21,17,26,.13);
-  overflow:hidden;
-  position:relative;
-}
-.welcome-card:after{
-  content:"";
-  position:absolute;
-  width:180px;height:180px;
-  right:-65px;top:-70px;
-  border-radius:50%;
-  background:rgba(255,47,146,.20);
-}
-.eyebrow,.section-kicker{
-  display:block;
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:1.3px;
-  text-transform:uppercase;
-  color:#ff9bc9;
-}
-.welcome-card h1{
-  margin:5px 0 3px;
-  font-size:28px;
-  color:#fff;
-}
-.welcome-card p{margin:0;color:#eadfea;font-size:13px;}
-.welcome-icon{position:relative;z-index:1;font-size:52px;}
-
-.quick-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:11px;
-  margin-bottom:14px;
-}
-.quick-card{
-  min-height:105px;
-  padding:15px;
-  border:1px solid #ece8ee;
-  border-radius:18px;
-  background:#fff;
-  color:var(--texto);
-  text-align:left;
-  box-shadow:0 5px 18px rgba(21,17,26,.05);
-  transition:.2s;
-}
-.quick-card:hover{transform:translateY(-2px);}
-.quick-card .quick-icon{
-  display:grid;place-items:center;
-  width:38px;height:38px;
-  margin-bottom:9px;
-  border-radius:12px;
-  font-size:19px;
-}
-.quick-card strong{display:block;font-size:13px;}
-.quick-card small{display:block;margin-top:3px;color:var(--gris);font-size:10px;}
-.quick-card.pink .quick-icon{background:#fff0f7;}
-.quick-card.purple .quick-icon{background:#f5edfa;}
-.quick-card.blue .quick-icon{background:#eef3ff;}
-.quick-card.orange .quick-icon{background:#fff4e5;}
-
-.card{
-  margin-bottom:14px !important;
-  padding:19px !important;
-  border:1px solid #ebe7ee !important;
-  border-radius:19px !important;
-  background:#fff !important;
-  box-shadow:0 5px 20px rgba(21,17,26,.045) !important;
-}
-.card:after{display:none !important;}
-
-.section-title{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:13px;
-}
-.section-title h2{
-  margin:2px 0 0 !important;
-  font-family:"DM Sans",sans-serif !important;
-  font-size:18px !important;
-  letter-spacing:0 !important;
-}
-.section-title h2::first-letter{color:inherit !important;}
-.section-kicker{color:#a59ca9;font-size:9px;}
-
-.helper{margin:-5px 0 12px !important;font-size:11px !important;color:#8b838e !important;}
-
-.attendance-status{
-  padding:13px 14px;
-  border-radius:13px;
-  background:#f7f6f9;
-  color:#57505d;
-  font-size:12px;
-  line-height:1.6;
-}
-.attendance-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
-.attendance-buttons button{width:100%;margin:0 !important;}
-.btn-entry{background:#31a968 !important;}
-.btn-exit{background:#ef4b63 !important;}
-
-.clean-list{
-  display:grid;
-  gap:7px;
-  padding:0 !important;
-  margin:0 !important;
-  list-style:none !important;
-}
-.clean-list li{
-  margin:0 !important;
-  padding:11px 12px !important;
-  border:1px solid #eeeaf0;
-  border-radius:12px;
-  background:#faf9fb;
-  color:#4f4855;
-  font-size:12px;
-}
-.notifications li{background:#fff5fa !important;border-color:#ffe1ef !important;}
-
-#ranking{display:grid;gap:7px;}
-.venta,.ranking-item{
-  min-height:48px !important;
-  padding:10px 12px !important;
-  border-radius:12px !important;
-  font-size:11px !important;
-  box-shadow:none !important;
-  grid-template-columns:1fr auto auto !important;
-}
-.oro,.plata,.bronce,.normal{border:0 !important;}
-
-.secondary-btn{
-  width:100% !important;
-  min-height:43px !important;
-  margin:0 !important;
-  padding:10px 14px !important;
-  color:#5d5363 !important;
-  background:#f4f2f6 !important;
-  box-shadow:none !important;
-  border:1px solid #e8e3eb !important;
-}
-#historialBox{
-  margin-top:10px !important;
-  padding:13px !important;
-  font-size:11px !important;
-  line-height:1.7 !important;
-}
-.calendar-heading{
-  margin:17px 0 8px;
-  font-size:11px;
-  font-weight:800;
-  color:#77727d;
-}
-#calendario{gap:4px !important;}
-.dia{min-height:36px !important;font-size:10px !important;border-radius:9px !important;}
-
-details summary{
-  cursor:pointer;
-  list-style:none;
-  display:flex;
-  align-items:center;
-  gap:9px;
-  min-height:25px;
-  font-size:13px;
-  font-weight:800;
-  color:#342b39;
-}
-details summary::-webkit-details-marker{display:none;}
-details summary:after{content:"＋";margin-left:auto;color:#a39aa7;font-size:16px;}
-details[open] summary:after{content:"−";}
-
-.info-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:8px;
-  margin-top:14px;
-}
-.info-grid > div{
-  padding:10px 11px;
-  border-radius:11px;
-  background:#faf9fb;
-}
-.info-grid small{display:block;color:#938b97;font-size:9px;margin-bottom:3px;}
-.info-grid strong{font-size:11px;color:#443b48;word-break:break-word;}
-
-.company-info{
-  margin-top:12px;
-  padding:12px;
-  border-radius:12px;
-  background:#fff5fa;
-}
-.company-info p{font-size:11px;margin:7px 0 !important;}
-
-.admin-shell{border-color:#f2d5e5 !important;background:#fffafd !important;}
-.admin-grid-simple{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:13px;}
-.admin-tool{
-  padding:12px;
-  border:1px solid #eee4eb;
-  border-radius:13px;
-  background:#fff;
-}
-.admin-tool summary{font-size:11px;}
-.admin-tool > *:not(summary){margin-top:9px;}
-.admin-tool input,.admin-tool select{
-  min-height:40px !important;
-  margin:0 !important;
-  padding:9px 10px !important;
-  font-size:11px !important;
-}
-.admin-tool button{min-height:40px !important;margin:0 !important;width:100% !important;font-size:11px !important;}
-.admin-btn{background:linear-gradient(135deg,#8e44ad,#aa62c7) !important;}
-.pink-admin{background:linear-gradient(135deg,#ff2f92,#ff65ae) !important;}
-.green-admin{background:linear-gradient(135deg,#31a968,#49c77a) !important;}
-#listaProductos > div{grid-template-columns:1fr !important;}
-#listaProductos button{width:100% !important;}
-#listaAnuncios > div{flex-direction:column !important;align-items:stretch !important;}
-#listaAnuncios button{width:100% !important;}
-#editarBox{padding:12px;margin-top:9px;border:1px solid #e5e0e8 !important;border-radius:12px;}
-#editarBox h3{font-size:12px;margin-bottom:8px;}
-
-#tablaAsistencia > div{
-  min-width:0 !important;
-  margin-bottom:7px;
-  padding:11px !important;
-  font-size:11px;
-}
-
-.cleaning-list{display:grid;gap:6px;margin-top:12px;}
-.cleaning-list span{
-  display:flex;justify-content:space-between;
-  padding:9px 11px;
-  background:#faf9fb;border-radius:10px;
-  font-size:11px;color:#69616d;
-}
-.cleaning-list b{color:#332a37;}
-
-.logout-btn{
-  width:100% !important;
-  min-height:50px !important;
-  margin:5px 0 0 !important;
-  background:#211827 !important;
-  box-shadow:0 8px 20px rgba(21,17,26,.10) !important;
-}
-
-@media(max-width:760px){
-  .dashboard{width:calc(100% - 20px);padding-top:15px;}
-  .quick-grid{grid-template-columns:repeat(2,1fr);}
-  .welcome-card{padding:20px;min-height:125px;}
-  .welcome-card h1{font-size:23px;}
-  .welcome-icon{font-size:42px;}
-  .admin-grid-simple{grid-template-columns:1fr;}
-}
-@media(max-width:480px){
-  .topbar{padding:9px 12px;}
-  .brand strong{font-size:13px;}
-  .brand small{font-size:9px;}
-  .logout-mini{font-size:11px !important;}
-  .dashboard{width:calc(100% - 14px);}
-  .welcome-card{border-radius:18px;}
-  .quick-grid{gap:7px;}
-  .quick-card{min-height:94px;padding:12px;border-radius:15px;}
-  .quick-card .quick-icon{width:33px;height:33px;font-size:16px;}
-  .quick-card strong{font-size:11px;}
-  .quick-card small{font-size:9px;}
-  .attendance-buttons{grid-template-columns:1fr;}
-  .info-grid{grid-template-columns:1fr;}
-  .card{padding:15px !important;border-radius:16px !important;}
-}
-
-</style>
+    <title>Shop Ofe Trujillo | Cosméticos, Accesorios y Novedades</title>
+
+    <meta name="description"
+        content="Shop Ofe Trujillo - Cosméticos, accesorios, novedades y mucho más. Envíos a toda la República Mexicana.">
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="chatbot.css">
+    <script src="chatbot.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <style>
+
+        :root {
+            --rosa: #ff2f92;
+            --rosa-claro: #ff72b8;
+            --rosa-suave: #fff0f7;
+            --morado: #8e44ad;
+            --oscuro: #15111a;
+            --oscuro-2: #211827;
+            --blanco: #ffffff;
+            --gris: #77727d;
+            --borde: rgba(21,17,26,.08);
+            --sombra: 0 25px 70px rgba(21,17,26,.16);
+        }
+
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            min-height: 100vh;
+            font-family: "DM Sans", sans-serif;
+            color: var(--oscuro);
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(255,47,146,.20),
+                    transparent 25%
+                ),
+
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(142,68,173,.18),
+                    transparent 28%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #fff4f9 0%,
+                    #ffe0ef 45%,
+                    #f4e8fb 100%
+                );
+
+            overflow-x: hidden;
+        }
+
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            z-index: -1;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+
+        body::before {
+            width: 280px;
+            height: 280px;
+            top: 110px;
+            left: -120px;
+            background: rgba(255,47,146,.10);
+        }
+
+
+        body::after {
+            width: 330px;
+            height: 330px;
+            right: -150px;
+            bottom: 20px;
+            background: rgba(142,68,173,.10);
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+
+        button {
+            font: inherit;
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+
+            width: 100%;
+
+            background: rgba(21,17,26,.96);
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+
+            box-shadow:
+                0 10px 35px rgba(21,17,26,.16);
+
+            backdrop-filter: blur(18px);
+        }
+
+
+        header .container {
+            width: min(
+                1200px,
+                calc(100% - 40px)
+            );
+
+            min-height: 76px;
+
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 25px;
+        }
+
+
+        .logo a {
+            color: #fff;
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size: 24px;
+            font-weight: 700;
+
+            letter-spacing: -.5px;
+
+            white-space: nowrap;
+        }
+
+
+        .logo a::after {
+            content: " ♥";
+            color: var(--rosa);
+        }
+
+
+        nav ul {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            gap: 4px;
+
+            list-style: none;
+        }
+
+
+        nav a {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+
+            min-height: 40px;
+
+            padding: 0 10px;
+
+            color: rgba(255,255,255,.72);
+
+            font-size: 12px;
+            font-weight: 600;
+
+            border-radius: 10px;
+
+            transition: .25s ease;
+        }
+
+
+        nav a:hover {
+            color: #fff;
+            background: rgba(255,47,146,.13);
+        }
+
+
+        .menu-toggle {
+            display: none;
+
+            width: 44px;
+            height: 44px;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid rgba(255,255,255,.10);
+
+            border-radius: 13px;
+
+            color: #fff;
+
+            background:
+                rgba(255,255,255,.06);
+
+            cursor: pointer;
+
+            font-size: 18px;
+        }
+
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .hero {
+            width: min(
+                1200px,
+                calc(100% - 40px)
+            );
+
+            min-height: 600px;
+
+            margin: 40px auto;
+
+            display: grid;
+
+            grid-template-columns:
+                1.15fr
+                .85fr;
+
+            gap: 30px;
+
+            align-items: stretch;
+        }
+
+
+        .hero-main {
+            position: relative;
+
+            overflow: hidden;
+
+            min-height: 600px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            padding: 70px;
+
+            border:
+                1px solid rgba(255,255,255,.75);
+
+            border-radius: 34px;
+
+            color: white;
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(255,255,255,.18),
+                    transparent 25%
+                ),
+
+                radial-gradient(
+                    circle at 90% 90%,
+                    rgba(255,255,255,.12),
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    145deg,
+                    #ff2f92 0%,
+                    #d92787 48%,
+                    #8e44ad 100%
+                );
+
+            box-shadow: var(--sombra);
+        }
+
+
+        .hero-main::before {
+            content: "";
+
+            position: absolute;
+
+            width: 360px;
+            height: 360px;
+
+            right: -180px;
+            top: -130px;
+
+            border:
+                1px solid rgba(255,255,255,.14);
+
+            border-radius: 50%;
+        }
+
+
+        .hero-main::after {
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+            height: 230px;
+
+            left: -120px;
+            bottom: -100px;
+
+            border:
+                1px solid rgba(255,255,255,.14);
+
+            border-radius: 50%;
+        }
+
+
+        .hero-icon {
+            position: relative;
+            z-index: 1;
+
+            width: 65px;
+            height: 65px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 25px;
+
+            border:
+                1px solid rgba(255,255,255,.25);
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,.14);
+
+            font-size: 27px;
+        }
+
+
+        .hero-main h1 {
+            position: relative;
+            z-index: 1;
+
+            max-width: 700px;
+
+            margin-bottom: 20px;
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size:
+                clamp(42px, 6vw, 72px);
+
+            line-height: 1;
+
+            letter-spacing: -2px;
+        }
+
+
+        .hero-main h1 span {
+            color: #ffd0e7;
+        }
+
+
+        .hero-main p {
+            position: relative;
+            z-index: 1;
+
+            max-width: 620px;
+
+            color:
+                rgba(255,255,255,.86);
+
+            font-size: 17px;
+
+            line-height: 1.7;
+
+            margin-bottom: 30px;
+        }
+
+
+        .hero-buttons {
+            position: relative;
+            z-index: 1;
+
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 12px;
+        }
+
+
+        .btn {
+            min-height: 50px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            padding: 0 23px;
+
+            border: 0;
+            border-radius: 14px;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: .25s ease;
+        }
+
+
+        .btn-primary {
+            color: var(--rosa);
+
+            background: white;
+
+            box-shadow:
+                0 14px 30px rgba(0,0,0,.12);
+        }
+
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+
+        .btn-outline {
+            color: white;
+
+            border:
+                1px solid rgba(255,255,255,.30);
+
+            background:
+                rgba(255,255,255,.10);
+        }
+
+
+        .btn-outline:hover {
+            background:
+                rgba(255,255,255,.18);
+        }
+
+
+        /* =========================================
+           TARJETA DESTACADA
+        ========================================= */
+
+        .hero-side {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+
+            gap: 30px;
+        }
+
+
+        .feature-card {
+            padding: 35px;
+
+            border:
+                1px solid rgba(255,255,255,.75);
+
+            border-radius: 30px;
+
+            background:
+                rgba(255,255,255,.72);
+
+            box-shadow:
+                var(--sombra);
+
+            backdrop-filter: blur(20px);
+        }
+
+
+        .feature-card .icon {
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 20px;
+
+            border-radius: 17px;
+
+            color: var(--rosa);
+
+            background:
+                var(--rosa-suave);
+
+            font-size: 21px;
+        }
+
+
+        .feature-card h2 {
+            margin-bottom: 10px;
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size: 27px;
+        }
+
+
+        .feature-card p {
+            color: var(--gris);
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+           SECCIONES
+        ========================================= */
+
+        .section {
+            width: min(
+                1200px,
+                calc(100% - 40px)
+            );
+
+            margin: 80px auto;
+        }
+
+
+        .section-header {
+            margin-bottom: 30px;
+        }
+
+
+        .section-header span {
+            display: inline-block;
+
+            margin-bottom: 8px;
+
+            color: var(--rosa);
+
+            font-size: 12px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+
+        .section-header h2 {
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size:
+                clamp(30px, 4vw, 44px);
+
+            letter-spacing: -1px;
+        }
+
+
+        .section-header p {
+            max-width: 650px;
+
+            margin-top: 10px;
+
+            color: var(--gris);
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+           CATEGORÍAS
+        ========================================= */
+
+        .category-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .category {
+            min-height: 190px;
+
+            padding: 28px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+
+            border:
+                1px solid rgba(255,255,255,.80);
+
+            border-radius: 24px;
+
+            background:
+                rgba(255,255,255,.72);
+
+            box-shadow:
+                0 15px 40px rgba(21,17,26,.08);
+
+            transition: .25s ease;
+        }
+
+
+        .category:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 25px 55px rgba(21,17,26,.13);
+        }
+
+
+        .category-icon {
+            width: 52px;
+            height: 52px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: auto;
+
+            border-radius: 16px;
+
+            color: var(--rosa);
+
+            background:
+                var(--rosa-suave);
+
+            font-size: 20px;
+        }
+
+
+        .category h3 {
+            margin-top: 25px;
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size: 22px;
+        }
+
+
+        .category p {
+            margin-top: 5px;
+
+            color: var(--gris);
+
+            font-size: 12px;
+        }
+
+
+        /* =========================================
+           RESEÑAS
+        ========================================= */
+
+        .reviews {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .review {
+            padding: 30px;
+
+            border:
+                1px solid rgba(255,255,255,.80);
+
+            border-radius: 24px;
+
+            background:
+                rgba(255,255,255,.74);
+
+            box-shadow:
+                0 15px 40px rgba(21,17,26,.08);
+        }
+
+
+        .stars {
+            color: #f4b400;
+
+            font-size: 15px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .review p {
+            color: #4d4650;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            margin-bottom: 18px;
+        }
+
+
+        .review strong {
+            color: var(--rosa);
+
+            font-size: 13px;
+        }
+
+
+        /* =========================================
+           ENVÍOS
+        ========================================= */
+
+        #envios {
+            scroll-margin-top: 100px;
+        }
+
+
+        .shipping-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .shipping-card {
+            padding: 30px;
+
+            border:
+                1px solid rgba(255,255,255,.80);
+
+            border-radius: 24px;
+
+            background:
+                rgba(255,255,255,.74);
+
+            box-shadow:
+                0 15px 40px rgba(21,17,26,.08);
+        }
+
+
+        .shipping-card .icon {
+            width: 52px;
+            height: 52px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 18px;
+
+            border-radius: 16px;
+
+            color: var(--rosa);
+
+            background:
+                var(--rosa-suave);
+
+            font-size: 19px;
+        }
+
+
+        .shipping-card h3 {
+            margin-bottom: 10px;
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size: 23px;
+        }
+
+
+        .shipping-card p {
+            color: var(--gris);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        .shipping-card ul {
+            margin-top: 15px;
+
+            padding-left: 20px;
+
+            color: var(--gris);
+
+            font-size: 13px;
+
+            line-height: 1.9;
+        }
+
+
+        /* =========================================
+           NOSOTROS
+        ========================================= */
+
+        #novedades {
+            scroll-margin-top: 100px;
+        }
+
+
+        .about {
+            display: grid;
+
+            grid-template-columns:
+                .8fr
+                1.2fr;
+
+            gap: 30px;
+
+            align-items: stretch;
+        }
+
+
+        .about-title {
+            padding: 45px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            border-radius: 30px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #15111a,
+                    #211827
+                );
+
+            box-shadow:
+                var(--sombra);
+        }
+
+
+        .about-title i {
+            color: var(--rosa);
+
+            font-size: 28px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .about-title h2 {
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size: 40px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .about-title p {
+            color:
+                rgba(255,255,255,.72);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        .about-text {
+            padding: 45px;
+
+            border:
+                1px solid rgba(255,255,255,.80);
+
+            border-radius: 30px;
+
+            background:
+                rgba(255,255,255,.74);
+
+            box-shadow:
+                0 15px 40px rgba(21,17,26,.08);
+        }
+
+
+        .about-text p {
+            color: var(--gris);
+
+            font-size: 15px;
+
+            line-height: 1.8;
+
+            margin-bottom: 18px;
+        }
+
+
+        .about-text strong {
+            color: var(--rosa);
+        }
+
+
+        /* =========================================
+           CTA
+        ========================================= */
+
+        .cta {
+            width: min(
+                1200px,
+                calc(100% - 40px)
+            );
+
+            margin: 80px auto;
+
+            padding: 65px 45px;
+
+            text-align: center;
+
+            border-radius: 32px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff2f92,
+                    #8e44ad
+                );
+
+            box-shadow:
+                var(--sombra);
+        }
+
+
+        .cta h2 {
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size:
+                clamp(30px, 4vw, 46px);
+
+            margin-bottom: 12px;
+        }
+
+
+        .cta p {
+            max-width: 650px;
+
+            margin: 0 auto 25px;
+
+            color:
+                rgba(255,255,255,.82);
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+            margin-top: 80px;
+
+            padding: 55px 20px 25px;
+
+            color: white;
+
+            background:
+                #15111a;
+        }
+
+
+        .footer-container {
+            width: min(
+                1200px,
+                calc(100% - 40px)
+            );
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                1.5fr
+                1fr
+                1fr;
+
+            gap: 40px;
+        }
+
+
+        footer h3 {
+            margin-bottom: 18px;
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            color: #fff;
+        }
+
+
+        footer p {
+            color:
+                rgba(255,255,255,.62);
+
+            font-size: 13px;
+
+            line-height: 1.8;
+        }
+
+
+        footer ul {
+            list-style: none;
+        }
+
+
+        footer li {
+            margin-bottom: 10px;
+        }
+
+
+        footer a {
+            color:
+                rgba(255,255,255,.65);
+
+            font-size: 13px;
+
+            transition: .2s;
+        }
+
+
+        footer a:hover {
+            color: var(--rosa-claro);
+        }
+
+
+        .copyright {
+            width: min(
+                1200px,
+                calc(100% - 40px)
+            );
+
+            margin: 40px auto 0;
+
+            padding-top: 20px;
+
+            border-top:
+                1px solid rgba(255,255,255,.08);
+
+            text-align: center;
+
+            color:
+                rgba(255,255,255,.45);
+
+            font-size: 11px;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 950px) {
+
+            header .container {
+                width:
+                    min(
+                        calc(100% - 30px),
+                        1200px
+                    );
+            }
+
+
+            .menu-toggle {
+                display: flex;
+            }
+
+
+            nav {
+                position: absolute;
+
+                top: 76px;
+
+                left: 0;
+                right: 0;
+
+                display: none;
+
+                padding: 12px;
+
+                background:
+                    rgba(21,17,26,.98);
+
+                border-bottom:
+                    1px solid rgba(255,255,255,.08);
+
+                box-shadow:
+                    0 15px 35px rgba(0,0,0,.18);
+            }
+
+
+            nav.active {
+                display: block;
+            }
+
+
+            nav ul {
+                width: 100%;
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 4px;
+            }
+
+
+            nav a {
+                justify-content: center;
+
+                min-height: 45px;
+            }
+
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+
+            .hero-main {
+                min-height: 500px;
+            }
+
+
+            .category-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .about {
+                grid-template-columns: 1fr;
+            }
+
+
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            header .container {
+                min-height: 68px;
+            }
+
+
+            .logo a {
+                font-size: 20px;
+            }
+
+
+            nav {
+                top: 68px;
+            }
+
+
+            .hero {
+                width:
+                    calc(100% - 24px);
+
+                margin-top: 20px;
+            }
+
+
+            .hero-main {
+                min-height: 520px;
+
+                padding: 35px 25px;
+
+                border-radius: 25px;
+            }
+
+
+            .hero-main h1 {
+                font-size: 43px;
+            }
+
+
+            .hero-main p {
+                font-size: 14px;
+            }
+
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+
+            .hero-buttons .btn {
+                width: 100%;
+            }
+
+
+            .hero-side {
+                gap: 15px;
+            }
+
+
+            .feature-card {
+                padding: 25px;
+            }
+
+
+            .section {
+                width:
+                    calc(100% - 24px);
+
+                margin: 60px auto;
+            }
+
+
+            .category-grid,
+            .reviews,
+            .shipping-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .about-title,
+            .about-text {
+                padding: 30px 25px;
+            }
+
+
+            .about-title h2 {
+                font-size: 34px;
+            }
+
+
+            .cta {
+                width:
+                    calc(100% - 24px);
+
+                padding: 45px 25px;
+
+                border-radius: 25px;
+            }
+
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+    </style>
+
 </head>
 
 
 <body>
 
-<header class="topbar">
-  <div class="brand">
-    <div class="brand-icon"><i class="fa-solid fa-store"></i></div>
-    <div>
-      <strong>Shop Ofe Trujillo</strong>
-      <small>Panel de empleada</small>
-    </div>
-  </div>
-  <button class="logout-mini" onclick="logout()" title="Cerrar sesión">
-    <i class="fa-solid fa-right-from-bracket"></i>
-    Salir
-  </button>
-</header>
 
-<main class="dashboard">
+    <!-- =========================================
+         HEADER
+    ========================================= -->
 
-  <section class="welcome-card">
-    <div>
-      <span class="eyebrow">¡Hola! 👋</span>
-      <h1 id="nombre">Cargando...</h1>
-      <p id="puesto">Cargando puesto...</p>
-    </div>
-    <div class="welcome-icon">💖</div>
-  </section>
+    <header>
 
-  <section class="quick-grid">
-    <button class="quick-card pink" onclick="document.getElementById('asistenciaCard').scrollIntoView({behavior:'smooth'})">
-      <span class="quick-icon">⏰</span>
-      <strong>Asistencia</strong>
-      <small>Entrada y salida</small>
-    </button>
+        <div class="container">
 
-    <button class="quick-card purple" onclick="document.getElementById('tareasCard').scrollIntoView({behavior:'smooth'})">
-      <span class="quick-icon">📋</span>
-      <strong>Mis tareas</strong>
-      <small>Revisa lo pendiente</small>
-    </button>
+            <div class="logo">
+                <a href="index.html">
+                    Shop Ofe Trujillo
+                </a>
+            </div>
 
-    <button class="quick-card blue" onclick="window.location='pos.html'">
-      <span class="quick-icon">🛍️</span>
-      <strong>Punto de venta</strong>
-      <small>Registrar una venta</small>
-    </button>
 
-    <button class="quick-card orange" onclick="document.getElementById('historialBtn').click()">
-      <span class="quick-icon">📅</span>
-      <strong>Mi historial</strong>
-      <small>Ver mis registros</small>
-    </button>
-  </section>
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                type="button"
+                aria-label="Abrir menú"
+                aria-expanded="false">
 
-  <section class="card compact-card" id="asistenciaCard">
-    <div class="section-title">
-      <div>
-        <span class="section-kicker">HOY</span>
-        <h2>⏰ Mi asistencia</h2>
-      </div>
-      <span class="status-dot" id="miniStatus"></span>
-    </div>
+                <i class="fas fa-bars"></i>
 
-    <div class="attendance-status" id="estadoAsistencia">Cargando...</div>
+            </button>
 
-    <div class="attendance-buttons">
-      <button class="btn-entry" onclick="registrarEntrada()">
-        <i class="fa-solid fa-right-to-bracket"></i>
-        Registrar entrada
-      </button>
-      <button class="btn-exit" onclick="registrarSalida()">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        Registrar salida
-      </button>
-    </div>
-  </section>
 
-  <section class="card" id="tareasCard">
-    <div class="section-title">
-      <div>
-        <span class="section-kicker">PARA TI</span>
-        <h2>📋 Mis tareas</h2>
-      </div>
-    </div>
-    <ul class="clean-list" id="tareas"></ul>
-  </section>
+            <nav id="mainNav">
 
-  <section class="card">
-    <div class="section-title">
-      <div>
-        <span class="section-kicker">AVISOS</span>
-        <h2>🔔 Notificaciones</h2>
-      </div>
-    </div>
-    <ul class="clean-list notifications" id="notificaciones"></ul>
-  </section>
+                <ul>
 
-  <section class="card">
-    <div class="section-title">
-      <div>
-        <span class="section-kicker">RENDIMIENTO</span>
-        <h2>🏆 Ranking semanal</h2>
-      </div>
-    </div>
-    <p class="helper">El ranking se calcula con las horas y asistencias registradas.</p>
-    <div id="ranking"></div>
-  </section>
+                    <li>
+                        <a href="index.html">
+                            Inicio
+                        </a>
+                    </li>
 
-  <section class="card">
-    <div class="section-title">
-      <div>
-        <span class="section-kicker">MIS REGISTROS</span>
-        <h2>📅 Historial y calendario</h2>
-      </div>
-    </div>
+                    <li>
+                        <a href="productos.html">
+                            Productos
+                        </a>
+                    </li>
 
-    <button class="secondary-btn" id="historialBtn" onclick="verHistorial()">
-      <i class="fa-regular fa-calendar"></i> Ver historial
-    </button>
-    <div id="historialBox"></div>
-    <div class="calendar-heading">Este mes</div>
-    <div id="calendario"></div>
-  </section>
+                    <li>
+                        <a href="#envios">
+                            Envíos
+                        </a>
+                    </li>
 
-  <section class="card">
-    <details>
-      <summary><span>👤</span> Mi información</summary>
-      <div class="info-grid">
-        <div><small>Usuario</small><strong id="usuario"></strong></div>
-        <div><small>Teléfono</small><strong id="telefono"></strong></div>
-        <div><small>Horario</small><strong id="horario"></strong></div>
-        <div><small>Área</small><strong id="area"></strong></div>
-        <div><small>Estado</small><strong id="estado"></strong></div>
-        <div><small>ID</small><strong id="id"></strong></div>
-      </div>
-    </details>
-  </section>
+                    <li>
+                        <a href="#novedades">
+                            Nosotros
+                        </a>
+                    </li>
 
-  <section class="card">
-    <details>
-      <summary><span>🏪</span> Información de Shop Ofe</summary>
-      <div class="company-info">
-        <p>📍 Minatitlán, Veracruz</p>
-        <p>📦 Envíos nacionales dentro de México</p>
-        <p>📲 WhatsApp: 922 217 4646</p>
-      </div>
-    </details>
-  </section>
+                    <li>
+                        <a href="login.html">
+                            Clientes
+                        </a>
+                    </li>
 
-  <!-- Herramientas administrativas: solo se muestran a Ofe y Samm -->
-  <section class="card admin-shell" id="adminPanel" style="display:none;">
-    <div class="section-title">
-      <div>
-        <span class="section-kicker">ADMINISTRACIÓN</span>
-        <h2>⚙️ Herramientas de administración</h2>
-      </div>
-    </div>
+                    <li>
+                        <a href="galeria.html#anuncios">
+                            Anuncios
+                        </a>
+                    </li>
 
-    <div class="admin-grid-simple">
+                    <li>
+                        <a href="galeria.html#galeria">
+                            Galería
+                        </a>
+                    </li>
 
-      <details class="admin-tool">
-        <summary>💬 Encuestas de clientes</summary>
-        <button class="secondary-btn" onclick="toggleEncuestas()" id="btnEncuestas">Ver encuestas 👁️</button>
-        <div id="listaEncuestas" style="display:none;"></div>
-      </details>
+                    <li>
+                        <a href="#contacto">
+                            Contacto
+                        </a>
+                    </li>
 
-      <details class="admin-tool">
-        <summary>📋 Asignar tarea</summary>
-        <select id="usuarioTarea">
-          <option value="sol">Sol</option>
-          <option value="pao">Paola</option>
-          <option value="angy">Angy</option>
-          <option value="nao">Naomi</option>
-          <option value="paty">Paty</option>
-          <option value="lety">Lety</option>
-          <option value="luis">Luis</option>
-          <option value="samm">Sammy</option>
-          <option value="ofe">Ofe</option>
-        </select>
-        <input type="text" id="nuevaTarea" placeholder="Escribe la tarea">
-        <button class="admin-btn" onclick="agregarTarea()">Asignar tarea</button>
-      </details>
+                    <!-- SOLO EMPLEADOS -->
+                    <li>
+                        <a href="acceso.html">
+                            Acceso
+                        </a>
+                    </li>
 
-      <details class="admin-tool">
-        <summary>🔔 Enviar notificación</summary>
-        <select id="usuarioNoti">
-          <option value="sol">Sol</option>
-          <option value="pao">Paola</option>
-          <option value="angy">Angy</option>
-          <option value="nao">Naomi</option>
-          <option value="paty">Paty</option>
-          <option value="lety">Lety</option>
-          <option value="samm">Sammy</option>
-          <option value="ofe">Ofe</option>
-        </select>
-        <input type="text" id="nuevaNoti" placeholder="Escribe el aviso">
-        <button class="admin-btn pink-admin" onclick="agregarNotificacion()">Enviar aviso</button>
-      </details>
+                </ul>
 
-      <details class="admin-tool">
-        <summary>👤 Registrar empleada</summary>
-        <input type="text" id="regUser" placeholder="Usuario (ej. ana)">
-        <input type="text" id="regNombre" placeholder="Nombre completo">
-        <input type="password" id="regPass" placeholder="Contraseña">
-        <input type="text" id="regPuesto" placeholder="Puesto">
-        <input type="text" id="regTelefono" placeholder="Teléfono">
-        <input type="text" id="regHorario" placeholder="Horario" value="10:00-7:00">
-        <input type="text" id="regArea" placeholder="Área">
-        <input type="text" id="regID" placeholder="ID (SOT00X)">
-        <button class="admin-btn green-admin" onclick="registrarEmpleadoBD()">Guardar empleada</button>
-      </details>
+            </nav>
 
-      <details class="admin-tool">
-        <summary>📢 Subir anuncio</summary>
-        <input type="text" id="tituloAnuncio" placeholder="Título">
-        <input type="text" id="descAnuncio" placeholder="Descripción">
-        <input type="file" id="imgAnuncio" accept="image/*">
-        <button class="admin-btn" onclick="subirAnuncio()">Publicar anuncio</button>
-      </details>
-
-      <details class="admin-tool">
-        <summary>🛍️ Subir producto</summary>
-        <input type="text" id="nombreProd" placeholder="Nombre del producto">
-        <input type="text" id="descProd" placeholder="Descripción">
-        <input type="number" id="precioProd" placeholder="Precio">
-        <input type="file" id="imgProd" accept="image/*">
-        <select id="tipoProd">
-          <option value="producto">Producto</option>
-          <option value="accesorio">Accesorio</option>
-        </select>
-        <button class="admin-btn" onclick="subirProducto()">Publicar producto</button>
-      </details>
-
-      <details class="admin-tool">
-        <summary>🗑️ Administrar productos</summary>
-        <button class="secondary-btn" id="btnMostrarProductos" onclick="toggleListaProductos()">Mostrar productos</button>
-        <div id="contenedorListaProductos" style="display:none;margin-top:12px;">
-          <div id="listaProductos"></div>
         </div>
-      </details>
 
-      <details class="admin-tool">
-        <summary>🗑️ Administrar anuncios</summary>
-        <div id="listaAnuncios"></div>
-      </details>
+    </header>
 
-      <div id="editarBox" style="display:none;">
-        <h3>✏️ Editar producto</h3>
-        <input id="editNombre" placeholder="Nombre">
-        <input id="editDesc" placeholder="Descripción">
-        <input id="editPrecio" type="number" placeholder="Precio">
-        <button class="admin-btn" onclick="guardarEdicion()">Guardar cambios</button>
-      </div>
-    </div>
-  </section>
 
-  <section class="card admin-shell" id="asistenciaAdmin" style="display:none;">
-    <details>
-      <summary>📊 Revisar asistencia del equipo</summary>
-      <select id="filtroEmpleado">
-        <option value="ofe">Ofe</option>
-        <option value="samm">Samm</option>
-        <option value="sol">Sol</option>
-        <option value="pao">Pao</option>
-        <option value="angy">Angy</option>
-        <option value="nao">Nao</option>
-        <option value="paty">Paty</option>
-        <option value="lety">Lety</option>
-        <option value="luis">Luis</option>
-      </select>
-      <div id="tablaAsistencia"></div>
-    </details>
-  </section>
+    <!-- =========================================
+         HERO
+    ========================================= -->
 
-  <section class="card admin-shell">
-    <details>
-      <summary>🧹 Rol de limpieza</summary>
-      <div class="cleaning-list">
-        <span>Lunes <b>Paty</b></span>
-        <span>Martes <b>Sol</b></span>
-        <span>Miércoles <b>Angy</b></span>
-        <span>Jueves <b>Pao</b></span>
-        <span>Viernes <b>Nao</b></span>
-        <span>Sábado <b>Lety</b></span>
-      </div>
-    </details>
-  </section>
+    <main>
 
-  <button class="logout-btn" onclick="logout()">
-    <i class="fa-solid fa-right-from-bracket"></i>
-    Cerrar sesión
-  </button>
+        <section class="hero">
 
-</main>
 
-<script src="https://unpkg.com/html5-qrcode"></script>
+            <div class="hero-main">
 
-<script>
-function toggleListaProductos(){
-    const lista=document.getElementById("contenedorListaProductos");
-    const boton=document.getElementById("btnMostrarProductos");
-    if(!lista || !boton) return;
-    if(lista.style.display==="none"){
-        lista.style.display="block";
-        boton.textContent="Ocultar productos";
-    }else{
-        lista.style.display="none";
-        boton.textContent="Mostrar productos";
-    }
-}
-</script>
+                <div class="hero-icon">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </div>
 
-<script type="module">
 
+                <h1>
+                    Shop Ofe
+                    <span>Trujillo</span>
+                </h1>
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 
-import {
-    getMessaging,
-    getToken,
-    onMessage
-}
-from "https://www.gstatic.com/firebasejs/12.11.0/firebase-messaging.js";
+                <p>
+                    Cosméticos, accesorios, novedades y mucho más,
+                    seleccionados para resaltar tu belleza, estilo y esencia.
+                </p>
 
-import {
-    getFirestore,
-    collection,
-    addDoc,
-    getDocs,
-    deleteDoc,
-    doc,
-    updateDoc,
-    setDoc,
-    getDoc,
-    query,
-    orderBy
-}
-from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-
-const firebaseConfig={
-
-    apiKey:
-    "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
-
-    authDomain:
-    "trujillo-digital-hub.firebaseapp.com",
-
-    projectId:
-    "trujillo-digital-hub",
-
-    storageBucket:
-    "trujillo-digital-hub.firebasestorage.app",
-
-    messagingSenderId:
-    "162799375782",
-
-    appId:
-    "1:162799375782:web:2be9127bfeaa613fd6ab67"
-
-};
-
-
-const app=
-    initializeApp(firebaseConfig);
-
-const messaging=
-    getMessaging(app);
-
-const db=
-    getFirestore(app);
-
-
-Notification.requestPermission()
-.then(async permission=>{
-
-    if(permission==="granted"){
-
-        console.log("✅ Permisos OK");
-
-        try{
-
-            const registration=
-                await navigator.serviceWorker.ready;
-
-            const token=
-                await getToken(
-                    messaging,
-                    {
-                        vapidKey:
-                        "BNXdDBrsHmv88YjzUWpIR9_fRETeDqHHaedktV0pNIUd06UGkV6itW5sNMGieMwV0Upol46FOvNibgQmQc93iIA",
-
-                        serviceWorkerRegistration:
-                        registration
-                    }
-                );
-
-            console.log("🔥 TOKEN:");
-            console.log(token);
-
-        }catch(error){
-
-            console.error(
-                "Error obteniendo token:",
-                error
-            );
-
-        }
-
-    }
-
-});
-
-
-let datosAsistencia=[];
-let historialVisible=false;
-
-
-document.addEventListener(
-"DOMContentLoaded",
-async()=>{
-
-    let emp=
-        JSON.parse(
-            sessionStorage.getItem("empleado")
-        );
-
-
-    if(!emp){
-
-        window.location.href=
-            "acceso.html";
-
-        return;
-
-    }
-
-
-    const estadoAsistencia=
-        document.getElementById(
-            "estadoAsistencia"
-        );
-
-
-    if(estadoAsistencia){
-
-        let fecha=
-            obtenerFechaHoy();
-
-        const ref=
-            doc(
-                db,
-                "asistencia",
-                emp.user+"_"+fecha
-            );
-
-        const snap=
-            await getDoc(ref);
-
-
-        if(!snap.exists()){
-
-            estadoAsistencia.innerText=
-                "❌ Sin registro hoy";
-
-        }else{
-
-            let data=
-                snap.data();
-
-            let entrada=
-                data.entrada
-                ? data.entrada
-                    .toDate()
-                    .toLocaleTimeString()
-                : "—";
-
-            let salida=
-                data.salida
-                ? data.salida
-                    .toDate()
-                    .toLocaleTimeString()
-                : "—";
-
-
-            estadoAsistencia.innerHTML=`
-
-                🟢 <b>Entrada:</b>
-                ${entrada}
-
-                <br>
-
-                🔴 <b>Salida:</b>
-                ${salida}
-
-            `;
-
-        }
-
-    }
-
-
-    document
-    .querySelectorAll("#nombre")
-    .forEach(e=>
-        e.innerText=
-        "Nombre: "+emp.nombre
-    );
-
-
-    document
-    .querySelectorAll("#puesto")
-    .forEach(e=>
-        e.innerText=
-        "Puesto: "+emp.puesto
-    );
-
-
-    document.getElementById("usuario").innerText=
-        "Usuario: "+emp.user;
-
-    document.getElementById("telefono").innerText=
-        "Teléfono: "+emp.telefono;
-
-    document.getElementById("horario").innerText=
-        "Horario: "+emp.horario;
-
-    document.getElementById("area").innerText=
-        "Área: "+emp.area;
-
-    document.getElementById("estado").innerText=
-        "Estado: "+emp.estado;
-
-    document.getElementById("id").innerText=
-        "ID: "+emp.id;
-
-
-    if(
-        emp.user==="ofe" ||
-        emp.user==="samm"
-    ){
-
-        let panel=
-            document.getElementById(
-                "adminPanel"
-            );
-
-        if(panel)
-            panel.style.display=
-                "block";
-
-    }
-
-
-    if(
-        emp.user==="ofe" ||
-        emp.user==="samm"
-    ){
-
-        let asistenciaAdmin=
-            document.getElementById(
-                "asistenciaAdmin"
-            );
-
-        if(asistenciaAdmin)
-            asistenciaAdmin.style.display=
-                "block";
-
-    }
-
-
-    if(
-        emp.user==="ofe" ||
-        emp.user==="samm"
-    ){
-
-        const snap=
-            await getDocs(
-                collection(
-                    db,
-                    "asistencia"
-                )
-            );
-
-
-        datosAsistencia=[];
-
-
-        snap.forEach(docSnap=>{
-
-            let data=
-                docSnap.data();
-
-            data.usuario=
-                data.usuario?.toLowerCase();
-
-            data.id=
-                docSnap.id;
-
-            datosAsistencia.push(
-                data
-            );
-
-        });
-
-
-        mostrarAsistencia("todos");
-
-    }
-
-
-    let lista=
-        document.getElementById(
-            "tareas"
-        );
-
-    let notificaciones=
-        document.getElementById(
-            "notificaciones"
-        );
-
-
-    const tareasSnap=
-        await getDocs(
-            collection(
-                db,
-                "tareas"
-            )
-        );
-
-
-    lista.innerHTML="";
-
-    let tieneTareas=false;
-
-
-    tareasSnap.forEach(docSnap=>{
-
-        let data=
-            docSnap.data();
-
-
-        if(
-            data.usuario===
-            emp.user
-        ){
-
-            let li=
-                document.createElement(
-                    "li"
-                );
-
-            li.textContent=
-                "✔ "+
-                data.texto+
-                " ("+
-                data.creadoPor+
-                ")";
-
-            lista.appendChild(li);
-
-            tieneTareas=true;
-
-        }
-
-    });
-
-
-    if(!tieneTareas)
-        lista.innerHTML=
-            "<li>Sin tareas</li>";
-
-
-    const notiSnap=
-        await getDocs(
-            collection(
-                db,
-                "notificaciones"
-            )
-        );
-
-
-    notificaciones.innerHTML="";
-
-    let tieneNoti=false;
-
-
-    notiSnap.forEach(docSnap=>{
-
-        let data=
-            docSnap.data();
-
-
-        if(
-            data.usuario===
-            emp.user
-        ){
-
-            let li=
-                document.createElement(
-                    "li"
-                );
-
-            li.textContent=
-                "🔔 "+
-                data.texto+
-                " ("+
-                data.creadoPor+
-                ")";
-
-            notificaciones.appendChild(li);
-
-            tieneNoti=true;
-
-        }
-
-    });
-
-
-    if(!tieneNoti)
-        notificaciones.innerHTML=
-            "<li>Sin notificaciones</li>";
-
-
-    const listaProductos=
-        document.getElementById(
-            "listaProductos"
-        );
-
-
-    const productosSnap=
-        await getDocs(
-            collection(
-                db,
-                "productos"
-            )
-        );
-
-
-    listaProductos.innerHTML="";
-
-
-    productosSnap.forEach(
-        docSnap=>{
-
-            let data=
-                docSnap.data();
-
-            let id=
-                docSnap.id;
-
-
-            let div=
-                document.createElement(
-                    "div"
-                );
-
-
-            let info=
-                document.createElement(
-                    "div"
-                );
-
-            info.innerHTML=`
-                <strong>
-                    ${data.nombre}
-                </strong>
-
-                <br>
-
-                <span>
-                    $${data.precio}
-                </span>
-
-                <br>
-
-                <small>
-                    Código:
-                    ${data.codigo||"N/A"}
-                </small>
-            `;
-
-
-            let btnEditar=
-                document.createElement(
-                    "button"
-                );
-
-            btnEditar.textContent=
-                "✏️ Editar";
-
-            btnEditar.onclick=()=>
-                editarProducto(
-                    id,
-                    data
-                );
-
-
-            let btnEliminar=
-                document.createElement(
-                    "button"
-                );
-
-            btnEliminar.textContent=
-                "🗑️ Eliminar";
-
-            btnEliminar.onclick=()=>
-                eliminarProducto(id);
-
-
-            div.appendChild(info);
-
-            div.appendChild(
-                btnEditar
-            );
-
-            div.appendChild(
-                btnEliminar
-            );
-
-
-            listaProductos.appendChild(
-                div
-            );
-
-        }
-    );
-
-
-    cargarVIP();
-
-    cargarContenidoVIPAdmin();
-
-
-    window.subirProducto=
-    async()=>{
-
-        let nombre=
-            document.getElementById(
-                "nombreProd"
-            ).value.trim();
-
-        let descripcion=
-            document.getElementById(
-                "descProd"
-            ).value.trim();
-
-        let precio=
-            document.getElementById(
-                "precioProd"
-            ).value;
-
-        let file=
-            document.getElementById(
-                "imgProd"
-            ).files[0];
-
-        let tipo=
-            document.getElementById(
-                "tipoProd"
-            ).value;
-
-
-        if(
-            !nombre ||
-            !precio ||
-            !file
-        ){
-
-            return alert(
-                "❌ Completa los campos"
-            );
-
-        }
-
-
-        try{
-
-            const formData=
-                new FormData();
-
-            formData.append(
-                "image",
-                file
-            );
-
-
-            const response=
-                await fetch(
-                    "https://api.imgbb.com/1/upload?key=e5fca8fd3a72f235075cfa08e1370ee3",
-                    {
-                        method:"POST",
-                        body:formData
-                    }
-                );
-
-
-            const data=
-                await response.json();
-
-            const imageUrl=
-                data.data.url;
-
-
-            await addDoc(
-                collection(
-                    db,
-                    "productos"
-                ),
-                {
-                    nombre,
-                    descripcion,
-                    precio,
-                    imagen:imageUrl,
-                    tipo,
-                    creadoPor:emp.user,
-                    fecha:new Date()
-                }
-            );
-
-
-            alert(
-                "✅ Producto subido"
-            );
-
-            location.reload();
-
-
-        }catch(error){
-
-            console.error(error);
-
-            alert(
-                "❌ Error al subir"
-            );
-
-        }
-
-    };
-
-
-    window.eliminarProducto=
-    async(id)=>{
-
-        if(
-            !confirm(
-                "¿Eliminar producto?"
-            )
-        )
-            return;
-
-
-        await deleteDoc(
-            doc(
-                db,
-                "productos",
-                id
-            )
-        );
-
-
-        alert(
-            "🗑️ Eliminado"
-        );
-
-        location.reload();
-
-    };
-
-
-    window.agregarTarea=
-    async()=>{
-
-        let user=
-            document.getElementById(
-                "usuarioTarea"
-            ).value;
-
-        let tarea=
-            document.getElementById(
-                "nuevaTarea"
-            ).value.trim();
-
-
-        if(!tarea)
-            return alert(
-                "Escribe una tarea"
-            );
-
-
-        await addDoc(
-            collection(
-                db,
-                "tareas"
-            ),
-            {
-                usuario:user,
-                texto:tarea,
-                creadoPor:emp.user
-            }
-        );
-
-
-        let empleado=
-            empleados.find(
-                e=>e.user===user
-            );
-
-
-        if(empleado){
-
-            let mensaje=
-                `Hola ${empleado.nombre}, tienes una nueva tarea en Shop Ofe Trujillo`;
-
-            let url=
-                `https://wa.me/52${empleado.telefono}?text=${encodeURIComponent(mensaje)}`;
-
-            window.location.href=
-                url;
-
-        }
-
-
-        alert(
-            "✅ Tarea enviada"
-        );
-
-    };
-
-
-    window.agregarNotificacion=
-    async()=>{
-
-        let user=
-            document.getElementById(
-                "usuarioNoti"
-            ).value;
-
-        let noti=
-            document.getElementById(
-                "nuevaNoti"
-            ).value.trim();
-
-
-        if(!noti)
-            return alert(
-                "Escribe una notificación"
-            );
-
-
-        await addDoc(
-            collection(
-                db,
-                "notificaciones"
-            ),
-            {
-                usuario:user,
-                texto:noti,
-                creadoPor:emp.user
-            }
-        );
-
-
-        let empleado=
-            empleados.find(
-                e=>e.user===user
-            );
-
-
-        if(empleado){
-
-            let mensaje=
-                `Hola ${empleado.nombre}, tienes una notificación en Shop Ofe Trujillo`;
-
-            let url=
-                `https://wa.me/52${empleado.telefono}?text=${encodeURIComponent(mensaje)}`;
-
-            window.location.href=
-                url;
-
-        }
-
-
-        alert(
-            "🔔 Notificación enviada"
-        );
-
-    };
-
-
-    cargarRanking();
-
-
-    const filtroEmpleado=
-        document.getElementById(
-            "filtroEmpleado"
-        );
-
-
-    if(filtroEmpleado){
-
-        filtroEmpleado.addEventListener(
-            "change",
-            e=>{
-                mostrarAsistencia(
-                    e.target.value.toLowerCase()
-                );
-            }
-        );
-
-    }
-
-
-    window.subirAnuncio=
-    async()=>{
-
-        let titulo=
-            document.getElementById(
-                "tituloAnuncio"
-            ).value.trim();
-
-        let descripcion=
-            document.getElementById(
-                "descAnuncio"
-            ).value.trim();
-
-        let file=
-            document.getElementById(
-                "imgAnuncio"
-            ).files[0];
-
-
-        if(
-            !titulo ||
-            !file
-        ){
-
-            return alert(
-                "❌ Completa los campos"
-            );
-
-        }
-
-
-        try{
-
-            const formData=
-                new FormData();
-
-            formData.append(
-                "image",
-                file
-            );
-
-
-            const response=
-                await fetch(
-                    "https://api.imgbb.com/1/upload?key=e5fca8fd3a72f235075cfa08e1370ee3",
-                    {
-                        method:"POST",
-                        body:formData
-                    }
-                );
-
-
-            const data=
-                await response.json();
-
-            const imageUrl=
-                data.data.url;
-
-
-            await addDoc(
-                collection(
-                    db,
-                    "anuncios"
-                ),
-                {
-                    titulo,
-                    descripcion,
-                    imagen:imageUrl,
-                    creadoPor:emp.user,
-                    fecha:new Date()
-                }
-            );
-
-
-            alert(
-                "✅ Anuncio subido"
-            );
-
-            location.reload();
-
-
-        }catch(error){
-
-            console.error(error);
-
-            alert(
-                "❌ Error al subir anuncio"
-            );
-
-        }
-
-    };
-
-
-    const listaAnuncios=
-        document.getElementById(
-            "listaAnuncios"
-        );
-
-
-    if(listaAnuncios){
-
-        const anunciosSnap=
-            await getDocs(
-                collection(
-                    db,
-                    "anuncios"
-                )
-            );
-
-
-        listaAnuncios.innerHTML="";
-
-
-        anunciosSnap.forEach(
-            docSnap=>{
-
-                let data=
-                    docSnap.data();
-
-                let id=
-                    docSnap.id;
-
-
-                let div=
-                    document.createElement(
-                        "div"
-                    );
-
-
-                let info=
-                    document.createElement(
-                        "span"
-                    );
-
-                info.innerHTML=
-                    `<strong>${data.titulo}</strong>`;
-
-
-                let button=
-                    document.createElement(
-                        "button"
-                    );
-
-                button.textContent=
-                    "🗑️ Eliminar";
-
-                button.onclick=()=>
-                    eliminarAnuncio(id);
-
-
-                div.appendChild(info);
-
-                div.appendChild(button);
-
-                listaAnuncios.appendChild(div);
-
-            }
-        );
-
-    }
-
-
-    window.eliminarAnuncio=
-    async(id)=>{
-
-        if(
-            !confirm(
-                "¿Eliminar anuncio?"
-            )
-        )
-            return;
-
-
-        await deleteDoc(
-            doc(
-                db,
-                "anuncios",
-                id
-            )
-        );
-
-
-        alert(
-            "🗑️ Anuncio eliminado"
-        );
-
-        location.reload();
-
-    };
-
-
-    let productoEditando=null;
-
-
-    window.editarProducto=
-    (id,data)=>{
-
-        productoEditando=id;
-
-
-        document.getElementById(
-            "editarBox"
-        ).style.display=
-            "block";
-
-
-        document.getElementById(
-            "editNombre"
-        ).value=
-            data.nombre;
-
-
-        document.getElementById(
-            "editDesc"
-        ).value=
-            data.descripcion||"";
-
-
-        document.getElementById(
-            "editPrecio"
-        ).value=
-            data.precio;
-
-
-        document.getElementById(
-            "editarBox"
-        ).scrollIntoView({
-            behavior:"smooth",
-            block:"center"
-        });
-
-    };
-
-
-    window.guardarEdicion=
-    async()=>{
-
-        let nombre=
-            document.getElementById(
-                "editNombre"
-            ).value.trim();
-
-        let descripcion=
-            document.getElementById(
-                "editDesc"
-            ).value.trim();
-
-        let precio=
-            document.getElementById(
-                "editPrecio"
-            ).value;
-
-
-        if(
-            !nombre ||
-            !precio
-        ){
-
-            return alert(
-                "❌ Completa los campos"
-            );
-
-        }
-
-
-        await updateDoc(
-            doc(
-                db,
-                "productos",
-                productoEditando
-            ),
-            {
-                nombre,
-                descripcion,
-                precio
-            }
-        );
-
-
-        alert(
-            "✅ Producto actualizado"
-        );
-
-        location.reload();
-
-    };
-
-
-    cargarCalendario();
-
-
-    window.registrarEntrada=
-    async()=>{
-
-        let ahora=
-            new Date();
-
-        let hora=
-            ahora.getHours();
-
-        let minutos=
-            ahora.getMinutes();
-
-
-        if(
-            hora<9 ||
-            (
-                hora===9 &&
-                minutos<50
-            )
-        ){
-
-            alert(
-                "❌ No puedes registrar entrada antes de las 9:50 AM"
-            );
-
-            return;
-
-        }
-
-
-        let emp=
-            JSON.parse(
-                sessionStorage.getItem(
-                    "empleado"
-                )
-            );
-
-
-        let fecha=
-            obtenerFechaHoy();
-
-
-        const ref=
-            doc(
-                db,
-                "asistencia",
-                emp.user+"_"+fecha
-            );
-
-
-        const snap=
-            await getDoc(ref);
-
-
-        if(snap.exists()){
-
-            alert(
-                "⚠️ Ya registraste entrada"
-            );
-
-            return;
-
-        }
-
-
-        try{
-
-            navigator.geolocation.getCurrentPosition(
-
-                async pos=>{
-
-                    const ubicacion={
-                        lat:
-                            pos.coords.latitude,
-
-                        lng:
-                            pos.coords.longitude
-                    };
-
-
-                    await setDoc(
-                        ref,
-                        {
-                            usuario:emp.user,
-                            nombre:emp.nombre,
-                            entrada:ahora,
-                            salida:null,
-                            ubicacionEntrada:
-                                ubicacion
-                        }
-                    );
-
-
-                    alert(
-                        "✅ Entrada registrada con ubicación"
-                    );
-
-                    location.reload();
-
-                },
-
-                error=>{
-
-                    alert(
-                        "❌ No se pudo obtener ubicación"
-                    );
-
-                    console.error(error);
-
-                }
-
-            );
-
-
-        }catch(error){
-
-            console.error(error);
-
-        }
-
-    };
-
-
-    window.registrarSalida=
-    async()=>{
-
-        let emp=
-            JSON.parse(
-                sessionStorage.getItem(
-                    "empleado"
-                )
-            );
-
-
-        let fecha=
-            obtenerFechaHoy();
-
-
-        const ref=
-            doc(
-                db,
-                "asistencia",
-                emp.user+"_"+fecha
-            );
-
-
-        const snap=
-            await getDoc(ref);
-
-
-        if(!snap.exists()){
-
-            alert(
-                "❌ Primero registra entrada"
-            );
-
-            return;
-
-        }
-
-
-        let data=
-            snap.data();
-
-
-        if(data.salida){
-
-            alert(
-                "⚠️ Ya registraste tu salida"
-            );
-
-            return;
-
-        }
-
-
-        let entrada=
-            data.entrada?.toDate
-            ? data.entrada.toDate()
-            : new Date(data.entrada);
-
-
-        let salida=
-            new Date();
-
-
-        let horas=
-            (
-                (salida-entrada)/
-                1000/
-                60/
-                60
-            );
-
-
-        const guardarSalida=
-        async(ubicacion=null)=>{
-
-            await setDoc(
-                ref,
-                {
-                    ...data,
-                    salida:salida,
-                    horasTrabajadas:
-                        horas.toFixed(2),
-                    ubicacionSalida:
-                        ubicacion
-                }
-            );
-
-
-            alert(
-                "✅ Salida registrada"
-            );
-
-            location.reload();
-
-        };
-
-
-        if(
-            navigator.geolocation
-        ){
-
-            navigator.geolocation.getCurrentPosition(
-
-                async pos=>{
-
-                    const ubicacion={
-                        lat:
-                            pos.coords.latitude,
-
-                        lng:
-                            pos.coords.longitude
-                    };
-
-
-                    await guardarSalida(
-                        ubicacion
-                    );
-
-                },
-
-                async error=>{
-
-                    console.warn(
-                        "Sin ubicación:",
-                        error
-                    );
-
-                    await guardarSalida(
-                        null
-                    );
-
-                }
-
-            );
-
-        }else{
-
-            await guardarSalida(
-                null
-            );
-
-        }
-
-    };
-
-
-    if(
-        emp.user==="ofe" ||
-        emp.user==="samm"
-    ){
-
-        cargarEncuestas();
-
-    }
-
-
-    const select=
-        document.getElementById(
-            "filtroEmpleado"
-        );
-
-
-    if(select){
-
-        select.value=
-            "ofe";
-
-    }
-
-});
-
-
-const empleados=[
-
-    {
-        user:"ofe",
-        nombre:"Ofe",
-        telefono:"9221640747"
-    },
-
-    {
-        user:"samm",
-        nombre:"Samm",
-        telefono:"9222081087"
-    },
-
-    {
-        user:"sol",
-        nombre:"Sol",
-        telefono:"9222136931"
-    },
-
-    {
-        user:"pao",
-        nombre:"Pao",
-        telefono:"9221589784"
-    },
-
-    {
-        user:"angy",
-        nombre:"Angy",
-        telefono:"9221251906"
-    },
-
-    {
-        user:"nao",
-        nombre:"Nao",
-        telefono:"9221721390"
-    },
-
-    {
-        user:"paty",
-        nombre:"Paty",
-        telefono:"9222038139"
-    },
-
-    {
-        user:"lety",
-        nombre:"Lety",
-        telefono:"9221307100"
-    },
-
-    {
-        user:"luis",
-        nombre:"Luis",
-        telefono:"9222098471"
-    }
-
-];
-
-
-window.logout=()=>{
-
-    sessionStorage.clear();
-
-    window.location.href=
-        "acceso.html";
-
-};
-
-
-function obtenerFechaHoy(){
-
-    const fecha=
-        new Date();
-
-    const year=
-        fecha.getFullYear();
-
-    const month=
-        String(
-            fecha.getMonth()+1
-        ).padStart(2,"0");
-
-    const day=
-        String(
-            fecha.getDate()
-        ).padStart(2,"0");
-
-
-    return `${year}-${month}-${day}`;
-
-}
-
-
-function mostrarAsistencia(filtro){
-
-    const contenedor=
-        document.getElementById(
-            "tablaAsistencia"
-        );
-
-
-    if(!contenedor)
-        return;
-
-
-    contenedor.innerHTML="";
-
-
-    if(!filtro)
-        return;
-
-
-    datosAsistencia.forEach(
-        data=>{
-
-            if(
-                data.usuario!==
-                filtro.toLowerCase()
-            )
-                return;
-
-
-            let entrada=
-                data.entrada
-                ? data.entrada
-                    .toDate()
-                    .toLocaleString()
-                : "—";
-
-
-            let salida=
-                data.salida
-                ? data.salida
-                    .toDate()
-                    .toLocaleString()
-                : "—";
-
-
-            let horas=
-                data.horasTrabajadas||
-                "—";
-
-
-            let div=
-                document.createElement(
-                    "div"
-                );
-
-
-            div.innerHTML=`
-
-                📅 <b>
-                    ${data.id.split("_")[1]}
-                </b>
-
-                <br>
-
-                👤 ${data.usuario}
-
-                <br>
-
-                🟢 Entrada:
-                ${entrada}
-
-                <br>
-
-                🔴 Salida:
-                ${salida}
-
-                <br>
-
-                ⏱️ Horas:
-                ${horas}
-
-            `;
-
-
-            contenedor.appendChild(
-                div
-            );
-
-        }
-    );
-
-}
-
-
-window.filtrarAsistencia=()=>{
-
-    let select=
-        document.getElementById(
-            "filtroEmpleado"
-        );
-
-    let valor=
-        select.value.toLowerCase();
-
-
-    mostrarAsistencia(
-        valor
-    );
-
-};
-
-
-window.verHistorial=
-async()=>{
-
-    let emp=
-        JSON.parse(
-            sessionStorage.getItem(
-                "empleado"
-            )
-        );
-
-
-    const box=
-        document.getElementById(
-            "historialBox"
-        );
-
-
-    if(historialVisible){
-
-        box.innerHTML="";
-
-        historialVisible=false;
-
-        return;
-
-    }
-
-
-    box.innerHTML=
-        "<h3>📅 Historial</h3>";
-
-
-    const snap=
-        await getDocs(
-            collection(
-                db,
-                "asistencia"
-            )
-        );
-
-
-    snap.forEach(
-        docSnap=>{
-
-            let data=
-                docSnap.data();
-
-
-            if(
-                data.usuario!==
-                emp.user
-            )
-                return;
-
-
-            let fecha=
-                docSnap.id.split("_")[1];
-
-
-            let entrada=
-                data.entrada
-                ? data.entrada
-                    .toDate()
-                    .toLocaleTimeString()
-                : "—";
-
-
-            let salida=
-                data.salida
-                ? data.salida
-                    .toDate()
-                    .toLocaleTimeString()
-                : "—";
-
-
-            let horas=
-                data.horasTrabajadas||
-                "—";
-
-
-            box.innerHTML+=`
-
-                <hr>
-
-                📅 ${fecha}
-
-                <br>
-
-                🟢 ${entrada}
-
-                <br>
-
-                🔴 ${salida}
-
-                <br>
-
-                ⏱️ ${horas} hrs
-
-            `;
-
-        }
-    );
-
-
-    historialVisible=true;
-
-};
-
-
-window.cargarCalendario=
-async()=>{
-
-    let emp=
-        JSON.parse(
-            sessionStorage.getItem(
-                "empleado"
-            )
-        );
-
-
-    const contenedor=
-        document.getElementById(
-            "calendario"
-        );
-
-
-    if(!contenedor)
-        return;
-
-
-    contenedor.innerHTML="";
-
-
-    let hoy=
-        new Date();
-
-    let year=
-        hoy.getFullYear();
-
-    let month=
-        hoy.getMonth();
-
-
-    let diasMes=
-        new Date(
-            year,
-            month+1,
-            0
-        ).getDate();
-
-
-    const snap=
-        await getDocs(
-            collection(
-                db,
-                "asistencia"
-            )
-        );
-
-
-    let asistencias={};
-
-
-    snap.forEach(
-        docSnap=>{
-
-            let data=
-                docSnap.data();
-
-
-            if(
-                data.usuario===
-                emp.user
-            ){
-
-                let fecha=
-                    docSnap.id.split("_")[1];
-
-                asistencias[fecha]=
-                    data;
-
-            }
-
-        }
-    );
-
-
-    for(
-        let dia=1;
-        dia<=diasMes;
-        dia++
-    ){
-
-        let fecha=
-            `${year}-${String(month+1).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
-
-
-        let div=
-            document.createElement(
-                "div"
-            );
-
-
-        div.classList.add(
-            "dia"
-        );
-
-
-        div.innerText=
-            dia;
-
-
-        if(
-            asistencias[fecha]
-        ){
-
-            if(
-                asistencias[fecha]
-                .entrada
-            ){
-
-                div.classList.add(
-                    "asistio"
-                );
-
-            }
-
-        }else{
-
-            div.classList.add(
-                "falta"
-            );
-
-        }
-
-
-        contenedor.appendChild(
-            div
-        );
-
-    }
-
-};
-
-
-async function cargarRanking(){
-
-    const cont=
-        document.getElementById(
-            "ranking"
-        );
-
-
-    cont.innerHTML=
-        "⏳ Cargando ranking...";
-
-
-    let empleadosData={};
-
-    const lista=[
-        "ofe",
-        "samm",
-        "sol",
-        "pao",
-        "angy",
-        "nao",
-        "paty",
-        "lety",
-        "luis"
-    ];
-
-
-    lista.forEach(
-        u=>{
-
-            empleadosData[u]={
-                puntos:0,
-                asistencias:0,
-                retardos:0,
-                faltas:0,
-                totalDias:0
-            };
-
-        }
-    );
-
-
-    try{
-
-        const snap=
-            await getDocs(
-                collection(
-                    db,
-                    "asistencia"
-                )
-            );
-
-
-        let inicioSemana=
-            obtenerInicioSemana();
-
-
-        snap.forEach(
-            docSnap=>{
-
-                let a=
-                    docSnap.data();
-
-                let user=
-                    (a.usuario||"")
-                    .toLowerCase();
-
-
-                if(
-                    !empleadosData[user]
-                )
-                    return;
-
-
-                let fechaE=
-                    a.entrada?.toDate();
-
-
-                let fechaS=
-                    a.salida?.toDate
-                    ? a.salida.toDate()
-                    : (
-                        a.salida
-                        ? new Date(a.salida)
-                        : null
-                    );
-
-
-                if(!fechaE)
-                    return;
-
-
-                if(
-                    fechaE<
-                    inicioSemana
-                )
-                    return;
-
-
-                let dia=
-                    fechaE.getDay();
-
-
-                if(
-                    dia>=2 &&
-                    dia<=5 &&
-                    fechaS
-                ){
-
-                    let horaSalida=
-                        fechaS.getHours();
-
-                    let minSalida=
-                        fechaS.getMinutes();
-
-                    let totalMinutos=
-                        (
-                            horaSalida*60
-                        )+
-                        minSalida;
-
-                    let limiteMinutos=
-                        (19*60)+15;
-
-
-                    if(
-                        totalMinutos>
-                        limiteMinutos
-                    )
-                        return;
-
-                }
-
-
-                if(
-                    dia===0||
-                    dia===6
-                )
-                    return;
-
-
-                empleadosData[user]
-                    .totalDias++;
-
-
-                let horas=
-                    parseFloat(
-                        a.horasTrabajadas||0
-                    );
-
-
-                empleadosData[user]
-                    .puntos+=horas;
-
-
-                if(horas>=8)
-                    empleadosData[user]
-                        .asistencias++;
-
-                else if(horas>0)
-                    empleadosData[user]
-                        .retardos++;
-
-                else
-                    empleadosData[user]
-                        .faltas++;
-
-            }
-        );
-
-
-        let ranking=
-            Object.keys(
-                empleadosData
-            ).map(
-                user=>{
-
-                    let emp=
-                        empleadosData[user];
-
-                    return {
-                        user,
-                        ...emp
-                    };
-
-                }
-            );
-
-
-        ranking.sort(
-            (a,b)=>
-                b.puntos-a.puntos
-        );
-
-
-        cont.innerHTML="";
-
-
-        ranking.forEach(
-            (emp,i)=>{
-
-                if(
-                    emp.totalDias===0
-                )
-                    return;
-
-
-                let medal=
-                    i===0
-                    ? "🥇"
-                    : i===1
-                    ? "🥈"
-                    : i===2
-                    ? "🥉"
-                    : "";
-
-
-                let div=
-                    document.createElement(
-                        "div"
-                    );
-
-
-                div.className=
-                    i===0
-                    ? "venta oro"
-                    : i===1
-                    ? "venta plata"
-                    : i===2
-                    ? "venta bronce"
-                    : "venta normal";
-
-
-                div.innerHTML=`
-
+                <p>
                     <strong>
-                        ${medal}
-                        ${emp.user.toUpperCase()}
+                        Dios es Bueno 💖
                     </strong>
-
-                    <span>
-                        ⏱️
-                        ${emp.puntos.toFixed(1)}
-                        hrs
-                    </span>
-
-                    <span>
-                        📊
-                        ${emp.asistencias}
-                        días completos
-                    </span>
-
-                `;
-
-
-                cont.appendChild(
-                    div
-                );
-
-            }
-        );
-
-
-    }catch(error){
-
-        console.error(error);
-
-        cont.innerHTML=
-            "❌ Error cargando ranking";
-
-    }
-
-}
-
-
-function obtenerInicioSemana(){
-
-    let hoy=
-        new Date();
-
-    let dia=
-        hoy.getDay();
-
-
-    let diff=
-        hoy.getDate()-
-        dia+
-        (
-            dia===0
-            ? -6
-            : 1
-        );
-
-
-    let lunes=
-        new Date(
-            hoy.setDate(diff)
-        );
-
-
-    lunes.setHours(
-        0,
-        0,
-        0,
-        0
-    );
-
-
-    return lunes;
-
-}
-
-
-async function cargarEncuestas(){
-
-    const cont=
-        document.getElementById(
-            "listaEncuestas"
-        );
-
-
-    if(!cont)
-        return;
-
-
-    const snap=
-        await getDocs(
-            collection(
-                db,
-                "encuestas"
-            )
-        );
-
-
-    let encuestas=[];
-
-
-    snap.forEach(
-        docSnap=>{
-
-            encuestas.push(
-                docSnap.data()
-            );
-
-        }
-    );
-
-
-    encuestas.sort(
-        (a,b)=>
-            new Date(b.fecha)-
-            new Date(a.fecha)
-    );
-
-
-    cont.innerHTML="";
-
-
-    encuestas.forEach(
-        e=>{
-
-            let fecha=
-                e.fecha?.toDate
-                ? e.fecha
-                    .toDate()
-                    .toLocaleString()
-                : new Date(
-                    e.fecha
-                ).toLocaleString();
-
-
-            cont.innerHTML+=`
-
-                <div>
-
-                    <b>
-                        ${e.nombre}
-                    </b>
-
                     <br>
+                    Nunca olvides lo bonita que eres.
+                </p>
 
-                    ⭐
-                    ${e.calificacion}/5
 
-                    <br>
+                <div class="hero-buttons">
 
-                    💬
-                    ${e.comentario||
-                    "Sin comentario"}
+                    <a
+                        href="productos.html"
+                        class="btn btn-primary">
 
-                    <br>
+                        <i class="fa-solid fa-bag-shopping"></i>
 
-                    <small>
-                        📅 ${fecha}
-                    </small>
+                        Ver productos
+
+                    </a>
+
+
+                    <a
+                        href="#novedades"
+                        class="btn btn-outline">
+
+                        Conócenos
+
+                    </a>
 
                 </div>
 
-            `;
-
-        }
-    );
+            </div>
 
 
-    if(encuestas.length===0){
-
-        cont.innerHTML=
-            "<p>No hay encuestas aún</p>";
-
-    }
-
-}
+            <div class="hero-side">
 
 
-let encuestasVisibles=false;
+                <div class="feature-card">
+
+                    <div class="icon">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+
+                    <h2>
+                        Una comunidad que crece contigo
+                    </h2>
+
+                    <p>
+                        Gracias a la confianza de más de
+                        <strong>30,000 seguidoras</strong>,
+                        seguimos creciendo y compartiendo contigo
+                        productos, novedades y tendencias.
+                    </p>
+
+                </div>
 
 
-window.toggleEncuestas=
-async function(){
+                <div class="feature-card">
 
-    const cont=
-        document.getElementById(
-            "listaEncuestas"
-        );
+                    <div class="icon">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
 
-    const btn=
-        document.getElementById(
-            "btnEncuestas"
-        );
+                    <h2>
+                        Envíos a México
+                    </h2>
 
+                    <p>
+                        Realizamos envíos a toda la República Mexicana
+                        con un tiempo estándar de
+                        <strong>3 a 5 días hábiles.</strong>
+                    </p>
 
-    if(encuestasVisibles){
+                </div>
 
-        cont.style.display=
-            "none";
+            </div>
 
-        btn.textContent=
-            "Ver encuestas 👁️";
-
-        encuestasVisibles=false;
-
-        return;
-
-    }
+        </section>
 
 
-    cont.style.display=
-        "block";
 
-    btn.textContent=
-        "Ocultar encuestas 🙈";
+        <!-- =========================================
+             CATEGORÍAS
+        ========================================= -->
 
-    encuestasVisibles=true;
+        <section class="section">
 
+            <div class="section-header">
 
-    await cargarEncuestas();
+                <span>
+                    Descubre
+                </span>
 
-};
+                <h2>
+                    Encuentra algo especial 💕
+                </h2>
 
+                <p>
+                    Explora algunas de las categorías que puedes encontrar
+                    en Shop Ofe Trujillo.
+                </p>
 
-async function cargarVIP(){
-
-    const cont=
-        document.getElementById(
-            "listaVIP"
-        );
-
-
-    if(!cont)
-        return;
-
-
-    cont.innerHTML=
-        "⏳ Cargando...";
+            </div>
 
 
-    const snap=
-        await getDocs(
-            collection(
-                db,
-                "vip_clientas"
-            )
-        );
+            <div class="category-grid">
 
 
-    cont.innerHTML="";
+                <a
+                    href="productos.html"
+                    class="category">
+
+                    <div class="category-icon">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+
+                    <h3>
+                        Cosméticos
+                    </h3>
+
+                    <p>
+                        Belleza y cuidado personal.
+                    </p>
+
+                </a>
 
 
-    snap.forEach(
-        docSnap=>{
+                <a
+                    href="productos.html"
+                    class="category">
 
-            let data=
-                docSnap.data();
+                    <div class="category-icon">
+                        <i class="fa-solid fa-gem"></i>
+                    </div>
+
+                    <h3>
+                        Accesorios
+                    </h3>
+
+                    <p>
+                        Detalles para complementar tu estilo.
+                    </p>
+
+                </a>
 
 
-            if(data.aprobada)
-                return;
+                <a
+                    href="productos.html"
+                    class="category">
+
+                    <div class="category-icon">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                    </div>
+
+                    <h3>
+                        Bolsas
+                    </h3>
+
+                    <p>
+                        Diseños para cada ocasión.
+                    </p>
+
+                </a>
 
 
-            let div=
-                document.createElement(
-                    "div"
+                <a
+                    href="productos.html"
+                    class="category">
+
+                    <div class="category-icon">
+                        <i class="fa-solid fa-sparkles"></i>
+                    </div>
+
+                    <h3>
+                        Novedades
+                    </h3>
+
+                    <p>
+                        Lo más reciente de Shop Ofe.
+                    </p>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             RESEÑAS
+        ========================================= -->
+
+        <section class="section">
+
+            <div class="section-header">
+
+                <span>
+                    Nuestra comunidad
+                </span>
+
+                <h2>
+                    Lo que dicen nuestras clientas
+                </h2>
+
+                <p>
+                    Gracias por compartir sus experiencias
+                    con Shop Ofe Trujillo.
+                </p>
+
+            </div>
+
+
+            <div class="reviews">
+
+
+                <div class="review">
+
+                    <div class="stars">
+                        ⭐⭐⭐⭐⭐
+                    </div>
+
+                    <p>
+                        "Excelente calidad y atención hermosa"
+                    </p>
+
+                    <strong>
+                        Ana Morgan
+                    </strong>
+
+                </div>
+
+
+                <div class="review">
+
+                    <div class="stars">
+                        ⭐⭐⭐⭐⭐
+                    </div>
+
+                    <p>
+                        "Me encantaron los productos 😍"
+                    </p>
+
+                    <strong>
+                        Kary Rueda
+                    </strong>
+
+                </div>
+
+
+                <div class="review">
+
+                    <div class="stars">
+                        ⭐⭐⭐⭐⭐
+                    </div>
+
+                    <p>
+                        "Todo llegó rápido y súper bonito"
+                    </p>
+
+                    <strong>
+                        Paola Sandoval
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             ENVÍOS
+        ========================================= -->
+
+        <section
+            class="section"
+            id="envios">
+
+            <div class="section-header">
+
+                <span>
+                    Compra con confianza
+                </span>
+
+                <h2>
+                    Envíos y puntos de recolección
+                </h2>
+
+                <p>
+                    Queremos que tu pedido llegue de manera
+                    fácil, segura y clara.
+                </p>
+
+            </div>
+
+
+            <div class="shipping-grid">
+
+
+                <div class="shipping-card">
+
+                    <div class="icon">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+
+                    <h3>
+                        Envíos a toda la República Mexicana
+                    </h3>
+
+                    <p>
+                        Llevamos tu pedido a cualquier rincón de México.
+                    </p>
+
+                    <ul>
+
+                        <li>
+                            Estándar:
+                            <strong>3 a 5 días hábiles.</strong>
+                        </li>
+
+                        <li>
+                            Costo fijo:
+                            <strong>$260 MXN.</strong>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <div class="shipping-card">
+
+                    <div class="icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+
+                    <h3>
+                        Punto de recolección
+                    </h3>
+
+                    <p>
+                        Si estás en Minatitlán, Veracruz,
+                        puedes recoger tu pedido en:
+                    </p>
+
+                    <ul>
+
+                        <li>
+                            Calle José Arenas 9,
+                            frente a la Picadita Jarocha del centro.
+                        </li>
+
+                        <li>
+                            Lunes: 10:00 a 15:00 hrs.
+                        </li>
+
+                        <li>
+                            Martes a viernes:
+                            10:00 a 19:00 hrs.
+                        </li>
+
+                        <li>
+                            Sábado:
+                            10:00 a 18:00 hrs.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <div class="shipping-card">
+
+                    <div class="icon">
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+
+                    <h3>
+                        Puntos de entrega
+                    </h3>
+
+                    <p>
+                        En algunos lugares de Veracruz y Puebla
+                        podemos realizar entrega presencial.
+                    </p>
+
+                    <ul>
+
+                        <li>Coatzacoalcos</li>
+                        <li>Cosoleacaque</li>
+                        <li>Naranjito</li>
+                        <li>Acayucan</li>
+                        <li>Nanchital</li>
+                        <li>Ixhuatlán</li>
+                        <li>Mundo Nuevo</li>
+                        <li>Jáltipan</li>
+                        <li>Villa Cuichapa</li>
+                        <li>Puebla</li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <div class="shipping-card">
+
+                    <div class="icon">
+                        <i class="fa-solid fa-file-shield"></i>
+                    </div>
+
+                    <h3>
+                        Políticas de compra
+                    </h3>
+
+                    <p>
+                        Consulta todos los detalles sobre
+                        pedidos, envíos y recolecciones.
+                    </p>
+
+                    <br>
+
+                    <a
+                        href="politicas.html"
+                        class="btn btn-primary">
+
+                        Ver políticas
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             NOSOTROS
+        ========================================= -->
+
+        <section
+            class="section"
+            id="novedades">
+
+            <div class="about">
+
+
+                <div class="about-title">
+
+                    <i class="fa-solid fa-heart"></i>
+
+                    <h2>
+                        Shop Ofe Trujillo
+                    </h2>
+
+                    <p>
+                        Mucho más que una tienda.
+                        Una comunidad que crece contigo.
+                    </p>
+
+                </div>
+
+
+                <div class="about-text">
+
+                    <p>
+                        En
+                        <strong>
+                            Shop Ofe Trujillo
+                        </strong>
+                        creamos mucho más que una tienda:
+                        construimos una experiencia pensada para
+                        resaltar tu belleza, estilo y esencia.
+                    </p>
+
+
+                    <p>
+                        Nos especializamos en cosméticos,
+                        accesorios y novedades cuidadosamente
+                        seleccionados, combinando tendencias,
+                        calidad y ese toque especial que nos distingue.
+                    </p>
+
+
+                    <p>
+                        Gracias a la confianza de más de
+                        <strong>
+                            30,000 seguidoras
+                        </strong>,
+                        hoy somos una comunidad sólida que
+                        crece día a día.
+                    </p>
+
+
+                    <p>
+                        Nos encanta conectar contigo de forma cercana
+                        y auténtica a través de redes sociales y lives,
+                        donde compartimos productos, tips y
+                        lo último en tendencias.
+                    </p>
+
+
+                    <p>
+                        Creemos en consentirte, escucharte y evolucionar
+                        contigo. Cada detalle está pensado para brindarte
+                        una experiencia única, femenina y especial.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             CTA
+        ========================================= -->
+
+        <section
+            class="cta"
+            id="contacto">
+
+            <h2>
+                ¿Lista para descubrir algo bonito? 💕
+            </h2>
+
+            <p>
+                Explora nuestros productos y encuentra
+                ese detalle especial que estabas buscando.
+            </p>
+
+            <a
+                href="productos.html"
+                class="btn btn-primary">
+
+                <i class="fa-solid fa-bag-shopping"></i>
+
+                Ver catálogo
+
+            </a>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================= -->
+
+    <footer>
+
+        <div class="footer-container">
+
+
+            <div>
+
+                <h3>
+                    Shop Ofe Trujillo
+                </h3>
+
+                <p>
+                    Realzando tu belleza natural con productos
+                    de calidad y creando una experiencia especial
+                    para nuestra comunidad.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Enlaces rápidos
+                </h3>
+
+                <ul>
+
+                    <li>
+                        <a href="index.html">
+                            Inicio
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="productos.html">
+                            Productos
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#envios">
+                            Envíos
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#novedades">
+                            Nosotros
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="politicas.html">
+                            Políticas
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Comunidad
+                </h3>
+
+                <ul>
+
+                    <li>
+                        <a href="galeria.html#anuncios">
+                            Anuncios
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="galeria.html#galeria">
+                            Galería
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="login.html">
+                            Clientes
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="acceso.html">
+                            Acceso de empleados
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="copyright">
+
+            © 2026 Shop Ofe Trujillo.
+            Todos los derechos reservados.
+
+        </div>
+
+    </footer>
+
+
+
+    <script>
+
+        /* =========================================
+           MENÚ MOBILE
+        ========================================= */
+
+        const menuToggle =
+            document.getElementById("menuToggle");
+
+        const mainNav =
+            document.getElementById("mainNav");
+
+
+        menuToggle.addEventListener(
+            "click",
+            () => {
+
+                const abierto =
+                    mainNav.classList.toggle("active");
+
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    abierto ? "true" : "false"
                 );
 
 
-            div.innerHTML=`
+                const icon =
+                    menuToggle.querySelector("i");
 
-                💖
-                ${data.email}
 
-                <br><br>
+                if (abierto) {
 
-                <button
-                    onclick="aprobarVIP('${docSnap.id}')">
+                    icon.classList.remove(
+                        "fa-bars"
+                    );
 
-                    ✅ Aprobar
+                    icon.classList.add(
+                        "fa-xmark"
+                    );
 
-                </button>
+                } else {
 
-            `;
+                    icon.classList.remove(
+                        "fa-xmark"
+                    );
 
+                    icon.classList.add(
+                        "fa-bars"
+                    );
 
-            cont.appendChild(
-                div
-            );
-
-        }
-    );
-
-}
-
-
-window.subirContenidoVIP=
-async()=>{
-
-    let titulo=
-        document.getElementById(
-            "tituloVIP"
-        ).value;
-
-    let imagen=
-        document.getElementById(
-            "imagenVIP"
-        ).value;
-
-    let descripcion=
-        document.getElementById(
-            "descripcionVIP"
-        ).value;
-
-    let fecha=
-        document.getElementById(
-            "fechaVIP"
-        ).value;
-
-    let nivel=
-        document.getElementById(
-            "nivelVIP"
-        ).value;
-
-
-    if(
-        !titulo||
-        !imagen||
-        !descripcion
-    ){
-
-        return alert(
-            "❌ Completa todos los campos"
-        );
-
-    }
-
-
-    try{
-
-        await addDoc(
-            collection(
-                db,
-                "vip_contenido"
-            ),
-            {
-                titulo,
-                imagen,
-                descripcion,
-                fecha,
-                nivel,
-                activo:true,
-                creado:new Date()
-            }
-        );
-
-
-        alert(
-            "💖 Contenido VIP publicado"
-        );
-
-
-        document.getElementById(
-            "tituloVIP"
-        ).value="";
-
-        document.getElementById(
-            "imagenVIP"
-        ).value="";
-
-        document.getElementById(
-            "descripcionVIP"
-        ).value="";
-
-        document.getElementById(
-            "fechaVIP"
-        ).value="";
-
-
-    }catch(error){
-
-        console.error(error);
-
-        alert(
-            "❌ Error al publicar"
-        );
-
-    }
-
-};
-
-
-async function cargarContenidoVIPAdmin(){
-
-    const box=
-        document.getElementById(
-            "listaContenidoVIP"
-        );
-
-
-    if(!box)
-        return;
-
-
-    box.innerHTML=
-        "⏳ Cargando contenido...";
-
-
-    try{
-
-        const q=
-            query(
-                collection(
-                    db,
-                    "vip_contenido"
-                ),
-                orderBy(
-                    "fecha",
-                    "desc"
-                )
-            );
-
-
-        const snap=
-            await getDocs(q);
-
-
-        box.innerHTML="";
-
-
-        snap.forEach(
-            docSnap=>{
-
-                let c=
-                    docSnap.data();
-
-
-                box.innerHTML+=`
-
-                    <div>
-
-                        <img
-                            src="${c.imagen}"
-                            alt="${c.titulo}">
-
-                        <h3>
-                            ${c.titulo}
-                        </h3>
-
-                        <p>
-                            ${c.descripcion}
-                        </p>
-
-                        <p>
-                            💎 ${c.nivel}
-                        </p>
-
-                        <button
-                            onclick="eliminarContenidoVIP('${docSnap.id}')">
-
-                            🗑️ Eliminar
-
-                        </button>
-
-                    </div>
-
-                `;
+                }
 
             }
         );
 
 
-    }catch(error){
+        /* CERRAR MENÚ AL DAR CLICK */
 
-        console.error(error);
+        document
+            .querySelectorAll("nav a")
+            .forEach(link => {
 
-        box.innerHTML=
-            "❌ No se pudo cargar el contenido VIP.";
+                link.addEventListener(
+                    "click",
+                    () => {
 
-    }
+                        mainNav.classList.remove(
+                            "active"
+                        );
 
-}
+                        menuToggle.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
 
+                        const icon =
+                            menuToggle.querySelector("i");
 
-window.eliminarContenidoVIP=
-async(id)=>{
+                        icon.classList.remove(
+                            "fa-xmark"
+                        );
 
-    if(
-        !confirm(
-            "¿Eliminar contenido VIP?"
-        )
-    )
-        return;
+                        icon.classList.add(
+                            "fa-bars"
+                        );
 
+                    }
+                );
 
-    await deleteDoc(
-        doc(
-            db,
-            "vip_contenido",
-            id
-        )
-    );
+            });
 
+    </script>
 
-    alert(
-        "🗑️ Contenido eliminado"
-    );
-
-
-    cargarContenidoVIPAdmin();
-
-};
-
-
-window.aprobarVIP=
-async(id)=>{
-
-    await updateDoc(
-        doc(
-            db,
-            "vip_clientas",
-            id
-        ),
-        {
-            aprobada:true
-        }
-    );
-
-
-    alert(
-        "💎 Suscriptora aprobada"
-    );
-
-
-    cargarVIP();
-
-    cargarContenidoVIPAdmin();
-
-};
-
-
-</script>
 
 </body>
 
