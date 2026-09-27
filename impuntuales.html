@@ -3,159 +3,1958 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Control | Shop Ofe Trujillo</title>
+
+    <title>Control de Pagos | Shop Ofe Trujillo</title>
+
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
     <style>
-        body { background: #f9f9f9; font-family: 'Open Sans', sans-serif; }
-        .contenedor { max-width: 900px; margin: 30px auto; padding: 20px; }
-        
-        .header-seccion { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
-        
-        .form-registro { 
-            background: white; padding: 25px; border-radius: 20px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 30px;
-            display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px; align-items: end;
+
+        :root {
+            --rosa: #ff2f92;
+            --rosa-claro: #ff72b8;
+            --rosa-suave: #fff0f7;
+            --morado: #8e44ad;
+            --oscuro: #15111a;
+            --oscuro-2: #211827;
+            --blanco: #ffffff;
+            --gris: #77727d;
+            --gris-claro: #f5f3f6;
+            --borde: rgba(21, 17, 26, .08);
+            --rojo: #ef476f;
+            --sombra: 0 18px 50px rgba(21,17,26,.08);
         }
 
-        @media (max-width: 768px) { .form-registro { grid-template-columns: 1fr; } }
-
-        .form-registro input { padding: 12px; border: 1px solid #ddd; border-radius: 10px; outline: none; }
-        .form-registro button { 
-            background: #ff4da6; color: white; border: none; padding: 12px 20px; 
-            border-radius: 10px; cursor: pointer; font-weight: bold; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .buscador-caja { position: relative; margin-bottom: 20px; }
-        .buscador-caja i { position: absolute; left: 15px; top: 15px; color: #aaa; }
-        .buscador-caja input { width: 100%; padding: 15px 15px 15px 45px; border-radius: 15px; border: 1px solid #ddd; font-size: 16px; box-sizing: border-box;}
+        html {
+            scroll-behavior: smooth;
+        }
 
-        .tabla-container { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        table { width: 100%; border-collapse: collapse; }
-        th { background: #ff4da6; color: white; padding: 15px; text-align: left; }
-        td { padding: 15px; border-bottom: 1px solid #eee; }
-        tr:hover { background: #fff9fb; }
-        
-        .monto { color: #d32f2f; font-weight: bold; }
-        .btn-borrar { color: #ff5252; cursor: pointer; transition: 0.2s; }
-        .btn-borrar:hover { transform: scale(1.2); }
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: "DM Sans", sans-serif;
+            color: var(--oscuro);
+            background:
+                radial-gradient(
+                    circle at 90% 0%,
+                    rgba(255,47,146,.10),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 0% 100%,
+                    rgba(142,68,173,.06),
+                    transparent 30%
+                ),
+                #faf8fb;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        button {
+            border: none;
+        }
+
+        /* ==========================================
+           HEADER
+        ========================================== */
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            background: rgba(21,17,26,.95);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,.08);
+        }
+
+        .topbar-inner {
+            width: min(1200px, calc(100% - 32px));
+            min-height: 76px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 43px;
+            height: 43px;
+            min-width: 43px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background: linear-gradient(135deg,var(--rosa),var(--morado));
+            box-shadow: 0 8px 25px rgba(255,47,146,.25);
+        }
+
+        .brand-text {
+            min-width: 0;
+            font-family: "Playfair Display",serif;
+            font-size: 22px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .brand-text span {
+            color: var(--rosa-claro);
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: 13px;
+            background: rgba(255,255,255,.08);
+            color: white;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 19px;
+        }
+
+        nav {
+            min-width: 0;
+        }
+
+        nav ul {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 4px;
+            list-style: none;
+        }
+
+        nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255,255,255,.86);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 10px 11px;
+            border-radius: 11px;
+            transition: .3s ease;
+            white-space: nowrap;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: white;
+            background: rgba(255,47,146,.16);
+        }
+
+        /* ==========================================
+           CONTENEDOR
+        ========================================== */
+
+        .contenedor {
+            width: min(1200px, calc(100% - 32px));
+            margin: auto;
+            padding: 35px 0 70px;
+        }
+
+        /* ==========================================
+           BOTÓN VOLVER
+        ========================================== */
+
+        .btn-volver {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            min-height: 44px;
+            margin-bottom: 18px;
+            padding: 10px 16px;
+            border-radius: 13px;
+            color: var(--rosa);
+            background: white;
+            border: 1px solid var(--borde);
+            box-shadow: 0 8px 25px rgba(21,17,26,.05);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            transition: .3s ease;
+        }
+
+        .btn-volver:hover {
+            color: white;
+            background: var(--rosa);
+            transform: translateX(-3px);
+        }
+
+        /* ==========================================
+           HERO
+        ========================================== */
+
+        .page-hero {
+            position: relative;
+            overflow: hidden;
+            padding: clamp(28px,5vw,48px);
+            margin-bottom: 28px;
+            border-radius: 30px;
+            color: white;
+            background:
+                radial-gradient(
+                    circle at 85% 20%,
+                    rgba(255,114,184,.30),
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 10% 90%,
+                    rgba(142,68,173,.25),
+                    transparent 30%
+                ),
+                linear-gradient(135deg,#17121d,#281b2e);
+            box-shadow: 0 25px 70px rgba(21,17,26,.16);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 760px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            margin-bottom: 17px;
+            border-radius: 50px;
+            color: #ffb6d8;
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.12);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .page-hero h1 {
+            font-family: "Playfair Display",serif;
+            font-size: clamp(34px,6vw,58px);
+            line-height: 1.05;
+            margin-bottom: 12px;
+        }
+
+        .page-hero h1 span {
+            color: var(--rosa-claro);
+        }
+
+        .page-hero p {
+            max-width: 650px;
+            color: rgba(255,255,255,.72);
+            line-height: 1.7;
+            font-size: clamp(14px,2vw,16px);
+        }
+
+        /* ==========================================
+           FORMULARIO
+        ========================================== */
+
+        .form-registro {
+            display: grid;
+            grid-template-columns:
+                minmax(220px,1.3fr)
+                minmax(150px,1fr)
+                minmax(180px,1fr)
+                auto;
+            gap: 14px;
+            align-items: end;
+            padding: 24px;
+            margin-bottom: 22px;
+            background: rgba(255,255,255,.96);
+            border: 1px solid var(--borde);
+            border-radius: 24px;
+            box-shadow: var(--sombra);
+        }
+
+        .campo {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .campo label {
+            color: #4f4a54;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .campo label i {
+            color: var(--rosa);
+            margin-right: 5px;
+        }
+
+        .campo input {
+            width: 100%;
+            min-width: 0;
+            min-height: 48px;
+            padding: 12px 14px;
+            color: var(--oscuro);
+            background: #fbfafc;
+            border: 1px solid #e6e1e8;
+            border-radius: 13px;
+            outline: none;
+            font-size: 14px;
+            transition: .25s ease;
+        }
+
+        .campo input:focus {
+            background: white;
+            border-color: var(--rosa);
+            box-shadow: 0 0 0 4px rgba(255,47,146,.09);
+        }
+
+        .btn-registrar {
+            min-height: 48px;
+            padding: 0 22px;
+            border-radius: 13px;
+            color: white;
+            background: linear-gradient(135deg,var(--rosa),var(--morado));
+            box-shadow: 0 10px 25px rgba(255,47,146,.22);
+            cursor: pointer;
+            font-weight: 700;
+            transition: .3s ease;
+            white-space: nowrap;
+        }
+
+        .btn-registrar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(255,47,146,.28);
+        }
+
+        .btn-registrar:disabled {
+            opacity: .65;
+            cursor: wait;
+            transform: none;
+        }
+
+        /* ==========================================
+           BUSCADOR
+        ========================================== */
+
+        .buscador-caja {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .buscador-caja i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--rosa);
+            pointer-events: none;
+        }
+
+        .buscador-caja input {
+            width: 100%;
+            min-height: 55px;
+            padding: 15px 18px 15px 48px;
+            color: var(--oscuro);
+            background: white;
+            border: 1px solid var(--borde);
+            border-radius: 17px;
+            outline: none;
+            font-size: 16px;
+            box-shadow: 0 8px 30px rgba(21,17,26,.05);
+            transition: .25s ease;
+        }
+
+        .buscador-caja input:focus {
+            border-color: var(--rosa);
+            box-shadow:
+                0 8px 30px rgba(21,17,26,.05),
+                0 0 0 4px rgba(255,47,146,.07);
+        }
+
+        /* ==========================================
+           TABLA
+        ========================================== */
+
+        .tabla-container {
+            background: white;
+            border: 1px solid var(--borde);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--sombra);
+        }
+
+        .tabla-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 20px 24px;
+            border-bottom: 1px solid #eeeaf0;
+        }
+
+        .tabla-titulo {
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tabla-titulo-icono {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 13px;
+            color: var(--rosa);
+            background: var(--rosa-suave);
+        }
+
+        .tabla-titulo h2 {
+            font-family: "Playfair Display",serif;
+            font-size: clamp(19px,3vw,23px);
+            color: var(--oscuro);
+        }
+
+        .contador {
+            min-width: 36px;
+            min-height: 30px;
+            padding: 7px 11px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50px;
+            color: var(--rosa);
+            background: var(--rosa-suave);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        /* ==========================================
+           SCROLL RESPONSIVE
+        ========================================== */
+
+        .tabla-scroll {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tabla-scroll::-webkit-scrollbar {
+            height: 7px;
+        }
+
+        .tabla-scroll::-webkit-scrollbar-track {
+            background: #f7f4f7;
+        }
+
+        .tabla-scroll::-webkit-scrollbar-thumb {
+            background: #e2b0ca;
+            border-radius: 50px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 680px;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            padding: 15px 20px;
+            color: #716b75;
+            background: #faf8fb;
+            border-bottom: 1px solid #eeeaf0;
+            text-align: left;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .7px;
+        }
+
+        tbody td {
+            padding: 17px 20px;
+            border-bottom: 1px solid #f0edf1;
+            font-size: 14px;
+            color: #55505a;
+        }
+
+        tbody tr {
+            transition: .25s ease;
+        }
+
+        tbody tr:hover {
+            background: #fff8fc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .cliente {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 180px;
+        }
+
+        .cliente-avatar {
+            width: 39px;
+            height: 39px;
+            min-width: 39px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            color: white;
+            background: linear-gradient(135deg,var(--rosa),var(--morado));
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .cliente-info {
+            min-width: 0;
+        }
+
+        .cliente-info strong {
+            display: block;
+            color: #2b2730;
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .cliente-info small {
+            color: #9a949e;
+            font-size: 11px;
+        }
+
+        .monto {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 11px;
+            border-radius: 10px;
+            color: #d6325c;
+            background: #fff0f3;
+            font-weight: 800;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .fecha {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: #69636d;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .fecha i {
+            color: var(--rosa);
+        }
+
+        .accion {
+            text-align: center !important;
+        }
+
+        .btn-borrar {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            color: #ef476f;
+            background: #fff1f4;
+            cursor: pointer;
+            transition: .25s ease;
+        }
+
+        .btn-borrar:hover {
+            color: white;
+            background: #ef476f;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(239,71,111,.20);
+        }
+
+        /* ==========================================
+           ESTADOS
+        ========================================== */
+
+        .estado {
+            padding: 55px 25px !important;
+            text-align: center;
+            color: #918b95 !important;
+        }
+
+        .estado i {
+            display: block;
+            margin-bottom: 12px;
+            color: var(--rosa);
+            font-size: 30px;
+        }
+
+        .estado strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #514b55;
+            font-size: 15px;
+        }
+
+        .estado small {
+            color: #9c96a0;
+        }
+
+        .spinner {
+            animation: girar 1s linear infinite;
+        }
+
+        @keyframes girar {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ==========================================
+           TOAST
+        ========================================== */
+
+        .toast {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            width: min(360px, calc(100% - 40px));
+            padding: 15px 18px;
+            color: white;
+            background: #211827;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,.20);
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: .3s ease;
+        }
+
+        .toast.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast i {
+            color: #ff72b8;
+        }
+
+        /* ==========================================
+           TABLET
+        ========================================== */
+
+        @media (max-width: 1100px) {
+
+            .topbar-inner {
+                width: min(100% - 28px, 1000px);
+            }
+
+            nav a {
+                padding: 9px 8px;
+                font-size: 11px;
+            }
+
+            .form-registro {
+                grid-template-columns: repeat(2,minmax(0,1fr));
+            }
+
+            .btn-registrar {
+                width: 100%;
+            }
+        }
+
+        /* ==========================================
+           TABLET PEQUEÑA
+        ========================================== */
+
+        @media (max-width: 850px) {
+
+            .topbar-inner {
+                min-height: 70px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            nav {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                display: none;
+                padding: 12px;
+                background: rgba(21,17,26,.98);
+                backdrop-filter: blur(18px);
+                border-bottom: 1px solid rgba(255,255,255,.08);
+            }
+
+            nav.active {
+                display: block;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 4px;
+            }
+
+            nav a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 45px;
+                padding: 12px;
+                font-size: 13px;
+            }
+
+            .contenedor {
+                width: min(94%,700px);
+                padding-top: 25px;
+            }
+
+            .page-hero {
+                border-radius: 24px;
+            }
+        }
+
+        /* ==========================================
+           MÓVIL
+        ========================================== */
+
+        @media (max-width: 600px) {
+
+            .topbar-inner {
+                width: calc(100% - 24px);
+            }
+
+            .brand-text {
+                font-size: 19px;
+            }
+
+            .brand-icon {
+                width: 39px;
+                height: 39px;
+                min-width: 39px;
+                border-radius: 12px;
+            }
+
+            .contenedor {
+                width: calc(100% - 20px);
+                padding: 20px 0 45px;
+            }
+
+            .btn-volver {
+                width: 100%;
+                margin-bottom: 14px;
+            }
+
+            .page-hero {
+                padding: 27px 21px;
+                margin-bottom: 18px;
+                border-radius: 21px;
+            }
+
+            .page-hero h1 {
+                font-size: 36px;
+            }
+
+            .page-hero p {
+                font-size: 14px;
+            }
+
+            .form-registro {
+                grid-template-columns: 1fr;
+                gap: 13px;
+                padding: 18px;
+                border-radius: 20px;
+            }
+
+            .campo input {
+                min-height: 50px;
+                font-size: 16px;
+            }
+
+            .btn-registrar {
+                min-height: 50px;
+                font-size: 14px;
+            }
+
+            .buscador-caja input {
+                min-height: 52px;
+                font-size: 16px;
+            }
+
+            .tabla-container {
+                border-radius: 20px;
+            }
+
+            .tabla-header {
+                padding: 16px;
+            }
+
+            .tabla-titulo-icono {
+                width: 38px;
+                height: 38px;
+                min-width: 38px;
+            }
+
+            table {
+                min-width: 620px;
+            }
+
+            thead th {
+                padding: 13px 15px;
+            }
+
+            tbody td {
+                padding: 15px;
+            }
+
+            .toast {
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                width: auto;
+            }
+        }
+
+        /* ==========================================
+           MÓVIL MUY PEQUEÑO
+        ========================================== */
+
+        @media (max-width: 380px) {
+
+            .brand-text {
+                font-size: 17px;
+            }
+
+            .brand-icon {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+            }
+
+            .menu-toggle {
+                width: 42px;
+                height: 42px;
+                min-width: 42px;
+            }
+
+            .page-hero h1 {
+                font-size: 32px;
+            }
+
+            .hero-badge {
+                font-size: 11px;
+            }
+
+            .tabla-titulo h2 {
+                font-size: 18px;
+            }
+
+            .contador {
+                min-width: 32px;
+            }
+        }
+
+        /* ==========================================
+           ACCESIBILIDAD
+        ========================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
     </style>
 </head>
+
 <body>
 
-<div class="contenedor">
-    <div class="header-seccion">
-        <button class="btn-volver" onclick="window.location='panel.html'" style="border:none; background:none; cursor:pointer; color:#ff4da6; font-weight:bold;">
-            <i class="fas fa-chevron-left"></i> Volver al Panel
+<header class="topbar">
+
+    <div class="topbar-inner">
+
+        <a href="panel.html" class="brand">
+
+            <div class="brand-icon">
+                <i class="fas fa-bag-shopping"></i>
+            </div>
+
+            <div class="brand-text">
+                Shop Ofe <span>Trujillo</span>
+            </div>
+
+        </a>
+
+        <button
+            class="menu-toggle"
+            type="button"
+            onclick="toggleMenu()"
+            aria-label="Abrir menú"
+        >
+            <i class="fas fa-bars"></i>
         </button>
-        <h2 style="color: #333; margin:0;">📋 Control de Pagos Pendientes</h2>
+
+        <nav>
+
+            <ul>
+
+                <li>
+                    <a href="panel.html">
+                        <i class="fas fa-house"></i>
+                        Panel
+                    </a>
+                </li>
+
+                <li>
+                    <a href="productos.html">
+                        <i class="fas fa-box"></i>
+                        Productos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="galeria.html">
+                        <i class="fas fa-images"></i>
+                        Galería
+                    </a>
+                </li>
+
+                <li>
+                    <a href="corte.html">
+                        <i class="fas fa-cash-register"></i>
+                        Corte
+                    </a>
+                </li>
+
+                <li>
+                    <a href="impuntuales.html" class="active">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        Pagos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="acceso.html">
+                        <i class="fas fa-right-from-bracket"></i>
+                        Salir
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
     </div>
 
-    <div class="form-registro">
-        <div>
-            <label style="font-size: 12px; display:block; margin-bottom:5px;">Nombre Clienta</label>
-            <input type="text" id="nombre" placeholder="Ej. María López" style="width:100%; box-sizing:border-box;">
+</header>
+
+
+<main class="contenedor">
+
+    <button
+        class="btn-volver"
+        type="button"
+        onclick="window.location='panel.html'"
+    >
+        <i class="fas fa-chevron-left"></i>
+        Volver al Panel
+    </button>
+
+
+    <section class="page-hero">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                <i class="fas fa-shield-heart"></i>
+                Área administrativa
+            </div>
+
+            <h1>
+                Control de <span>Pagos</span>
+            </h1>
+
+            <p>
+                Registra, consulta y administra de forma sencilla
+                los pagos pendientes de las clientas de
+                Shop Ofe Trujillo.
+            </p>
+
         </div>
-        <div>
-            <label style="font-size: 12px; display:block; margin-bottom:5px;">Monto Debida</label>
-            <input type="number" id="adeudo" placeholder="$0.00" style="width:100%; box-sizing:border-box;">
+
+    </section>
+
+
+    <form
+        class="form-registro"
+        id="formRegistro"
+    >
+
+        <div class="campo">
+
+            <label for="nombre">
+                <i class="fas fa-user"></i>
+                Nombre de la clienta
+            </label>
+
+            <input
+                type="text"
+                id="nombre"
+                placeholder="Ej. María López"
+                autocomplete="off"
+                maxlength="100"
+                required
+            >
+
         </div>
-        <div>
-            <label style="font-size: 12px; display:block; margin-bottom:5px;">Fecha Límite/Vencimiento</label>
-            <input type="date" id="fecha" style="width:100%; box-sizing:border-box;">
+
+
+        <div class="campo">
+
+            <label for="adeudo">
+                <i class="fas fa-money-bill-wave"></i>
+                Monto pendiente
+            </label>
+
+            <input
+                type="number"
+                id="adeudo"
+                placeholder="$0.00"
+                min="0.01"
+                step="0.01"
+                required
+            >
+
         </div>
-        <button onclick="agregarImpuntual()">Registrar</button>
-    </div>
+
+
+        <div class="campo">
+
+            <label for="fecha">
+                <i class="fas fa-calendar-days"></i>
+                Fecha de vencimiento
+            </label>
+
+            <input
+                type="date"
+                id="fecha"
+                required
+            >
+
+        </div>
+
+
+        <button
+            class="btn-registrar"
+            id="btnRegistrar"
+            type="submit"
+        >
+            <i class="fas fa-plus"></i>
+            Registrar
+        </button>
+
+    </form>
+
 
     <div class="buscador-caja">
+
         <i class="fas fa-search"></i>
-        <input type="text" id="buscador" placeholder="Buscar clienta por nombre..." onkeyup="filtrarTabla()">
+
+        <input
+            type="search"
+            id="buscador"
+            placeholder="Buscar clienta por nombre..."
+            autocomplete="off"
+        >
+
     </div>
 
-    <div class="tabla-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Clienta</th>
-                    <th>Deuda</th>
-                    <th>Fecha Registro</th>
-                    <th style="text-align: center;">Acción</th>
-                </tr>
-            </thead>
-            <tbody id="tabla-cuerpo">
+
+    <section class="tabla-container">
+
+        <div class="tabla-header">
+
+            <div class="tabla-titulo">
+
+                <div class="tabla-titulo-icono">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                </div>
+
+                <h2>Pagos pendientes</h2>
+
+            </div>
+
+            <span
+                class="contador"
+                id="contador"
+            >
+                0
+            </span>
+
+        </div>
+
+
+        <div class="tabla-scroll">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Clienta</th>
+
+                        <th>Deuda</th>
+
+                        <th>Fecha de vencimiento</th>
+
+                        <th style="text-align:center;">
+                            Acción
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="tabla-cuerpo">
+
+                    <tr>
+
+                        <td
+                            colspan="4"
+                            class="estado"
+                        >
+
+                            <i class="fas fa-spinner spinner"></i>
+
+                            <strong>
+                                Cargando registros...
+                            </strong>
+
+                            <small>
+                                Espera un momento.
+                            </small>
+
+                        </td>
+
+                    </tr>
+
                 </tbody>
-        </table>
-    </div>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<div
+    class="toast"
+    id="toast"
+    aria-live="polite"
+>
+    <i class="fas fa-circle-check"></i>
+    <span id="toastMensaje">
+        Operación realizada.
+    </span>
 </div>
 
+
 <script type="module">
-    // SEGURIDAD IGUAL QUE EN CORTE.JS
-    let acceso = sessionStorage.getItem("acceso");
-    if(acceso !== "ok"){ window.location.href = "acceso.html"; }
+
+    const acceso =
+        sessionStorage.getItem("acceso");
+
+    if (acceso !== "ok") {
+        window.location.href = "acceso.html";
+    }
+
 
     import { db } from "./firebase.js";
-    import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+    import {
+        collection,
+        addDoc,
+        getDocs,
+        deleteDoc,
+        doc,
+        query,
+        orderBy
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+
+    const tabla =
+        document.getElementById("tabla-cuerpo");
+
+    const contador =
+        document.getElementById("contador");
+
+    const buscador =
+        document.getElementById("buscador");
+
+    const form =
+        document.getElementById("formRegistro");
+
+    const btnRegistrar =
+        document.getElementById("btnRegistrar");
+
+
+    function mostrarToast(mensaje, tipo = "success") {
+
+        const toast =
+            document.getElementById("toast");
+
+        const texto =
+            document.getElementById("toastMensaje");
+
+        const icono =
+            toast.querySelector("i");
+
+        texto.textContent = mensaje;
+
+        if (tipo === "error") {
+
+            icono.className =
+                "fas fa-circle-exclamation";
+
+            icono.style.color =
+                "#ff6685";
+
+        } else {
+
+            icono.className =
+                "fas fa-circle-check";
+
+            icono.style.color =
+                "#ff72b8";
+
+        }
+
+        toast.classList.add("visible");
+
+        clearTimeout(window.toastTimer);
+
+        window.toastTimer =
+            setTimeout(() => {
+                toast.classList.remove("visible");
+            }, 3000);
+
+    }
+
+
+    function obtenerIniciales(nombre) {
+
+        const palabras =
+            nombre
+                .trim()
+                .split(/\s+/)
+                .filter(Boolean);
+
+        if (!palabras.length) {
+            return "?";
+        }
+
+        if (palabras.length === 1) {
+
+            return palabras[0]
+                .substring(0,2)
+                .toUpperCase();
+
+        }
+
+        return (
+            palabras[0][0] +
+            palabras[1][0]
+        ).toUpperCase();
+
+    }
+
+
+    function formatearDinero(valor) {
+
+        const numero =
+            Number.parseFloat(valor) || 0;
+
+        return numero.toLocaleString(
+            "es-MX",
+            {
+                style: "currency",
+                currency: "MXN"
+            }
+        );
+
+    }
+
+
+    function formatearFecha(fecha) {
+
+        if (!fecha) {
+            return "Sin fecha";
+        }
+
+        const partes =
+            fecha.split("-");
+
+        if (partes.length !== 3) {
+            return fecha;
+        }
+
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
+
+    }
+
 
     async function cargarDatos() {
-        const tabla = document.getElementById("tabla-cuerpo");
-        tabla.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Cargando registros...</td></tr>";
-        
+
+        tabla.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="4"
+                    class="estado"
+                >
+
+                    <i class="fas fa-spinner spinner"></i>
+
+                    <strong>
+                        Cargando registros...
+                    </strong>
+
+                    <small>
+                        Consultando información.
+                    </small>
+
+                </td>
+
+            </tr>
+
+        `;
+
+
         try {
-            const q = query(collection(db, "impuntuales"), orderBy("fecha", "desc"));
-            const snap = await getDocs(q);
+
+            const q =
+                query(
+                    collection(
+                        db,
+                        "impuntuales"
+                    ),
+                    orderBy(
+                        "fecha",
+                        "desc"
+                    )
+                );
+
+
+            const snap =
+                await getDocs(q);
+
+
             tabla.innerHTML = "";
-            
+
+
             if (snap.empty) {
-                tabla.innerHTML = "<tr><td colspan='4' style='text-align:center;'>No hay clientas registradas.</td></tr>";
+
+                contador.textContent = "0";
+
+                tabla.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="4"
+                            class="estado"
+                        >
+
+                            <i class="fas fa-check-circle"></i>
+
+                            <strong>
+                                No hay pagos pendientes
+                            </strong>
+
+                            <small>
+                                Todas las clientas están al corriente.
+                            </small>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+                return;
+
+            }
+
+
+            contador.textContent =
+                snap.size;
+
+
+            snap.forEach((documento) => {
+
+                const d =
+                    documento.data();
+
+                const nombre =
+                    d.nombre || "Sin nombre";
+
+                const adeudo =
+                    d.adeudo || 0;
+
+                const fecha =
+                    d.fecha || "";
+
+
+                const tr =
+                    document.createElement("tr");
+
+
+                const tdCliente =
+                    document.createElement("td");
+
+                const cliente =
+                    document.createElement("div");
+
+                cliente.className =
+                    "cliente";
+
+
+                const avatar =
+                    document.createElement("div");
+
+                avatar.className =
+                    "cliente-avatar";
+
+                avatar.textContent =
+                    obtenerIniciales(nombre);
+
+
+                const clienteInfo =
+                    document.createElement("div");
+
+                clienteInfo.className =
+                    "cliente-info";
+
+
+                const strong =
+                    document.createElement("strong");
+
+                strong.textContent =
+                    nombre;
+
+
+                const small =
+                    document.createElement("small");
+
+                small.textContent =
+                    "Pago pendiente";
+
+
+                clienteInfo.appendChild(strong);
+
+                clienteInfo.appendChild(small);
+
+                cliente.appendChild(avatar);
+
+                cliente.appendChild(clienteInfo);
+
+                tdCliente.appendChild(cliente);
+
+
+                const tdAdeudo =
+                    document.createElement("td");
+
+
+                const monto =
+                    document.createElement("span");
+
+                monto.className =
+                    "monto";
+
+
+                const iconoDinero =
+                    document.createElement("i");
+
+                iconoDinero.className =
+                    "fas fa-circle-dollar-to-slot";
+
+
+                monto.appendChild(iconoDinero);
+
+                monto.appendChild(
+                    document.createTextNode(
+                        formatearDinero(adeudo)
+                    )
+                );
+
+                tdAdeudo.appendChild(monto);
+
+
+                const tdFecha =
+                    document.createElement("td");
+
+
+                const fechaElemento =
+                    document.createElement("span");
+
+                fechaElemento.className =
+                    "fecha";
+
+
+                const iconoFecha =
+                    document.createElement("i");
+
+                iconoFecha.className =
+                    "fas fa-calendar-day";
+
+
+                fechaElemento.appendChild(
+                    iconoFecha
+                );
+
+                fechaElemento.appendChild(
+                    document.createTextNode(
+                        formatearFecha(fecha)
+                    )
+                );
+
+                tdFecha.appendChild(
+                    fechaElemento
+                );
+
+
+                const tdAccion =
+                    document.createElement("td");
+
+                tdAccion.className =
+                    "accion";
+
+
+                const boton =
+                    document.createElement("button");
+
+                boton.type =
+                    "button";
+
+                boton.className =
+                    "btn-borrar";
+
+                boton.title =
+                    "Marcar como liquidado";
+
+                boton.setAttribute(
+                    "aria-label",
+                    "Marcar como liquidado"
+                );
+
+
+                const icono =
+                    document.createElement("i");
+
+                icono.className =
+                    "fas fa-check";
+
+
+                boton.appendChild(icono);
+
+
+                boton.addEventListener(
+                    "click",
+                    () => {
+
+                        eliminarRegistro(
+                            documento.id,
+                            nombre
+                        );
+
+                    }
+                );
+
+
+                tdAccion.appendChild(boton);
+
+
+                tr.appendChild(tdCliente);
+                tr.appendChild(tdAdeudo);
+                tr.appendChild(tdFecha);
+                tr.appendChild(tdAccion);
+
+
+                tabla.appendChild(tr);
+
+            });
+
+
+            filtrarTabla();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            contador.textContent = "0";
+
+            tabla.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="4"
+                        class="estado"
+                    >
+
+                        <i class="fas fa-triangle-exclamation"></i>
+
+                        <strong>
+                            No se pudieron cargar los registros
+                        </strong>
+
+                        <small>
+                            Revisa la conexión con Firebase.
+                        </small>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
+    }
+
+
+    form.addEventListener(
+        "submit",
+        async (event) => {
+
+            event.preventDefault();
+
+
+            const nombre =
+                document
+                    .getElementById("nombre")
+                    .value
+                    .trim();
+
+
+            const adeudo =
+                document
+                    .getElementById("adeudo")
+                    .value;
+
+
+            const fecha =
+                document
+                    .getElementById("fecha")
+                    .value;
+
+
+            if (!nombre || !adeudo || !fecha) {
+
+                mostrarToast(
+                    "Completa todos los campos.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            if (
+                Number.parseFloat(adeudo) <= 0
+            ) {
+
+                mostrarToast(
+                    "El monto debe ser mayor a $0.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            btnRegistrar.disabled = true;
+
+            btnRegistrar.innerHTML = `
+                <i class="fas fa-spinner fa-spin"></i>
+                Guardando...
+            `;
+
+
+            try {
+
+                await addDoc(
+                    collection(
+                        db,
+                        "impuntuales"
+                    ),
+                    {
+                        nombre: nombre,
+                        adeudo: String(
+                            Number.parseFloat(
+                                adeudo
+                            ).toFixed(2)
+                        ),
+                        fecha: fecha
+                    }
+                );
+
+
+                form.reset();
+
+
+                establecerFechaActual();
+
+
+                mostrarToast(
+                    "Pago pendiente registrado correctamente."
+                );
+
+
+                await cargarDatos();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                mostrarToast(
+                    "No se pudo registrar el pago.",
+                    "error"
+                );
+
+            } finally {
+
+                btnRegistrar.disabled = false;
+
+                btnRegistrar.innerHTML = `
+                    <i class="fas fa-plus"></i>
+                    Registrar
+                `;
+
+            }
+
+        }
+    );
+
+
+    async function eliminarRegistro(id,nombre) {
+
+        const confirmar =
+            confirm(
+                `¿Confirmas que ${nombre} ya liquidó su adeudo?\n\nEl registro será eliminado del control de pagos pendientes.`
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        try {
+
+            await deleteDoc(
+                doc(
+                    db,
+                    "impuntuales",
+                    id
+                )
+            );
+
+
+            mostrarToast(
+                "El adeudo fue marcado como liquidado."
+            );
+
+
+            await cargarDatos();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            mostrarToast(
+                "No se pudo eliminar el registro.",
+                "error"
+            );
+
+        }
+
+    }
+
+
+    function filtrarTabla() {
+
+        const valor =
+            buscador.value
+                .trim()
+                .toLowerCase();
+
+
+        const filas =
+            document.querySelectorAll(
+                "#tabla-cuerpo tr"
+            );
+
+
+        filas.forEach((fila) => {
+
+            const cliente =
+                fila.querySelector(
+                    ".cliente-info strong"
+                );
+
+
+            if (!cliente) {
                 return;
             }
 
-            snap.forEach(documento => {
-                const d = documento.data();
-                tabla.innerHTML += `
-                    <tr>
-                        <td><b>${d.nombre}</b></td>
-                        <td class="monto">$${parseFloat(d.adeudo).toFixed(2)}</td>
-                        <td>${d.fecha}</td>
-                        <td style="text-align: center;">
-                            <i class="fas fa-trash-alt btn-borrar" onclick="eliminarRegistro('${documento.id}')"></i>
-                        </td>
-                    </tr>
-                `;
-            });
-        } catch(e) { console.error(e); }
+
+            const nombre =
+                cliente.textContent
+                    .toLowerCase();
+
+
+            fila.style.display =
+                nombre.includes(valor)
+                    ? ""
+                    : "none";
+
+        });
+
     }
 
-    window.agregarImpuntual = async () => {
-        const n = document.getElementById("nombre").value;
-        const a = document.getElementById("adeudo").value;
-        const f = document.getElementById("fecha").value;
 
-        if(!n || !a || !f) return alert("Por favor completa todos los campos");
+    buscador.addEventListener(
+        "input",
+        filtrarTabla
+    );
 
-        await addDoc(collection(db, "impuntuales"), { nombre: n, adeudo: a, fecha: f });
-        document.getElementById("nombre").value = "";
-        document.getElementById("adeudo").value = "";
-        cargarDatos();
-    };
 
-    window.eliminarRegistro = async (id) => {
-        if(confirm("¿Confirmas que la clienta ya liquidó su adeudo?")) {
-            await deleteDoc(doc(db, "impuntuales", id));
-            cargarDatos();
-        }
-    };
+    window.toggleMenu =
+        function() {
 
-    window.filtrarTabla = () => {
-        const val = document.getElementById("buscador").value.toLowerCase();
-        const filas = document.querySelectorAll("#tabla-cuerpo tr");
-        filas.forEach(tr => {
-            const txt = tr.cells[0].textContent.toLowerCase();
-            tr.style.display = txt.includes(val) ? "" : "none";
+            const nav =
+                document.querySelector(
+                    "header nav"
+                );
+
+            nav.classList.toggle(
+                "active"
+            );
+
+        };
+
+
+    document
+        .querySelectorAll("nav a")
+        .forEach((enlace) => {
+
+            enlace.addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .querySelector("header nav")
+                        .classList.remove(
+                            "active"
+                        );
+
+                }
+            );
+
         });
-    };
+
+
+    function establecerFechaActual() {
+
+        const fechaInput =
+            document.getElementById("fecha");
+
+        const hoy =
+            new Date();
+
+        const yyyy =
+            hoy.getFullYear();
+
+        const mm =
+            String(
+                hoy.getMonth() + 1
+            ).padStart(2,"0");
+
+        const dd =
+            String(
+                hoy.getDate()
+            ).padStart(2,"0");
+
+        fechaInput.value =
+            `${yyyy}-${mm}-${dd}`;
+
+    }
+
+
+    establecerFechaActual();
 
     cargarDatos();
+
 </script>
+
 </body>
 </html>

@@ -3,100 +3,1065 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Acceso Empleados</title>
+<title>Acceso | Shop Ofe Trujillo</title>
 
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
 
-/* 🔥 BODY FIX */
-body {
+/* =========================================================
+   SHOP OFE TRUJILLO
+   ACCESO PREMIUM
+========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+:root{
+    --pink:#ff2f92;
+    --pink-light:#ff75bc;
+    --pink-soft:#ffb7dc;
+    --purple:#8b5cf6;
+    --purple-light:#b99cff;
+    --black:#070509;
+    --dark:#100a13;
+    --dark-card:rgba(24,15,28,.72);
+    --white:#fff;
+    --text:#e9e1eb;
+    --muted:#9e92a4;
+    --border:rgba(255,255,255,.10);
+}
+
+*{
+    box-sizing:border-box;
     margin:0;
-    font-family: Arial;
-    background: linear-gradient(135deg, #ff4da6, #ff80bf);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    padding:0;
 }
 
-/* 🔥 HEADER */
-header {
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    font-family:"DM Sans",Arial,sans-serif;
+    color:var(--white);
+    overflow-x:hidden;
+
+    background:
+        radial-gradient(
+            circle at 5% 10%,
+            rgba(255,47,146,.22),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 95% 90%,
+            rgba(139,92,246,.25),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(255,47,146,.05),
+            transparent 45%
+        ),
+        linear-gradient(
+            135deg,
+            #070509 0%,
+            #100a14 50%,
+            #08060b 100%
+        );
+}
+
+/* =========================================================
+   AMBIENT LIGHT
+========================================================= */
+
+body::before,
+body::after{
+    content:"";
+    position:fixed;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:0;
+    filter:blur(100px);
+}
+
+body::before{
+    width:360px;
+    height:360px;
+    background:var(--pink);
+    left:-170px;
+    top:-120px;
+    opacity:.18;
+    animation:orbPink 10s ease-in-out infinite alternate;
+}
+
+body::after{
+    width:420px;
+    height:420px;
+    background:var(--purple);
+    right:-200px;
+    bottom:-170px;
+    opacity:.18;
+    animation:orbPurple 12s ease-in-out infinite alternate;
+}
+
+@keyframes orbPink{
+    from{
+        transform:translate(0,0) scale(1);
+    }
+
+    to{
+        transform:translate(90px,80px) scale(1.2);
+    }
+}
+
+@keyframes orbPurple{
+    from{
+        transform:translate(0,0) scale(1);
+    }
+
+    to{
+        transform:translate(-80px,-70px) scale(1.15);
+    }
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header{
     width:100%;
-    position: relative;
-    z-index: 1000;
+    height:78px;
+    position:relative;
+    z-index:1000;
+
+    background:rgba(7,5,9,.58);
+
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+
+    border-bottom:1px solid rgba(255,255,255,.07);
 }
 
-/* 🔥 CONTENEDOR LOGIN */
-.main-login {
-    flex:1;
+header .container{
+    width:min(1250px,100%);
+    height:100%;
+    margin:auto;
+
+    padding:0 30px;
+
     display:flex;
-    justify-content:center;
     align-items:center;
-    padding:20px;
+    justify-content:space-between;
 }
 
-/* 🔥 CAJA */
-.box {
-    background:white;
-    padding:30px;
-    border-radius:20px;
+/* LOGO */
+
+.logo a{
+    text-decoration:none;
+    color:#fff;
+
+    font-size:21px;
+    font-weight:800;
+
+    letter-spacing:-.6px;
+
+    transition:.25s;
+}
+
+.logo a::before{
+    content:"✦";
+
+    color:var(--pink-light);
+
+    margin-right:9px;
+
+    text-shadow:
+        0 0 12px rgba(255,47,146,.8),
+        0 0 30px rgba(255,47,146,.4);
+}
+
+.logo a:hover{
+    transform:translateY(-1px);
+}
+
+/* NAVIGATION */
+
+nav ul{
+    display:flex;
+    align-items:center;
+
+    list-style:none;
+
+    gap:24px;
+}
+
+nav ul li a{
+    position:relative;
+
+    text-decoration:none;
+
+    color:#d2cad5;
+
+    font-size:13px;
+    font-weight:500;
+
+    transition:.25s;
+}
+
+nav ul li a:hover{
+    color:#fff;
+}
+
+nav ul li a::after{
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    bottom:-9px;
+
+    width:0;
+    height:2px;
+
+    transform:translateX(-50%);
+
+    border-radius:100px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--pink),
+            var(--purple)
+        );
+
+    box-shadow:
+        0 0 10px rgba(255,47,146,.5);
+
+    transition:.25s;
+}
+
+nav ul li a:hover::after{
+    width:70%;
+}
+
+/* MENU MOBILE */
+
+.menu-toggle{
+    display:none;
+
+    color:#fff;
+
+    font-size:23px;
+
+    cursor:pointer;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main-login{
+    min-height:calc(100vh - 78px);
+
+    position:relative;
+    z-index:2;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:65px 25px 80px;
+}
+
+.access-layout{
+    width:min(1120px,100%);
+
+    display:grid;
+
+    grid-template-columns:1fr 440px;
+
+    align-items:center;
+
+    gap:70px;
+}
+
+/* =========================================================
+   LEFT SIDE
+========================================================= */
+
+.brand-side{
+    padding:20px 0;
+}
+
+.eyebrow{
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:9px 15px;
+
+    border-radius:100px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    border:1px solid rgba(255,255,255,.10);
+
+    color:#f4d9e8;
+
+    font-size:10px;
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    box-shadow:
+        inset 0 0 20px rgba(255,255,255,.02);
+}
+
+.eyebrow i{
+    color:var(--pink-light);
+
+    text-shadow:
+        0 0 12px rgba(255,47,146,.8);
+}
+
+.brand-side h1{
+    max-width:620px;
+
+    margin-top:24px;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size:clamp(
+        50px,
+        6vw,
+        78px
+    );
+
+    line-height:.97;
+
+    letter-spacing:-3px;
+}
+
+.brand-side h1 span{
+    display:block;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff 5%,
+            var(--pink-soft) 48%,
+            var(--purple-light) 100%
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    color:transparent;
+}
+
+.brand-side p{
+    max-width:550px;
+
+    margin-top:28px;
+
+    color:var(--muted);
+
+    font-size:15px;
+
+    line-height:1.85;
+}
+
+.features{
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:11px;
+
+    margin-top:30px;
+}
+
+.feature{
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:10px 14px;
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    color:#d6cdd9;
+
+    font-size:11px;
+
+    transition:.25s;
+}
+
+.feature:hover{
+    transform:translateY(-3px);
+
+    border-color:
+        rgba(255,47,146,.3);
+
+    background:
+        rgba(255,47,146,.06);
+}
+
+.feature i{
+    color:var(--pink-light);
+}
+
+/* =========================================================
+   LOGIN CARD
+========================================================= */
+
+.login-card{
+    position:relative;
+
+    padding:40px;
+
+    border-radius:30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.105),
+            rgba(255,255,255,.035)
+        );
+
+    border:1px solid var(--border);
+
+    backdrop-filter:blur(30px);
+    -webkit-backdrop-filter:blur(30px);
+
+    box-shadow:
+
+        0 35px 100px
+        rgba(0,0,0,.55),
+
+        0 0 80px
+        rgba(255,47,146,.08),
+
+        inset 0 1px 0
+        rgba(255,255,255,.12);
+
+    overflow:hidden;
+
+    animation:
+        loginAppear
+        .8s
+        cubic-bezier(.2,.8,.2,1)
+        both;
+}
+
+/* Línea superior */
+
+.login-card::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:10%;
+
+    width:80%;
+
+    height:1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--pink),
+            var(--purple),
+            transparent
+        );
+
+    box-shadow:
+        0 0 20px
+        rgba(255,47,146,.8);
+}
+
+/* Aura */
+
+.login-card::after{
+    content:"";
+
+    position:absolute;
+
+    width:230px;
+    height:230px;
+
+    top:-140px;
+    right:-120px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,47,146,.25),
+            transparent 70%
+        );
+
+    pointer-events:none;
+}
+
+@keyframes loginAppear{
+
+    from{
+        opacity:0;
+
+        transform:
+            translateY(30px)
+            scale(.96);
+    }
+
+    to{
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.card-top{
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    margin-bottom:28px;
+}
+
+.shield{
+    width:60px;
+    height:60px;
+
+    flex:0 0 60px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,47,146,.25),
+            rgba(139,92,246,.25)
+        );
+
+    border:1px solid
+        rgba(255,255,255,.12);
+
+    color:#fff;
+
+    font-size:23px;
+
+    box-shadow:
+
+        0 15px 35px
+        rgba(255,47,146,.12),
+
+        inset 0 0 25px
+        rgba(255,255,255,.04);
+}
+
+.card-top small{
+    display:block;
+
+    margin-bottom:5px;
+
+    color:var(--pink-light);
+
+    font-size:9px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+}
+
+.card-top strong{
+    font-size:19px;
+
+    letter-spacing:-.4px;
+}
+
+/* =========================================================
+   TITLES
+========================================================= */
+
+.login-card h2{
+    font-size:30px;
+
+    line-height:1.1;
+
+    letter-spacing:-1.2px;
+
+    margin-bottom:10px;
+}
+
+.description{
+    color:var(--muted);
+
+    font-size:13px;
+
+    line-height:1.7;
+
+    margin-bottom:26px;
+}
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.field{
+    margin-bottom:16px;
+}
+
+.field label{
+    display:block;
+
+    margin:
+        0
+        0
+        8px
+        3px;
+
+    color:#d8d0db;
+
+    font-size:10px;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+}
+
+.input-wrap{
+    position:relative;
+}
+
+.input-wrap > i{
+    position:absolute;
+
+    left:17px;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    color:#8d8292;
+
+    font-size:14px;
+
+    transition:.25s;
+
+    pointer-events:none;
+}
+
+.input-wrap input{
     width:100%;
-    max-width:320px;
+
+    height:55px;
+
+    padding:
+        0
+        17px
+        0
+        47px;
+
+    border-radius:15px;
+
+    outline:none;
+
+    color:#fff;
+
+    background:
+        rgba(4,2,6,.34);
+
+    border:1px solid
+        rgba(255,255,255,.10);
+
+    font-family:
+        "DM Sans",
+        Arial,
+        sans-serif;
+
+    font-size:14px;
+
+    transition:.25s;
+}
+
+.input-wrap input::placeholder{
+    color:#786d7d;
+}
+
+.input-wrap input:hover{
+    border-color:
+        rgba(255,255,255,.18);
+}
+
+.input-wrap input:focus{
+
+    border-color:
+        rgba(255,47,146,.75);
+
+    background:
+        rgba(255,255,255,.055);
+
+    box-shadow:
+
+        0 0 0 4px
+        rgba(255,47,146,.08),
+
+        0 12px 35px
+        rgba(255,47,146,.07);
+}
+
+.input-wrap:focus-within > i{
+    color:var(--pink-light);
+
+    text-shadow:
+        0 0 10px
+        rgba(255,47,146,.5);
+}
+
+/* =========================================================
+   PASSWORD TOGGLE
+========================================================= */
+
+.password-toggle{
+    position:absolute;
+
+    right:15px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    border:0;
+
+    background:transparent;
+
+    color:#817687;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    transition:.2s;
+}
+
+.password-toggle:hover{
+    color:var(--pink-light);
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.login-button{
+    width:100%;
+
+    height:56px;
+
+    margin-top:8px;
+
+    border:0;
+
+    border-radius:15px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    cursor:pointer;
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            105deg,
+            #f5278b,
+            #ff3e9d 40%,
+            #9257f5 100%
+        );
+
+    font-family:
+        "DM Sans",
+        Arial,
+        sans-serif;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    letter-spacing:.2px;
+
+    box-shadow:
+        0 16px 35px
+        rgba(255,47,146,.25);
+
+    transition:.25s;
+}
+
+.login-button::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    bottom:0;
+
+    left:-120%;
+
+    width:70%;
+
+    transform:skewX(-18deg);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.35),
+            transparent
+        );
+
+    transition:.7s;
+}
+
+.login-button:hover{
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 22px 45px
+        rgba(255,47,146,.35);
+
+    filter:saturate(1.1);
+}
+
+.login-button:hover::before{
+    left:140%;
+}
+
+.login-button:active{
+    transform:
+        translateY(0)
+        scale(.99);
+}
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+.security{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:7px;
+
+    margin-top:19px;
+
+    color:#776d7c;
+
+    font-size:9px;
+
     text-align:center;
-    box-shadow:0 10px 30px rgba(0,0,0,0.2);
-    animation: fadeUp 0.5s ease;
 }
 
-/* INPUTS */
-input {
-    width:100%;
-    padding:12px;
-    margin:10px 0;
-    border-radius:10px;
-    border:1px solid #ccc;
-    font-size:16px;
+.security i{
+    color:#76d7a2;
+
+    font-size:10px;
 }
 
-/* BOTON */
-button {
-    width:100%;
-    padding:12px;
-    background:#ff4da6;
-    color:white;
-    border:none;
-    border-radius:10px;
-    font-size:16px;
+/* =========================================================
+   FOOTER CARD
+========================================================= */
+
+.card-bottom{
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-top:22px;
+
+    padding-top:17px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.07);
+
+    color:#726875;
+
+    font-size:9px;
+
+    letter-spacing:.6px;
 }
 
-/* ANIMACIÓN */
-@keyframes fadeUp {
-    from {opacity:0; transform: translateY(20px);}
-    to {opacity:1; transform: translateY(0);}
+.card-bottom span:first-child{
+    color:#c2b4c4;
 }
 
-/* 🔥 NAVBAR MOBILE FIX */
-@media (max-width: 992px) {
+/* =========================================================
+   MOBILE
+========================================================= */
 
-    header nav {
-        display: none;
-        width: 100%;
+@media(max-width:950px){
+
+    .access-layout{
+        grid-template-columns:1fr;
+
+        max-width:500px;
+
+        gap:35px;
     }
 
-    header nav.active {
-        display: block;
+    .brand-side{
+        text-align:center;
     }
 
-    header nav ul {
-        flex-direction: column;
-        align-items: center;
-        background: white;
-        padding: 15px 0;
+    .brand-side p{
+        margin-left:auto;
+        margin-right:auto;
     }
 
-    .menu-toggle {
-        display: block;
-        cursor: pointer;
+    .features{
+        justify-content:center;
+    }
+
+    .brand-side h1{
+        font-size:53px;
+    }
+}
+
+@media(max-width:992px){
+
+    .menu-toggle{
+        display:block;
+    }
+
+    header nav{
+        display:none;
+
+        position:absolute;
+
+        top:78px;
+        left:0;
+
+        width:100%;
+
+        background:
+            rgba(9,6,12,.97);
+
+        backdrop-filter:blur(25px);
+
+        border-bottom:
+            1px solid
+            rgba(255,255,255,.08);
+    }
+
+    header nav.active{
+        display:block;
+    }
+
+    nav ul{
+        flex-direction:column;
+
+        gap:0;
+
+        padding:15px 25px;
+    }
+
+    nav ul li{
+        width:100%;
+
+        text-align:center;
+    }
+
+    nav ul li a{
+        display:block;
+
+        padding:12px;
+    }
+}
+
+@media(max-width:520px){
+
+    header .container{
+        padding:0 18px;
+    }
+
+    .logo a{
+        font-size:18px;
+    }
+
+    .main-login{
+        padding:
+            40px
+            15px
+            55px;
+    }
+
+    .brand-side h1{
+        font-size:42px;
+
+        letter-spacing:-1.8px;
+    }
+
+    .brand-side p{
+        font-size:13px;
+    }
+
+    .login-card{
+        padding:28px 21px;
+
+        border-radius:25px;
+    }
+
+    .login-card h2{
+        font-size:25px;
+    }
+
+    .shield{
+        width:55px;
+        height:55px;
+
+        flex-basis:55px;
     }
 }
 
@@ -106,107 +1071,565 @@ button {
 <body>
 
 <header>
+
 <div class="container">
 
     <div class="logo">
-        <a href="#">Shop Ofe Trujillo</a>
+        <a href="index.html">
+            Shop Ofe Trujillo
+        </a>
     </div>
 
-    <div class="menu-toggle" onclick="toggleMenu()">
+    <div
+        class="menu-toggle"
+        onclick="toggleMenu()"
+        aria-label="Abrir menú"
+    >
         <i class="fas fa-bars"></i>
     </div>
 
     <nav>
-         <ul>
-             <li><a href="index.html">Inicio</a></li>
-    <li><a href="productos.html">Productos</a></li>
-            <li><a href="index.html#envios">Envíos</a></li>
-            <li><a href="index.html#novedades">Nosotros</a></li>
-             <li><a href="login.html">Clientes</a></li>
-            <li><a href="galeria.html#anuncios">Anuncios</a></li>
-            <li><a href="galeria.html#galeria">Galeria</a></li>
-            <li><a href="index.html#contacto">Contacto</a></li>
-            <li><a href="acceso.html">Acceso</a></li>
+
+        <ul>
+
+            <li>
+                <a href="index.html">
+                    Inicio
+                </a>
+            </li>
+
+            <li>
+                <a href="productos.html">
+                    Productos
+                </a>
+            </li>
+
+            <li>
+                <a href="index.html#envios">
+                    Envíos
+                </a>
+            </li>
+
+            <li>
+                <a href="index.html#novedades">
+                    Nosotros
+                </a>
+            </li>
+
+            <li>
+                <a href="login.html">
+                    Clientes
+                </a>
+            </li>
+
+            <li>
+                <a href="galeria.html#anuncios">
+                    Anuncios
+                </a>
+            </li>
+
+            <li>
+                <a href="galeria.html#galeria">
+                    Galería
+                </a>
+            </li>
+
+            <li>
+                <a href="index.html#contacto">
+                    Contacto
+                </a>
+            </li>
+
+            <li>
+                <a href="acceso.html">
+                    Acceso
+                </a>
+            </li>
+
         </ul>
+
     </nav>
 
 </div>
+
 </header>
 
-<!-- 🔥 LOGIN -->
-<div class="main-login">
-    <div class="box">
-        <h2>👤 Acceso Empleados</h2>
 
-        <input type="text" id="user" placeholder="Usuario">
-        <input type="password" id="pass" placeholder="Contraseña">
+<main class="main-login">
 
-        <button onclick="login()">Entrar</button>
+<div class="access-layout">
+
+
+<!-- =====================================================
+     PRESENTACIÓN
+===================================================== -->
+
+<section class="brand-side">
+
+    <div class="eyebrow">
+
+        <i class="fas fa-sparkles"></i>
+
+        Área privada
+
     </div>
+
+
+    <h1>
+
+        Bienvenido a tu
+
+        <span>
+            espacio exclusivo.
+        </span>
+
+    </h1>
+
+
+    <p>
+
+        Accede al centro administrativo
+        de Shop Ofe Trujillo y gestiona
+        tu trabajo desde un entorno moderno,
+        elegante y seguro.
+
+    </p>
+
+
+    <div class="features">
+
+        <div class="feature">
+
+            <i class="fas fa-shield-halved"></i>
+
+            Acceso protegido
+
+        </div>
+
+
+        <div class="feature">
+
+            <i class="fas fa-bolt"></i>
+
+            Gestión rápida
+
+        </div>
+
+
+        <div class="feature">
+
+            <i class="fas fa-lock"></i>
+
+            Área privada
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+
+<section class="login-card">
+
+
+    <div class="card-top">
+
+        <div class="shield">
+
+            <i class="fas fa-user-shield"></i>
+
+        </div>
+
+
+        <div>
+
+            <small>
+                Shop Ofe Trujillo
+            </small>
+
+            <strong>
+                Portal administrativo
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <h2>
+        Iniciar sesión
+    </h2>
+
+
+    <p class="description">
+
+        Introduce tus credenciales
+        para continuar al panel
+        de empleados.
+
+    </p>
+
+
+    <!-- USUARIO -->
+
+    <div class="field">
+
+        <label for="user">
+            USUARIO
+        </label>
+
+
+        <div class="input-wrap">
+
+            <i class="fas fa-user"></i>
+
+            <input
+                type="text"
+                id="user"
+                placeholder="Escribe tu usuario"
+                autocomplete="username"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTRASEÑA -->
+
+    <div class="field">
+
+        <label for="pass">
+            CONTRASEÑA
+        </label>
+
+
+        <div class="input-wrap">
+
+            <i class="fas fa-lock"></i>
+
+            <input
+                type="password"
+                id="pass"
+                placeholder="Escribe tu contraseña"
+                autocomplete="current-password"
+            >
+
+
+            <button
+                type="button"
+                class="password-toggle"
+                onclick="togglePassword()"
+                aria-label="Mostrar contraseña"
+            >
+
+                <i
+                    id="passwordIcon"
+                    class="fas fa-eye"
+                ></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOTÓN -->
+
+    <button
+        class="login-button"
+        onclick="login()"
+    >
+
+        <i class="fas fa-arrow-right"></i>
+
+        &nbsp;
+
+        Entrar al panel
+
+    </button>
+
+
+    <div class="security">
+
+        <i class="fas fa-circle-check"></i>
+
+        Conexión protegida ·
+        Acceso exclusivo para empleados
+
+    </div>
+
+
+    <div class="card-bottom">
+
+        <span>
+            SHOP OFE TRUJILLO
+        </span>
+
+        <span>
+            © 2026
+        </span>
+
+    </div>
+
+
+</section>
+
 </div>
 
-<script type="module">
-// Importamos lo necesario de Firebase (usa la misma versión que en tu panel)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+</main>
 
-// Tu configuración (la misma que usas en el panel)
+
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
+
+<script type="module">
+
+import {
+    initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+
+
+import {
+    getFirestore,
+    doc,
+    getDoc
+} from
+"https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+
 const firebaseConfig = {
-    apiKey: "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
-    authDomain: "trujillo-digital-hub.firebaseapp.com",
-    projectId: "trujillo-digital-hub",
-    storageBucket: "trujillo-digital-hub.firebasestorage.app",
-    messagingSenderId: "162799375782",
-    appId: "1:162799375782:web:2be9127bfeaa613fd6ab67"
+
+    apiKey:
+        "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
+
+    authDomain:
+        "trujillo-digital-hub.firebaseapp.com",
+
+    projectId:
+        "trujillo-digital-hub",
+
+    storageBucket:
+        "trujillo-digital-hub.firebasestorage.app",
+
+    messagingSenderId:
+        "162799375782",
+
+    appId:
+        "1:162799375782:web:2be9127bfeaa613fd6ab67"
+
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
-// Hacemos la función login global para que el botón la encuentre
-window.login = async function() {
-    let u = document.getElementById("user").value.toLowerCase().trim();
-    let p = document.getElementById("pass").value.trim();
+const app =
+    initializeApp(firebaseConfig);
 
-    if (!u || !p) {
-        alert("Por favor llena ambos campos");
+
+const db =
+    getFirestore(app);
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+window.login = async function(){
+
+    const u =
+        document
+        .getElementById("user")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const p =
+        document
+        .getElementById("pass")
+        .value
+        .trim();
+
+
+    if(!u || !p){
+
+        alert(
+            "Por favor llena ambos campos"
+        );
+
         return;
     }
 
-    try {
-        // Buscamos el documento que tiene como ID el nombre de usuario
-        const docRef = doc(db, "empleados", u);
-        const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
-            let datosEmpleado = docSnap.data();
+    try{
 
-            // Validamos la contraseña que viene de la base de datos
-            if (datosEmpleado.pass === p) {
-                sessionStorage.setItem("acceso", "ok");
-                sessionStorage.setItem("empleado", JSON.stringify({
-                    user: u,
-                    ...datosEmpleado
-                }));
-                window.location.href = "panel.html";
-            } else {
-                alert("❌ Contraseña incorrecta");
+        const docRef =
+            doc(
+                db,
+                "empleados",
+                u
+            );
+
+
+        const docSnap =
+            await getDoc(docRef);
+
+
+        if(docSnap.exists()){
+
+            const datosEmpleado =
+                docSnap.data();
+
+
+            if(datosEmpleado.pass === p){
+
+                sessionStorage.setItem(
+                    "acceso",
+                    "ok"
+                );
+
+
+                sessionStorage.setItem(
+                    "empleado",
+                    JSON.stringify({
+
+                        user:u,
+
+                        ...datosEmpleado
+
+                    })
+                );
+
+
+                window.location.href =
+                    "panel.html";
+
             }
-        } else {
-            alert("❌ Usuario no encontrado");
+
+            else{
+
+                alert(
+                    "❌ Contraseña incorrecta"
+                );
+
+            }
+
         }
-    } catch (error) {
-        console.error("Error al entrar:", error);
-        alert("Ocurrió un error en la conexión");
+
+        else{
+
+            alert(
+                "❌ Usuario no encontrado"
+            );
+
+        }
+
     }
-}
+
+    catch(error){
+
+        console.error(
+            "Error al entrar:",
+            error
+        );
+
+
+        alert(
+            "Ocurrió un error en la conexión"
+        );
+
+    }
+
+};
+
+
+/* =====================================================
+   ENTER PARA LOGIN
+===================================================== */
+
+document
+.getElementById("pass")
+.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            login();
+
+        }
+
+    }
+);
+
 </script>
 
+
 <script>
-// Mantén tu función de menú fuera del módulo para que funcione siempre
-function toggleMenu() {
-    document.querySelector("nav").classList.toggle("active");
+
+/* =====================================================
+   MOSTRAR / OCULTAR CONTRASEÑA
+===================================================== */
+
+function togglePassword(){
+
+    const password =
+        document.getElementById("pass");
+
+    const icon =
+        document.getElementById("passwordIcon");
+
+
+    if(password.type === "password"){
+
+        password.type = "text";
+
+        icon.classList.remove(
+            "fa-eye"
+        );
+
+        icon.classList.add(
+            "fa-eye-slash"
+        );
+
+    }
+
+    else{
+
+        password.type = "password";
+
+        icon.classList.remove(
+            "fa-eye-slash"
+        );
+
+        icon.classList.add(
+            "fa-eye"
+        );
+
+    }
+
 }
+
+
+/* =====================================================
+   MENÚ MOBILE
+===================================================== */
+
+function toggleMenu(){
+
+    document
+        .querySelector("nav")
+        .classList
+        .toggle("active");
+
+}
+
 </script>
 
 </body>

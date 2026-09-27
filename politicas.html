@@ -3,163 +3,1262 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#15111a">
+<meta name="description" content="Términos, políticas de privacidad, compras, envíos y condiciones de Shop Ofe Trujillo.">
+
 <title>Políticas de Privacidad | Shop Ofe Trujillo</title>
 
 <link rel="stylesheet" href="style.css">
+<!-- AGREGA ESTAS 2 LÍNEAS EN TODAS TUS PÁGINAS -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="chatbot.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<script src="chatbot.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root{
+    --rosa:#ff2f92;
+    --rosa-claro:#ff72b8;
+    --rosa-suave:#fff0f7;
+    --morado:#8e44ad;
+    --morado-2:#b45ad6;
+    --oscuro:#15111a;
+    --oscuro-2:#211827;
+    --blanco:#ffffff;
+    --gris:#716b76;
+    --gris-claro:#f8f5f8;
+    --borde:rgba(21,17,26,.08);
+    --sombra:0 18px 50px rgba(21,17,26,.08);
+    --sombra-fuerte:0 25px 70px rgba(21,17,26,.16);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 5% 10%, rgba(255,47,146,.08), transparent 25%),
+        radial-gradient(circle at 95% 20%, rgba(142,68,173,.08), transparent 25%),
+        #faf8fa;
+    color:var(--oscuro);
+    font-family:"DM Sans",sans-serif;
+    line-height:1.7;
+}
+
+a{
+    text-decoration:none;
+}
+
+button,
+a{
+    -webkit-tap-highlight-color:transparent;
+}
+
+/* =========================
+   TOP BAR
+========================= */
+
+.top-bar{
+    width:100%;
+    background:linear-gradient(90deg,var(--rosa),var(--morado),var(--rosa));
+    color:#fff;
+    overflow:hidden;
+    white-space:nowrap;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.4px;
+}
+
+.top-track{
+    display:inline-flex;
+    min-width:max-content;
+    padding:8px 0;
+    animation:scrollText 24s linear infinite;
+}
+
+.top-track span{
+    margin-right:55px;
+}
+
+@keyframes scrollText{
+    from{
+        transform:translateX(0);
+    }
+    to{
+        transform:translateX(-50%);
+    }
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:rgba(21,17,26,.96);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    box-shadow:0 8px 30px rgba(0,0,0,.12);
+}
+
+.header-container{
+    width:min(1200px,92%);
+    margin:auto;
+    min-height:78px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:25px;
+}
+
+.logo a{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    color:#fff;
+    font-family:"Playfair Display",serif;
+    font-size:25px;
+    font-weight:700;
+}
+
+.logo-icon{
+    width:43px;
+    height:43px;
+    border-radius:14px;
+    display:grid;
+    place-items:center;
+    color:#fff;
+    background:linear-gradient(135deg,var(--rosa),var(--morado));
+    box-shadow:0 8px 22px rgba(255,47,146,.3);
+    font-family:"DM Sans",sans-serif;
+    font-size:19px;
+}
+
+.menu-toggle{
+    display:none;
+    border:0;
+    background:rgba(255,255,255,.08);
+    color:#fff;
+    width:45px;
+    height:45px;
+    border-radius:13px;
+    cursor:pointer;
+    font-size:20px;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:5px;
+}
+
+nav a{
+    position:relative;
+    display:block;
+    color:rgba(255,255,255,.86);
+    padding:9px 10px;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:600;
+    transition:.25s ease;
+}
+
+nav a:hover{
+    color:#fff;
+    background:rgba(255,255,255,.08);
+}
+
+nav a::after{
+    content:"";
+    position:absolute;
+    left:10px;
+    right:10px;
+    bottom:4px;
+    height:2px;
+    border-radius:5px;
+    background:linear-gradient(90deg,var(--rosa),var(--morado-2));
+    transform:scaleX(0);
+    transform-origin:center;
+    transition:.25s ease;
+}
+
+nav a:hover::after{
+    transform:scaleX(1);
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.page{
+    width:min(1100px,92%);
+    margin:0 auto;
+    padding:55px 0 80px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.privacy-header{
+    position:relative;
+    overflow:hidden;
+    text-align:center;
+    color:#fff;
+    padding:65px 35px;
+    margin-bottom:28px;
+    border-radius:30px;
+    background:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,.18), transparent 25%),
+        radial-gradient(circle at 90% 80%, rgba(255,255,255,.14), transparent 25%),
+        linear-gradient(135deg,#15111a 0%,#3a183e 52%,#8e44ad 100%);
+    box-shadow:var(--sombra-fuerte);
+}
+
+.privacy-header::before,
+.privacy-header::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    background:rgba(255,255,255,.08);
+    pointer-events:none;
+}
+
+.privacy-header::before{
+    width:260px;
+    height:260px;
+    top:-150px;
+    left:-90px;
+}
+
+.privacy-header::after{
+    width:300px;
+    height:300px;
+    right:-140px;
+    bottom:-180px;
+}
+
+.privacy-icon{
+    position:relative;
+    z-index:2;
+    width:76px;
+    height:76px;
+    margin:0 auto 20px;
+    display:grid;
+    place-items:center;
+    border-radius:24px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.2);
+    backdrop-filter:blur(10px);
+    font-size:30px;
+    box-shadow:0 12px 35px rgba(0,0,0,.18);
+}
+
+.privacy-header h1{
+    position:relative;
+    z-index:2;
+    margin-bottom:8px;
+    font-family:"Playfair Display",serif;
+    font-size:clamp(32px,5vw,50px);
+    line-height:1.15;
+}
+
+.privacy-header p{
+    position:relative;
+    z-index:2;
+    color:rgba(255,255,255,.82);
+    font-size:16px;
+    font-weight:600;
+}
+
+.intro{
+    text-align:center;
+    max-width:850px;
+    margin:0 auto 38px;
+    color:var(--gris);
+    font-size:15px;
+}
+
+.intro strong{
+    color:var(--rosa);
+}
+
+/* =========================
+   POLICY GRID
+========================= */
+
+.policies{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:20px;
+}
+
+.section{
+    position:relative;
+    overflow:hidden;
+    padding:27px 27px 28px;
+    border:1px solid var(--borde);
+    border-radius:22px;
+    background:rgba(255,255,255,.94);
+    box-shadow:var(--sombra);
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+}
+
+.section:hover{
+    transform:translateY(-4px);
+    border-color:rgba(255,47,146,.22);
+    box-shadow:0 22px 55px rgba(21,17,26,.12);
+}
+
+.section::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    width:4px;
+    background:linear-gradient(180deg,var(--rosa),var(--morado));
+}
+
+.section.highlight{
+    background:
+        linear-gradient(135deg,rgba(255,240,247,.96),rgba(255,255,255,.98));
+    border-color:rgba(255,47,146,.25);
+}
+
+.section.warning{
+    background:
+        linear-gradient(135deg,#fff4f9,#fff);
+    border-color:rgba(255,47,146,.28);
+}
+
+.section.full{
+    grid-column:1/-1;
+}
+
+.section-title{
+    display:flex;
+    align-items:flex-start;
+    gap:13px;
+    margin-bottom:14px;
+}
+
+.section-number{
+    flex:0 0 39px;
+    width:39px;
+    height:39px;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    color:#fff;
+    background:linear-gradient(135deg,var(--rosa),var(--morado));
+    font-size:13px;
+    font-weight:800;
+    box-shadow:0 8px 18px rgba(255,47,146,.2);
+}
+
+.section h2{
+    padding-top:3px;
+    color:var(--oscuro);
+    font-family:"Playfair Display",serif;
+    font-size:20px;
+    line-height:1.35;
+}
+
+.section p{
+    color:var(--gris);
+    font-size:14px;
+}
+
+.section b,
+.section strong{
+    color:var(--oscuro);
+    font-weight:800;
+}
+
+.section p + p{
+    margin-top:10px;
+}
+
+/* =========================
+   CONTACT CARD
+========================= */
+
+.contact-card{
+    margin-top:22px;
+    padding:35px;
+    border-radius:27px;
+    color:#fff;
+    background:
+        radial-gradient(circle at 10% 20%,rgba(255,255,255,.15),transparent 25%),
+        linear-gradient(135deg,var(--oscuro),#33182f 55%,var(--morado));
+    box-shadow:var(--sombra-fuerte);
+}
+
+.contact-header{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:23px;
+}
+
+.contact-icon{
+    width:55px;
+    height:55px;
+    display:grid;
+    place-items:center;
+    border-radius:17px;
+    background:linear-gradient(135deg,var(--rosa),var(--morado));
+    font-size:21px;
+}
+
+.contact-header h2{
+    font-family:"Playfair Display",serif;
+    font-size:26px;
+}
+
+.contact-header p{
+    color:rgba(255,255,255,.68);
+    font-size:13px;
+}
+
+.contact-list{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:13px;
+}
+
+.contact-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
+    padding:15px;
+    color:#fff;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:16px;
+    background:rgba(255,255,255,.07);
+    transition:.25s ease;
+}
+
+.contact-item:hover{
+    background:rgba(255,255,255,.12);
+    transform:translateY(-2px);
+}
+
+.contact-item i{
+    flex:0 0 38px;
+    width:38px;
+    height:38px;
+    display:grid;
+    place-items:center;
+    border-radius:11px;
+    color:#fff;
+    background:rgba(255,47,146,.24);
+}
+
+.contact-item div{
+    min-width:0;
+}
+
+.contact-item small{
+    display:block;
+    color:rgba(255,255,255,.55);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+    font-weight:800;
+}
+
+.contact-item span{
+    display:block;
+    overflow:hidden;
+    color:#fff;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:13px;
+    font-weight:700;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    padding:32px 20px;
+    text-align:center;
+    color:rgba(255,255,255,.72);
+    background:var(--oscuro);
+    border-top:1px solid rgba(255,255,255,.05);
+}
+
+.footer-brand{
+    margin-bottom:7px;
+    color:#fff;
+    font-family:"Playfair Display",serif;
+    font-size:19px;
+}
+
+footer p{
+    font-size:12px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1050px){
+
+    .header-container{
+        width:94%;
+    }
+
+    nav ul{
+        gap:0;
+    }
+
+    nav a{
+        padding-left:7px;
+        padding-right:7px;
+        font-size:12px;
+    }
+
+    .policies{
+        gap:16px;
+    }
+
+    .contact-list{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:850px){
+
+    .header-container{
+        min-height:70px;
+    }
+
+    .menu-toggle{
+        display:grid;
+        place-items:center;
+    }
+
+    nav{
+        position:absolute;
+        top:70px;
+        left:0;
+        width:100%;
+        padding:12px 4%;
+        display:none;
+        background:rgba(21,17,26,.98);
+        border-top:1px solid rgba(255,255,255,.08);
+        box-shadow:0 18px 35px rgba(0,0,0,.18);
+    }
+
+    nav.active{
+        display:block;
+    }
+
+    nav ul{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:5px;
+    }
+
+    nav li{
+        width:100%;
+    }
+
+    nav a{
+        padding:12px;
+        text-align:center;
+        font-size:13px;
+        background:rgba(255,255,255,.035);
+    }
+
+    .policies{
+        grid-template-columns:1fr;
+    }
+
+    .section.full{
+        grid-column:auto;
+    }
+
+    .page{
+        padding-top:35px;
+    }
+
+    .privacy-header{
+        padding:52px 25px;
+        border-radius:25px;
+    }
+}
+
+@media(max-width:600px){
+
+    .top-bar{
+        font-size:10px;
+    }
+
+    .top-track span{
+        margin-right:30px;
+    }
+
+    .logo a{
+        font-size:21px;
+    }
+
+    .logo-icon{
+        width:38px;
+        height:38px;
+        border-radius:12px;
+        font-size:16px;
+    }
+
+    nav{
+        top:70px;
+    }
+
+    nav ul{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .page{
+        width:94%;
+        padding:25px 0 55px;
+    }
+
+    .privacy-header{
+        padding:42px 20px;
+        border-radius:22px;
+    }
+
+    .privacy-icon{
+        width:64px;
+        height:64px;
+        border-radius:19px;
+        font-size:25px;
+    }
+
+    .privacy-header h1{
+        font-size:31px;
+    }
+
+    .privacy-header p{
+        font-size:14px;
+    }
+
+    .intro{
+        margin-bottom:25px;
+        font-size:13px;
+    }
+
+    .section{
+        padding:22px 19px 23px;
+        border-radius:18px;
+    }
+
+    .section-title{
+        gap:10px;
+    }
+
+    .section-number{
+        flex-basis:34px;
+        width:34px;
+        height:34px;
+        border-radius:10px;
+        font-size:11px;
+    }
+
+    .section h2{
+        font-size:17px;
+    }
+
+    .section p{
+        font-size:13px;
+    }
+
+    .contact-card{
+        padding:25px 19px;
+        border-radius:21px;
+    }
+
+    .contact-header h2{
+        font-size:22px;
+    }
+
+    .contact-list{
+        gap:9px;
+    }
+
+    .contact-item{
+        padding:12px;
+    }
+}
+
+@media(max-width:390px){
+
+    .header-container{
+        width:92%;
+    }
+
+    .logo a{
+        font-size:18px;
+    }
+
+    .logo-icon{
+        width:34px;
+        height:34px;
+    }
+
+    nav ul{
+        grid-template-columns:1fr;
+    }
+
+    .privacy-header{
+        padding:35px 16px;
+    }
+
+    .privacy-header h1{
+        font-size:27px;
+    }
+
+    .section{
+        padding:19px 16px 20px;
+    }
+
+    .section h2{
+        font-size:16px;
+    }
+
+    .contact-header{
+        align-items:flex-start;
+    }
+
+    .contact-icon{
+        width:47px;
+        height:47px;
+        flex-basis:47px;
+    }
+}
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    html{
+        scroll-behavior:auto;
+    }
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+    }
+}
+</style>
 </head>
 
 <body>
 
+<div class="top-bar">
+    <div class="top-track">
+        <span>💖 ENVÍOS A TODO MÉXICO 🚚</span>
+        <span>✨ NUEVOS PRODUCTOS CADA SEMANA</span>
+        <span>🔥 PROMOCIONES DISPONIBLES</span>
+        <span>💖 MÁS DE 20,000 CLIENTAS SATISFECHAS</span>
+        <span>💖 ENVÍOS A TODO MÉXICO 🚚</span>
+        <span>✨ NUEVOS PRODUCTOS CADA SEMANA</span>
+        <span>🔥 PROMOCIONES DISPONIBLES</span>
+        <span>💖 MÁS DE 20,000 CLIENTAS SATISFECHAS</span>
+    </div>
+</div>
+
 <header>
-    <div class="container">
+    <div class="header-container">
+
         <div class="logo">
-            <a href="#">Shop Ofe Trujillo</a>
+            <a href="index.html">
+                <span class="logo-icon">
+                    <i class="fas fa-heart"></i>
+                </span>
+                <span>Shop Ofe Trujillo</span>
+            </a>
         </div>
 
-        <div class="menu-toggle" onclick="toggleMenu()">
+        <button
+            class="menu-toggle"
+            type="button"
+            aria-label="Abrir menú"
+            aria-expanded="false"
+            onclick="toggleMenu()">
             <i class="fas fa-bars"></i>
-        </div>
+        </button>
 
-        <nav>
+        <nav id="mainNav">
             <ul>
                 <li><a href="index.html">Inicio</a></li>
-              <li><a href="productos.html">Productos</a></li>
+                <li><a href="productos.html">Productos</a></li>
                 <li><a href="index.html#envios">Envíos</a></li>
                 <li><a href="index.html#novedades">Nosotros</a></li>
                 <li><a href="login.html">Clientes</a></li>
                 <li><a href="galeria.html#anuncios">Anuncios</a></li>
-                <li><a href="galeria.html#galeria">Galeria</a></li>
+                <li><a href="galeria.html#galeria">Galería</a></li>
                 <li><a href="index.html#contacto">Contacto</a></li>
                 <li><a href="acceso.html">Acceso</a></li>
             </ul>
         </nav>
+
     </div>
 </header>
 
-<div class="container">
+<main class="page">
 
-    <div class="privacy-header">
+    <section class="privacy-header">
+
+        <div class="privacy-icon">
+            <i class="fas fa-shield-heart"></i>
+        </div>
+
         <h1>Términos y Privacidad 💖</h1>
-        <p>Shop Ofe Trujillo</p>
-    </div>
-    
-    <p style="text-align:center; margin-bottom:20px;">
-        Estas políticas están diseñadas para brindarte seguridad, confianza y transparencia en cada compra. Al realizar tu pedido, aceptas los siguientes lineamientos 💖
+
+        <p>Shop Ofe Trujillo · Compra con confianza</p>
+
+    </section>
+
+    <p class="intro">
+        Estas políticas están diseñadas para brindarte
+        <strong>seguridad, confianza y transparencia</strong>
+        en cada compra. Al realizar tu pedido, aceptas los siguientes lineamientos. 💖
     </p>
 
-    <div class="section">
-        <h2>1. Información que recopilamos</h2><br>
-        <p>Recopilamos datos como nombre, teléfono, dirección de envío y comprobantes de pago para procesar tus pedidos de forma personalizada.</p>
+    <div class="policies">
+
+        <article class="section">
+
+            <div class="section-title">
+                <div class="section-number">01</div>
+                <h2>Información que recopilamos</h2>
+            </div>
+
+            <p>
+                Recopilamos datos como nombre, teléfono, dirección de envío y
+                comprobantes de pago para procesar tus pedidos de forma personalizada.
+            </p>
+
+        </article>
+
+        <article class="section highlight">
+
+            <div class="section-title">
+                <div class="section-number">02</div>
+                <h2>Vigencia de Apartado</h2>
+            </div>
+
+            <p>
+                Una vez generada tu nota de venta, cuentas con un máximo de
+                <b>12 horas naturales</b> para realizar y reportar tu pago vía WhatsApp.
+                Pasado este tiempo, los productos se liberarán automáticamente
+                para otros clientes.
+            </p>
+
+        </article>
+
+        <article class="section">
+
+            <div class="section-title">
+                <div class="section-number">03</div>
+                <h2>Uso de la información</h2>
+            </div>
+
+            <p>
+                Tu información se utiliza exclusivamente para procesar pedidos,
+                contactarte para la logística de entrega y enviarte promociones
+                si así lo autorizas.
+            </p>
+
+        </article>
+
+        <article class="section">
+
+            <div class="section-title">
+                <div class="section-number">04</div>
+                <h2>Envíos y Logística Nacional</h2>
+            </div>
+
+            <p>
+                Para envíos en México, compartimos únicamente los datos necesarios
+                con paqueterías externas. Nuestra responsabilidad concluye al
+                entregar el paquete a la mensajería y proporcionarte tu número de guía.
+            </p>
+
+        </article>
+
+        <article class="section warning">
+
+            <div class="section-title">
+                <div class="section-number">05</div>
+                <h2>Transferencia de Riesgo</h2>
+            </div>
+
+            <p>
+                Shop Ofe Trujillo no se hace responsable por robos, extravíos,
+                retrasos o daños causados por el manejo de la empresa de
+                paquetería externa.
+            </p>
+
+        </article>
+
+        <article class="section">
+
+            <div class="section-title">
+                <div class="section-number">06</div>
+                <h2>Puntos de Entrega Local</h2>
+            </div>
+
+            <p>
+                En entregas presenciales (Minatitlán y puntos estatales), se otorga
+                una <b>tolerancia máxima de 10 minutos</b> de espera. En caso de
+                inasistencia, el pedido vuelve a bodega y se deberá pagar un nuevo
+                cargo de envío local.
+            </p>
+
+        </article>
+
+        <article class="section">
+
+            <div class="section-title">
+                <div class="section-number">07</div>
+                <h2>Comunicación Oficial</h2>
+            </div>
+
+            <p>
+                Podemos contactarte por WhatsApp o redes sociales únicamente para
+                temas relacionados con tu pedido o novedades de la tienda.
+            </p>
+
+        </article>
+
+        <article class="section">
+
+            <div class="section-title">
+                <div class="section-number">08</div>
+                <h2>Uso de cookies</h2>
+            </div>
+
+            <p>
+                Utilizamos cookies para mejorar tu experiencia en la web
+                y analizar el uso del sitio.
+            </p>
+
+        </article>
+
+        <article class="section">
+
+            <div class="section-title">
+                <div class="section-number">09</div>
+                <h2>Derechos del usuario</h2>
+            </div>
+
+            <p>
+                Puedes solicitar acceso, modificación o eliminación de tus datos
+                personales contactándonos por nuestros canales oficiales.
+            </p>
+
+        </article>
+
+        <article class="section highlight">
+
+            <div class="section-title">
+                <div class="section-number">10</div>
+                <h2>Garantía de Higiene y Salud</h2>
+            </div>
+
+            <p>
+                Debido a la naturaleza de los productos (belleza y cuidado personal),
+                <b>no se aceptan cambios ni devoluciones</b> en artículos abiertos,
+                probados o usados por razones estrictas de higiene.
+            </p>
+
+        </article>
+
+        <article class="section">
+
+            <div class="section-title">
+                <div class="section-number">11</div>
+                <h2>Métodos de pago</h2>
+            </div>
+
+            <p>
+                Aceptamos transferencia bancaria, depósitos en efectivo y pagos
+                con tarjeta. Las comisiones por pagos con tarjeta o plataformas
+                externas corren por cuenta del cliente.
+            </p>
+
+        </article>
+
+        <article class="section warning">
+
+            <div class="section-title">
+                <div class="section-number">12</div>
+                <h2>Reporte de Faltantes</h2>
+            </div>
+
+            <p>
+                Es <b>requisito obligatorio</b> presentar un
+                <b>video de unboxing continuo</b>, sin cortes ni ediciones,
+                que muestre el paquete sellado y el proceso de apertura para
+                validar reportes de productos faltantes o incorrectos.
+            </p>
+
+        </article>
+
+        <article class="section">
+
+            <div class="section-title">
+                <div class="section-number">13</div>
+                <h2>Cambios y Errores de Surtido</h2>
+            </div>
+
+            <p>
+                En caso de recibir un producto incorrecto o con defecto de fábrica,
+                deberás reportarlo dentro de las primeras
+                <b>24 horas naturales</b> tras recibir tu paquete,
+                adjuntando tu video de unboxing.
+            </p>
+
+        </article>
+
+        <article class="section">
+
+            <div class="section-title">
+                <div class="section-number">14</div>
+                <h2>Disponibilidad de productos</h2>
+            </div>
+
+            <p>
+                La disponibilidad puede variar sin previo aviso. Si un producto
+                se agota después del pago, se te ofrecerá una alternativa de igual
+                valor o un reembolso.
+            </p>
+
+        </article>
+
+        <article class="section">
+
+            <div class="section-title">
+                <div class="section-number">15</div>
+                <h2>Tiempos de procesamiento</h2>
+            </div>
+
+            <p>
+                Los pedidos se procesan en un plazo de
+                <b>24 a 48 horas hábiles</b> después de confirmado el pago.
+                Este tiempo puede variar en temporadas altas.
+            </p>
+
+        </article>
+
+        <article class="section">
+
+            <div class="section-title">
+                <div class="section-number">16</div>
+                <h2>Responsabilidad del cliente</h2>
+            </div>
+
+            <p>
+                Es responsabilidad del cliente proporcionar correctamente
+                sus datos de envío. Shop Ofe Trujillo no se hace responsable
+                por errores en direcciones proporcionadas.
+            </p>
+
+        </article>
+
+        <article class="section">
+
+            <div class="section-title">
+                <div class="section-number">17</div>
+                <h2>Garantía y Reacciones</h2>
+            </div>
+
+            <p>
+                No nos hacemos responsables por reacciones alérgicas o mal uso
+                de los productos. Recomendamos realizar una prueba de sensibilidad
+                antes de su uso total.
+            </p>
+
+        </article>
+
+        <article class="section">
+
+            <div class="section-title">
+                <div class="section-number">18</div>
+                <h2>Promociones</h2>
+            </div>
+
+            <p>
+                Las promociones y descuentos están sujetos a disponibilidad
+                y pueden finalizar sin previo aviso.
+            </p>
+
+        </article>
+
+        <article class="section full">
+
+            <div class="section-title">
+                <div class="section-number">19</div>
+                <h2>Contacto y Redes</h2>
+            </div>
+
+            <p>
+                Utiliza nuestros canales oficiales para comunicarte con
+                Shop Ofe Trujillo y recibir atención relacionada con tus pedidos.
+            </p>
+
+        </article>
+
     </div>
 
-    <div class="section" style="border: 1px solid #ff4da6; background-color: #fffafb;">
-        <h2>2. Vigencia de Apartado</h2><br>
-        <p>Una vez generada tu nota de venta, cuentas con un máximo de <b>12 horas naturales</b> para realizar y reportar tu pago vía WhatsApp. Pasado este tiempo, los productos se liberarán automáticamente para otros clientes.</p>
-    </div>
+    <section class="contact-card">
 
-    <div class="section">
-        <h2>3. Uso de la información</h2><br>
-        <p>Tu información se utiliza exclusivamente para procesar pedidos, contactarte para la logística de entrega y enviarte promociones si así lo autorizas.</p>
-    </div>
+        <div class="contact-header">
 
-    <div class="section">
-        <h2>4. Envíos y Logística (Nacional)</h2><br>
-        <p>Para envíos en México, compartimos únicamente los datos necesarios con paqueterías externas. Nuestra responsabilidad concluye al entregar el paquete a la mensajería y proporcionarte tu número de guía.</p>
-    </div>
+            <div class="contact-icon">
+                <i class="fas fa-headset"></i>
+            </div>
 
-    <div class="section" style="border: 1px solid #ff4da6;">
-        <h2>5. Transferencia de Riesgo</h2><br>
-        <p>Shop Ofe Trujillo no se hace responsable por robos, extravíos, retrasos o daños causados por el manejo de la empresa de paquetería externa.</p>
-    </div>
+            <div>
+                <h2>Canales oficiales</h2>
+                <p>Estamos para atenderte 💖</p>
+            </div>
 
-    <div class="section">
-        <h2>6. Puntos de Entrega Local</h2><br>
-        <p>En entregas presenciales (Minatitlán y puntos estatales), se otorga una <b>tolerancia máxima de 10 minutos</b> de espera. En caso de inasistencia, el pedido vuelve a bodega y se deberá pagar un nuevo cargo de envío local.</p>
-    </div>
+        </div>
 
-    <div class="section">
-        <h2>7. Comunicación Oficial</h2><br>
-        <p>Podemos contactarte por WhatsApp o redes sociales únicamente para temas relacionados con tu pedido o novedades de la tienda.</p>
-    </div>
+        <div class="contact-list">
 
-    <div class="section">
-        <h2>8. Uso de cookies</h2><br>
-        <p>Utilizamos cookies para mejorar tu experiencia en la web y analizar el uso del sitio.</p>
-    </div>
+            <a class="contact-item"
+               href="https://wa.link/ph7p5s"
+               target="_blank"
+               rel="noopener noreferrer">
 
-    <div class="section">
-        <h2>9. Derechos del usuario</h2><br>
-        <p>Puedes solicitar acceso, modificación o eliminación de tus datos personales contactándonos por nuestros canales oficiales.</p>
-    </div>
+                <i class="fab fa-whatsapp"></i>
 
-    <div class="section" style="background-color: #fff5f8;">
-        <h2>10. Garantía de Higiene y Salud</h2><br>
-        <p>Debido a la naturaleza de los productos (belleza y cuidado personal), <b>no se aceptan cambios ni devoluciones</b> en artículos abiertos, probados o usados por razones estrictas de higiene.</p>
-    </div>
+                <div>
+                    <small>WhatsApp</small>
+                    <span>922 217 4646</span>
+                </div>
 
-    <div class="section">
-        <h2>11. Métodos de pago</h2><br>
-        <p>Aceptamos transferencia bancaria, depósitos en efectivo y pagos con tarjeta. Las comisiones por pagos con tarjeta o plataformas externas corren por cuenta del cliente.</p>
-    </div>
+            </a>
 
-    <div class="section" style="border-left: 5px solid #ff4da6; padding-left: 15px;">
-        <h2>12. Reporte de Faltantes (Cláusula de Video)</h2><br>
-        <p>Es <b>requisito obligatorio</b> presentar un <b>video de unboxing continuo</b> (sin cortes ni ediciones) que muestre el paquete sellado y el proceso de apertura para validar reportes de productos faltantes o incorrectos.</p>
-    </div>
+            <a class="contact-item"
+               href="https://www.instagram.com/shop_ofetrujillo"
+               target="_blank"
+               rel="noopener noreferrer">
 
-    <div class="section">
-        <h2>13. Cambios y Errores de Surtido</h2><br>
-        <p>En caso de recibir un producto incorrecto o con defecto de fábrica, deberás reportarlo dentro de las primeras <b>24 horas naturales</b> tras recibir tu paquete, adjuntando tu video de unboxing.</p>
-    </div>
+                <i class="fab fa-instagram"></i>
 
-    <div class="section">
-        <h2>14. Disponibilidad de productos</h2><br>
-        <p>La disponibilidad puede variar sin previo aviso. Si un producto se agota después del pago, se te ofrecerá una alternativa de igual valor o un reembolso.</p>
-    </div>
+                <div>
+                    <small>Instagram</small>
+                    <span>@shop_ofetrujillo</span>
+                </div>
 
-    <div class="section">
-        <h2>15. Tiempos de procesamiento</h2><br>
-        <p>Los pedidos se procesan en un plazo de 24 a 48 horas hábiles después de confirmado el pago. Este tiempo puede variar en temporadas altas.</p>
-    </div>
+            </a>
 
-    <div class="section">
-        <h2>16. Responsabilidad del cliente</h2><br>
-        <p>Es responsabilidad del cliente proporcionar correctamente sus datos de envío. Shop Ofe Trujillo no se hace responsable por errores en direcciones proporcionadas.</p>
-    </div>
+            <a class="contact-item"
+               href="https://www.facebook.com/Ofetrujillo32"
+               target="_blank"
+               rel="noopener noreferrer">
 
-    <div class="section">
-        <h2>17. Garantía y Reacciones</h2><br>
-        <p>No nos hacemos responsables por reacciones alérgicas o mal uso de los productos. Recomendamos realizar una prueba de sensibilidad antes de su uso total.</p>
-    </div>
+                <i class="fab fa-facebook-f"></i>
 
-    <div class="section">
-        <h2>18. Promociones</h2><br>
-        <p>Las promociones y descuentos están sujetos a disponibilidad y pueden finalizar sin previo aviso.</p>
-    </div>
+                <div>
+                    <small>Facebook</small>
+                    <span>Shop Ofe Trujillo</span>
+                </div>
 
-    <div class="section">
-        <h2>19. Contacto y Redes</h2><br>
-        <p><i class="fab fa-whatsapp"></i> WhatsApp: 922 217 4646</p>
-        <p><i class="fab fa-instagram"></i> Instagram: @shop_ofetrujillo</p>
-        <p><i class="fab fa-facebook"></i> Facebook: Shop Ofe Trujillo</p>
-    </div>
+            </a>
 
-</div>
+        </div>
+
+    </section>
+
+</main>
 
 <footer>
-    <p>© 2026 Shop Ofe Trujillo</p>
+
+    <div class="footer-brand">
+        Shop Ofe Trujillo 💖
+    </div>
+
+    <p>
+        © 2026 Shop Ofe Trujillo · Todos los derechos reservados
+    </p>
+
 </footer>
 
 <script src="a.js"></script>
+
 <script>
-    function toggleMenu() {
-        const nav = document.querySelector('nav');
-        nav.classList.toggle('active');
-    }
+function toggleMenu(){
+
+    const nav = document.getElementById("mainNav");
+    const button = document.querySelector(".menu-toggle");
+
+    nav.classList.toggle("active");
+
+    const abierto = nav.classList.contains("active");
+
+    button.setAttribute("aria-expanded", abierto ? "true" : "false");
+
+    button.innerHTML = abierto
+        ? '<i class="fas fa-times"></i>'
+        : '<i class="fas fa-bars"></i>';
+}
+
+document.querySelectorAll("#mainNav a").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        const nav = document.getElementById("mainNav");
+        const button = document.querySelector(".menu-toggle");
+
+        nav.classList.remove("active");
+
+        button.setAttribute("aria-expanded","false");
+
+        button.innerHTML = '<i class="fas fa-bars"></i>';
+
+    });
+
+});
 </script>
+
 </body>
 </html>

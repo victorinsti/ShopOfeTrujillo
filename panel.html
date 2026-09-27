@@ -1,209 +1,1086 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panel Empleado</title>
+
+<title>Panel de Empleado | Shop Ofe Trujillo</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
-body {
+
+:root{
+    --rosa:#ff2f92;
+    --rosa-claro:#ff72b8;
+    --rosa-suave:#fff0f7;
+    --morado:#8e44ad;
+    --morado-oscuro:#642d7c;
+    --oscuro:#15111a;
+    --oscuro-2:#211827;
+    --blanco:#fff;
+    --gris:#77727d;
+    --gris-claro:#f8f7fa;
+    --verde:#31a968;
+    --rojo:#ef4b63;
+    --naranja:#ff9800;
+    --azul:#4d7cff;
+    --borde:rgba(21,17,26,.08);
+    --sombra:0 18px 50px rgba(21,17,26,.08);
+    --radio:20px;
+}
+
+*{
+    box-sizing:border-box;
     margin:0;
-    font-family: Arial;
-    background: linear-gradient(135deg, #ffe4ec, #fff0f5);
+    padding:0;
 }
 
-/* HEADER */
-.header {
-    background:#ff4da6;
-    color:white;
-    padding:15px;
-    text-align:center;
-    font-weight:bold;
+html{
+    scroll-behavior:smooth;
 }
 
-/* CONTENEDOR */
-.container {
-    padding:20px;
+body{
+    min-height:100vh;
+    font-family:"DM Sans",sans-serif;
+    color:var(--oscuro);
+    background:
+        radial-gradient(circle at 0% 0%,rgba(255,47,146,.10),transparent 25%),
+        radial-gradient(circle at 100% 20%,rgba(142,68,173,.09),transparent 28%),
+        linear-gradient(135deg,#fff8fb,#f8f5fa);
+    overflow-x:hidden;
 }
 
-/* TARJETAS */
-.card {
-    background:white;
-    padding:20px;
-    border-radius:15px;
+body::before{
+    content:"";
+    position:fixed;
+    z-index:-1;
+    width:400px;
+    height:400px;
+    right:-180px;
+    bottom:-160px;
+    border-radius:50%;
+    background:rgba(255,47,146,.07);
+    filter:blur(5px);
+    pointer-events:none;
+}
+
+button,
+input,
+select,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+hr{
+    height:1px;
+    margin:30px 0;
+    border:0;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,47,146,.20),
+        transparent
+    );
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:2000;
+    min-height:78px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:16px 25px;
+    color:#fff;
+    background:
+        radial-gradient(circle at 90% 0%,rgba(255,47,146,.22),transparent 25%),
+        linear-gradient(135deg,var(--oscuro),var(--oscuro-2));
+    border-bottom:1px solid rgba(255,255,255,.08);
+    box-shadow:0 12px 35px rgba(21,17,26,.18);
+    backdrop-filter:blur(18px);
+}
+
+.header::before{
+    content:"";
+    width:10px;
+    height:10px;
+    margin-right:10px;
+    border-radius:50%;
+    background:var(--rosa);
+    box-shadow:0 0 20px rgba(255,47,146,.8);
+}
+
+.header{
+    font-family:"Playfair Display",serif;
+    font-size:clamp(21px,3vw,29px);
+    font-weight:700;
+    letter-spacing:-.5px;
+}
+
+/* =========================================
+   CONTENEDOR PRINCIPAL
+========================================= */
+
+.container{
+    width:min(1200px,calc(100% - 40px));
+    margin:0 auto;
+    padding:32px 0 55px;
+}
+
+/* =========================================
+   TARJETAS
+========================================= */
+
+.card{
+    position:relative;
+    overflow:hidden;
     margin-bottom:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    padding:25px;
+    border:1px solid var(--borde);
+    border-radius:var(--radio);
+    background:rgba(255,255,255,.92);
+    box-shadow:var(--sombra);
+    transition:.25s ease;
 }
 
-/* TITULOS */
-h2 {
-    color:#ff4da6;
+.card:hover{
+    box-shadow:0 24px 60px rgba(21,17,26,.11);
 }
 
-/* LISTA */
-ul {
-    padding-left:20px;
+.card::after{
+    content:"";
+    position:absolute;
+    width:100px;
+    height:100px;
+    right:-55px;
+    bottom:-55px;
+    border-radius:50%;
+    background:rgba(255,47,146,.035);
+    pointer-events:none;
 }
 
-/* BOTON */
-button {
+.card h2{
+    position:relative;
+    z-index:1;
+    margin-bottom:16px;
+    color:var(--oscuro);
+    font-family:"Playfair Display",serif;
+    font-size:24px;
+    letter-spacing:-.3px;
+}
+
+.card h2::first-letter{
+    color:var(--rosa);
+}
+
+.card h3{
+    position:relative;
+    z-index:1;
+    margin-bottom:12px;
+}
+
+.card p{
+    position:relative;
+    z-index:1;
+    margin:7px 0;
+    color:#5f5963;
+    line-height:1.55;
+}
+
+.card ul{
+    position:relative;
+    z-index:1;
+    padding-left:22px;
+}
+
+.card li{
+    margin:8px 0;
+    color:#5f5963;
+    line-height:1.5;
+}
+
+/* =========================================
+   PERFIL
+========================================= */
+
+.card:first-of-type{
+    background:
+        radial-gradient(circle at 100% 0%,rgba(255,47,146,.10),transparent 28%),
+        #fff;
+}
+
+.card:first-of-type h2{
+    color:var(--rosa);
+}
+
+/* =========================================
+   BOTONES
+========================================= */
+
+button{
+    min-height:48px;
+    padding:12px 18px;
+    border:0;
+    border-radius:13px;
+    color:#fff;
+    background:linear-gradient(135deg,var(--rosa),var(--morado));
+    font-size:13px;
+    font-weight:700;
+    box-shadow:0 10px 24px rgba(255,47,146,.14);
+    transition:.25s ease;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 15px 30px rgba(255,47,146,.22);
+}
+
+button:active{
+    transform:translateY(0);
+}
+
+/* =========================================
+   BOTONES ASISTENCIA
+========================================= */
+
+button[onclick="registrarEntrada()"]{
+    background:linear-gradient(135deg,#27ae60,#42c979);
+    margin-right:8px;
+}
+
+button[onclick="registrarSalida()"]{
+    background:linear-gradient(135deg,#ef405d,#ff6b81);
+}
+
+/* =========================================
+   RANKING
+========================================= */
+
+#ranking{
+    display:grid;
+    gap:10px;
+}
+
+.venta,
+.ranking-item{
+    position:relative;
+    display:grid;
+    grid-template-columns:minmax(110px,1fr) auto auto;
+    align-items:center;
+    gap:14px;
+    min-height:58px;
+    padding:13px 16px;
+    border:1px solid var(--borde);
+    border-radius:15px;
+    background:#faf9fb;
+    font-size:13px;
+    font-weight:700;
+}
+
+.venta span{
+    color:var(--gris);
+    font-size:12px;
+    font-weight:600;
+}
+
+.oro{
+    background:linear-gradient(135deg,#fff1a8,#ffd700);
+    color:#3b3000;
+}
+
+.plata{
+    background:linear-gradient(135deg,#f4f4f4,#c0c0c0);
+    color:#303030;
+}
+
+.bronce{
+    background:linear-gradient(135deg,#efbd91,#cd7f32);
+    color:#fff;
+}
+
+.normal{
+    background:#f5f5f5;
+}
+
+/* =========================================
+   ASISTENCIA
+========================================= */
+
+#estadoAsistencia{
+    margin-bottom:18px;
+    padding:15px;
+    border-radius:14px;
+    color:#5f5963;
+    background:var(--gris-claro);
+    font-size:14px;
+    font-weight:600;
+}
+
+#estadoAsistencia b{
+    color:var(--oscuro);
+}
+
+#calendario{
+    display:grid;
+    grid-template-columns:repeat(7,minmax(0,1fr));
+    gap:7px;
+    margin-top:15px;
+}
+
+.dia{
+    min-height:45px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid var(--borde);
+    border-radius:11px;
+    background:#f4f2f5;
+    color:#6f6972;
+    font-size:12px;
+    font-weight:700;
+    transition:.2s ease;
+}
+
+.dia:hover{
+    transform:translateY(-2px);
+}
+
+.asistio{
+    background:linear-gradient(135deg,#32b86c,#59d98d);
+    color:#fff;
+    border-color:transparent;
+}
+
+.falta{
+    background:linear-gradient(135deg,#ef405d,#ff7188);
+    color:#fff;
+    border-color:transparent;
+}
+
+.retardo{
+    background:linear-gradient(135deg,#ff9800,#ffb52e);
+    color:#fff;
+    border-color:transparent;
+}
+
+/* =========================================
+   SELECTS
+========================================= */
+
+select{
     width:100%;
-    padding:12px;
-    background:#ff4da6;
-    color:white;
-    border:none;
-    border-radius:10px;
-    margin-top:20px;
+    min-height:48px;
+    margin:7px 0;
+    padding:0 14px;
+    border:1px solid var(--borde);
+    border-radius:13px;
+    outline:none;
+    color:var(--oscuro);
+    background:#faf9fb;
+    transition:.25s ease;
 }
 
-/* RESPONSIVE */
-@media (max-width:768px){
-    .container {
-        padding:10px;
+select:focus{
+    border-color:rgba(255,47,146,.45);
+    background:#fff;
+    box-shadow:0 0 0 4px rgba(255,47,146,.07);
+}
+
+/* =========================================
+   INPUTS
+========================================= */
+
+input,
+textarea{
+    width:100%;
+    min-height:48px;
+    margin:7px 0;
+    padding:13px 14px;
+    border:1px solid var(--borde);
+    border-radius:13px;
+    outline:none;
+    color:var(--oscuro);
+    background:#faf9fb;
+    transition:.25s ease;
+}
+
+input:focus,
+textarea:focus{
+    border-color:rgba(255,47,146,.45);
+    background:#fff;
+    box-shadow:0 0 0 4px rgba(255,47,146,.07);
+}
+
+textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+/* =========================================
+   TAREAS Y NOTIFICACIONES
+========================================= */
+
+#tareas,
+#notificaciones{
+    display:grid;
+    gap:8px;
+    padding-left:0;
+    list-style:none;
+}
+
+#tareas li,
+#notificaciones li{
+    margin:0;
+    padding:13px 15px;
+    border-radius:13px;
+    border:1px solid var(--borde);
+    background:#faf9fb;
+}
+
+#notificaciones li{
+    border-color:rgba(255,47,146,.12);
+    background:#fff4fa;
+}
+
+/* =========================================
+   BOTÓN IMPUNTUALES
+========================================= */
+
+.btn-impuntuales{
+    width:100%;
+    min-height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    padding:18px 22px;
+    border:0;
+    border-radius:18px;
+    color:#fff;
+    background:
+        radial-gradient(circle at 10% 0%,rgba(255,255,255,.20),transparent 25%),
+        linear-gradient(135deg,#ff14e4,#f44336);
+    box-shadow:0 16px 35px rgba(244,67,54,.20);
+    font-size:15px;
+    font-weight:800;
+}
+
+.btn-impuntuales i{
+    font-size:22px;
+}
+
+/* =========================================
+   CAJA Y REPORTES
+========================================= */
+
+.card button[onclick*="pos.html"],
+.card button[onclick*="corte.html"],
+.card button[onclick*="reportes.html"],
+.card button[onclick*="validarpuntos.html"]{
+    width:100%;
+    margin-top:8px;
+}
+
+.card button[onclick*="pos.html"]{
+    background:linear-gradient(135deg,#ff2f92,#ff68b0);
+}
+
+.card button[onclick*="corte.html"]{
+    background:linear-gradient(135deg,#8e44ad,#aa62c7);
+}
+
+.card button[onclick*="reportes.html"]{
+    background:linear-gradient(135deg,#4d7cff,#6d93ff);
+}
+
+.card button[onclick*="validarpuntos.html"]{
+    background:linear-gradient(135deg,#15111a,#392a42)!important;
+    border:0!important;
+}
+
+/* =========================================
+   PANEL ADMINISTRATIVO
+========================================= */
+
+.admin-card{
+    border:1px solid rgba(255,47,146,.15);
+    background:
+        radial-gradient(circle at top right,rgba(255,47,146,.08),transparent 30%),
+        #fff;
+}
+
+.admin-card > h2{
+    color:var(--rosa);
+}
+
+.admin-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+}
+
+.admin-box{
+    position:relative;
+    padding:20px;
+    border:1px solid var(--borde);
+    border-radius:17px;
+    background:#faf9fb;
+}
+
+.admin-box h3{
+    margin-bottom:13px;
+    color:var(--oscuro);
+    font-size:16px;
+}
+
+.admin-box button{
+    width:100%;
+    margin-top:8px;
+}
+
+.btn-tarea{
+    background:linear-gradient(135deg,#8e44ad,#aa62c7);
+}
+
+.btn-noti{
+    background:linear-gradient(135deg,#ff2f92,#ff65ae);
+}
+
+/* =========================================
+   ENCUESTAS
+========================================= */
+
+#listaEncuestas{
+    overflow:hidden;
+    border-radius:15px;
+}
+
+#listaEncuestas > div{
+    padding:15px!important;
+    border-bottom:1px solid var(--borde)!important;
+    background:#fff;
+}
+
+#listaEncuestas > div:last-child{
+    border-bottom:0!important;
+}
+
+/* =========================================
+   PRODUCTOS
+========================================= */
+
+#listaProductos{
+    display:grid;
+    gap:10px;
+}
+
+#listaProductos > div{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto auto;
+    align-items:center;
+    gap:8px;
+    padding:15px!important;
+    border:1px solid var(--borde)!important;
+    border-radius:14px;
+    background:#faf9fb;
+}
+
+#listaProductos button{
+    width:auto;
+    min-height:40px;
+    margin:0;
+    padding:8px 12px;
+    font-size:11px;
+}
+
+#listaProductos button:first-of-type{
+    background:linear-gradient(135deg,#4d7cff,#7094ff);
+}
+
+#listaProductos button:last-of-type{
+    background:linear-gradient(135deg,#ef405d,#ff7188);
+}
+
+/* =========================================
+   ANUNCIOS
+========================================= */
+
+#listaAnuncios{
+    display:grid;
+    gap:10px;
+}
+
+#listaAnuncios > div{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    padding:15px!important;
+    border:1px solid var(--borde)!important;
+    border-radius:14px;
+    background:#faf9fb;
+}
+
+#listaAnuncios button{
+    width:auto;
+    min-height:40px;
+    margin:0;
+    padding:8px 13px;
+    background:linear-gradient(135deg,#ef405d,#ff7188);
+}
+
+/* =========================================
+   EDICIÓN
+========================================= */
+
+#editarBox{
+    border:1px solid rgba(77,124,255,.15);
+    background:
+        radial-gradient(circle at top right,rgba(77,124,255,.08),transparent 30%),
+        #fff;
+}
+
+/* =========================================
+   HISTORIAL
+========================================= */
+
+#historialBox{
+    margin-top:15px;
+    padding:18px;
+    border:1px solid var(--borde);
+    border-radius:16px;
+    background:#faf9fb;
+    line-height:1.8;
+    color:#5f5963;
+}
+
+#historialBox hr{
+    margin:12px 0;
+}
+
+/* =========================================
+   TABLA ASISTENCIA
+========================================= */
+
+#tablaAsistencia{
+    margin-top:15px;
+    overflow-x:auto;
+}
+
+#tablaAsistencia > div{
+    min-width:650px;
+    margin-bottom:8px;
+    padding:15px!important;
+    border:1px solid var(--borde)!important;
+    border-radius:14px;
+    background:#faf9fb;
+    line-height:1.7;
+}
+
+/* =========================================
+   VIP
+========================================= */
+
+#listaVIP,
+#listaContenidoVIP{
+    margin-top:15px;
+}
+
+#listaVIP > div{
+    border:1px solid var(--borde)!important;
+    background:#fff!important;
+    box-shadow:0 8px 25px rgba(21,17,26,.06)!important;
+}
+
+#listaVIP img,
+#listaContenidoVIP img{
+    display:block;
+    width:100%;
+    height:auto;
+    max-height:none;
+    object-fit:contain;
+    border-radius:14px;
+}
+
+#listaContenidoVIP > div{
+    background:linear-gradient(145deg,#fff0f7,#f7effb)!important;
+    border:1px solid rgba(255,47,146,.10);
+}
+
+/* =========================================
+   INFORMACIÓN EMPLEADO
+========================================= */
+
+.card:has(#usuario){
+    background:
+        radial-gradient(circle at 100% 0%,rgba(142,68,173,.08),transparent 30%),
+        #fff;
+}
+
+#nombre,
+#puesto,
+#usuario,
+#telefono,
+#horario,
+#area,
+#estado,
+#id{
+    display:flex;
+    align-items:center;
+    min-height:42px;
+    margin:7px 0;
+    padding:10px 13px;
+    border-radius:12px;
+    background:#faf9fb;
+    font-size:13px;
+    font-weight:600;
+}
+
+/* =========================================
+   EMPRESA
+========================================= */
+
+.card p strong{
+    color:var(--rosa);
+}
+
+/* =========================================
+   CERRAR SESIÓN
+========================================= */
+
+.container > button[onclick="logout()"]{
+    width:100%;
+    min-height:54px;
+    margin-top:5px;
+    background:linear-gradient(135deg,#15111a,#35253d);
+    box-shadow:0 15px 30px rgba(21,17,26,.15);
+}
+
+/* =========================================
+   RESPONSIVE 1100
+========================================= */
+
+@media(max-width:1100px){
+
+    .container{
+        width:min(100% - 32px,1000px);
     }
-}
 
-#calendario {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    margin-top: 10px;
-}
-
-.dia {
-    padding: 10px;
-    text-align: center;
-    border-radius: 8px;
-    background: #eee;
-    font-size: 12px;
-}
-
-.asistio {
-    background: #4caf50;
-    color: white;
-}
-
-.falta {
-    background: #f44336;
-    color: white;
-}
-
-.retardo {
-    background: #ff9800;
-    color: white;
-}
-.ranking-item {
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 8px;
-    font-weight: bold;
-}
-
-/* 🥇 */
-.oro {
-    background: linear-gradient(135deg, #FFD700, #FFC107);
-    color: #000;
-}
-
-/* 🥈 */
-.plata {
-    background: linear-gradient(135deg, #C0C0C0, #9E9E9E);
-    color: #000;
-}
-
-/* 🥉 */
-.bronce {
-    background: linear-gradient(135deg, #CD7F32, #A0522D);
-    color: #fff;
-}
-
-/* resto */
-.normal {
-    background: #f5f5f5;
-}
-.btn-impuntuales {
-        background: linear-gradient(135deg, #ff14e4, #f44336);
-        color: white;
-        padding: 20px;
-        border-radius: 15px;
-        text-align: center;
-        font-weight: bold;
-        cursor: pointer;
-        margin: 15px 0;
-        box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
-        transition: transform 0.2s, box-shadow 0.2s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 15px;
-        border: none;
-        width: 100%;
-        font-size: 18px;
+    .admin-grid{
+        grid-template-columns:1fr;
     }
 
-    .btn-impuntuales:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(244, 67, 54, 0.4);
+    .venta,
+    .ranking-item{
+        grid-template-columns:1fr auto;
     }
 
-    .btn-impuntuales i {
-        font-size: 24px;
+    .venta span:last-child,
+    .ranking-item span:last-child{
+        grid-column:1/-1;
     }
+
+}
+
+/* =========================================
+   RESPONSIVE 768
+========================================= */
+
+@media(max-width:768px){
+
+    .header{
+        min-height:68px;
+        padding:14px 16px;
+        font-size:21px;
+    }
+
+    .container{
+        width:calc(100% - 24px);
+        padding:20px 0 40px;
+    }
+
+    .card{
+        padding:19px;
+        border-radius:17px;
+    }
+
+    .card h2{
+        font-size:21px;
+    }
+
+    .admin-grid{
+        grid-template-columns:1fr;
+    }
+
+    .venta,
+    .ranking-item{
+        grid-template-columns:1fr;
+        gap:7px;
+    }
+
+    .venta span,
+    .ranking-item span{
+        display:block;
+    }
+
+    button{
+        width:100%;
+        margin-top:8px;
+    }
+
+    button[onclick="registrarEntrada()"]{
+        margin-right:0;
+    }
+
+    #calendario{
+        gap:4px;
+    }
+
+    .dia{
+        min-height:39px;
+        border-radius:9px;
+        font-size:11px;
+    }
+
+    #listaProductos > div{
+        grid-template-columns:1fr;
+    }
+
+    #listaProductos button{
+        width:100%;
+    }
+
+    #listaAnuncios > div{
+        align-items:stretch;
+        flex-direction:column;
+    }
+
+    #listaAnuncios button{
+        width:100%;
+    }
+
+}
+
+/* =========================================
+   RESPONSIVE 560
+========================================= */
+
+@media(max-width:560px){
+
+    .container{
+        width:calc(100% - 18px);
+        padding-top:14px;
+    }
+
+    .card{
+        margin-bottom:14px;
+        padding:16px;
+        border-radius:16px;
+    }
+
+    .card h2{
+        font-size:20px;
+        line-height:1.25;
+    }
+
+    .header{
+        font-size:19px;
+    }
+
+    #calendario{
+        gap:3px;
+    }
+
+    .dia{
+        min-height:35px;
+        font-size:10px;
+    }
+
+    .btn-impuntuales{
+        min-height:65px;
+        padding:14px;
+        font-size:13px;
+    }
+
+    .btn-impuntuales i{
+        font-size:19px;
+    }
+
+    #nombre,
+    #puesto,
+    #usuario,
+    #telefono,
+    #horario,
+    #area,
+    #estado,
+    #id{
+        font-size:12px;
+    }
+
+}
+
+/* =========================================
+   RESPONSIVE 390
+========================================= */
+
+@media(max-width:390px){
+
+    .container{
+        width:calc(100% - 12px);
+    }
+
+    .card{
+        padding:14px;
+    }
+
+    .header{
+        padding:13px 10px;
+        font-size:18px;
+    }
+
+    .card h2{
+        font-size:18px;
+    }
+
+    input,
+    select,
+    textarea{
+        font-size:13px;
+    }
+
+    button{
+        font-size:12px;
+    }
+
+    .dia{
+        min-height:31px;
+        font-size:9px;
+    }
+
+}
+
+/* =========================================
+   REDUCIR MOVIMIENTO
+========================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        scroll-behavior:auto!important;
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+    }
+
+}
 
 </style>
 
 <script>
-// 🔐 PROTECCIÓN
-let acceso = sessionStorage.getItem("acceso");
 
-if(acceso !== "ok") {
-    window.location.href = "acceso.html";
+/* =========================================
+   PROTECCIÓN
+========================================= */
+
+let acceso=sessionStorage.getItem("acceso");
+
+if(acceso!=="ok"){
+    window.location.href="acceso.html";
 }
+
 </script>
 
 </head>
+
 <body>
 
 <div class="header">
-💖 Panel de Empleado
+    <i class="fa-solid fa-user-shield"></i>
+    &nbsp; Panel de Empleado
 </div>
 
 <div class="container">
 
 <div class="card">
+
     <h2>👤 Perfil</h2>
+
     <p id="nombre"></p>
+
     <p id="puesto"></p>
+
 </div>
-
-
 
 
 <div class="card">
+
     <h2>🏆 Ranking de empleados</h2>
-    <h3>Si no marcas asistencia y salida no se contará el dia completo.
-        <br> </h3>
+
+    <h3>
+        Si no marcas asistencia y salida no se contará el día completo.
+    </h3>
+
     <div id="ranking"></div>
+
 </div>
+
 <hr>
 
+
 <div class="card">
+
     <h2>⏰ Asistencia</h2>
 
-    <p id="estadoAsistencia">Cargando...</p>
+    <p id="estadoAsistencia">
+        Cargando...
+    </p>
 
-    <button onclick="registrarEntrada()">🟢 Registrar entrada</button>
-    <button onclick="registrarSalida()">🔴 Registrar salida</button>
+    <button onclick="registrarEntrada()">
+        🟢 Registrar entrada
+    </button>
+
+    <button onclick="registrarSalida()">
+        🔴 Registrar salida
+    </button>
+
 </div>
 
+
 <div class="card">
+
     <h2>📋 Tareas asignadas</h2>
+
     <ul id="tareas"></ul>
-     <h2>📋 Notificaciones asignadas</h2>
+
+    <h2>📋 Notificaciones asignadas</h2>
+
     <ul id="notificaciones"></ul>
+
 </div>
 
+
 <div class="card">
+
     <h2>💰 Caja y Reportes</h2>
 
     <button onclick="window.location='pos.html'">
@@ -218,271 +1095,410 @@ if(acceso !== "ok") {
         📊 Ver Reportes
     </button>
 
-    <button onclick="window.location='validarpuntos.html'" style="background: #ff4da6; color: white; border: 2px solid #000;">
+    <button onclick="window.location='validarpuntos.html'">
         📸 Validar Notas Foráneas
     </button>
+
 </div>
+
 <hr>
-<button class="btn-impuntuales" onclick="window.location='impuntuales.html'">
+
+
+<button class="btn-impuntuales"
+onclick="window.location='impuntuales.html'">
+
     <i class="fas fa-exclamation-triangle"></i>
-    <span>Gestión de Clientas Impuntuales</span>
+
+    <span>
+        Gestión de Clientas Impuntuales
+    </span>
+
 </button>
+
 <hr>
-<br>
+
 
 <div class="card">
+
     <h2>🧹 Rol de Limpieza Abril</h2>
+
     <p>Lunes: Paty</p>
     <p>Martes: Sol</p>
-    <p>Miercoles: Angy</p>
+    <p>Miércoles: Angy</p>
     <p>Jueves: Pao</p>
     <p>Viernes: Nao</p>
-    <p>Sabado: Lety</p>
-    
+    <p>Sábado: Lety</p>
+
 </div>
 
 
+<div class="card"
+id="asistenciaAdmin"
+style="display:none;">
 
-<div class="card" id="asistenciaAdmin" style="display:none;">
     <h2>📊 Asistencia de empleados</h2>
 
-   <select id="filtroEmpleado">
-    <option value="ofe">Ofe</option>
-    <option value="samm">Samm</option>
-    <option value="sol">Sol</option>
-    <option value="pao">Pao</option>
-    <option value="angy">Angy</option>
-    <option value="nao">Nao</option>
-    <option value="paty">Paty</option>
-    <option value="lety">Lety</option>
-    <option value="luis">Luis</option>
-</select>
+    <select id="filtroEmpleado">
+
+        <option value="ofe">Ofe</option>
+        <option value="samm">Samm</option>
+        <option value="sol">Sol</option>
+        <option value="pao">Pao</option>
+        <option value="angy">Angy</option>
+        <option value="nao">Nao</option>
+        <option value="paty">Paty</option>
+        <option value="lety">Lety</option>
+        <option value="luis">Luis</option>
+
+    </select>
 
     <div id="tablaAsistencia"></div>
+
 </div>
-<button onclick="verHistorial()">📅 Ver historial</button>
+
+
+<button onclick="verHistorial()">
+    📅 Ver historial
+</button>
+
 <div id="historialBox"></div>
+
 
 <br>
 
-<div class="card admin-card" id="adminPanel" style="display:none;">
-    
+
+<div class="card admin-card"
+id="adminPanel"
+style="display:none;">
+
     <h2>⚙️ Panel Administrativo</h2>
 
     <div class="admin-grid">
-       <div class="card">
 
-<h2>💎 Solicitudes VIP</h2>
+        <div class="card">
 
-<div id="listaVIP">
-Cargando suscriptoras...
-</div>
+            <div class="admin-box">
 
-</div>
+                <h3>
+                    💬 Encuestas de clientes
+                </h3>
 
-<!-- 🔥 PUBLICAR CONTENIDO VIP -->
-<div class="card">
+                <button
+                    onclick="toggleEncuestas()"
+                    id="btnEncuestas">
 
-<h2>🔥 Publicar contenido VIP</h2>
+                    Ver encuestas 👁️
 
-<input type="text"
-id="tituloVIP"
-placeholder="Título del contenido">
+                </button>
 
-<input type="text"
-id="imagenVIP"
-placeholder="URL de imagen">
+                <div
+                    id="listaEncuestas"
+                    style="display:none;margin-top:10px;">
 
-<textarea
-id="descripcionVIP"
-placeholder="Descripción"
-style="
-width:100%;
-height:120px;
-padding:15px;
-border-radius:15px;
-border:1px solid #ddd;
-margin-top:10px;
-"></textarea>
+                    Cargando...
 
-<input type="datetime-local"
-id="fechaVIP">
+                </div>
 
-<select id="nivelVIP">
+            </div>
 
-<option value="Silver">
-Silver
-</option>
 
-<option value="Gold">
-Gold
-</option>
+            <div class="admin-box"
+            style="margin-top:20px;">
 
-<option value="Diamond">
-Diamond
-</option>
+                <h3>
+                    📋 Asignar tareas
+                </h3>
 
-</select>
+                <select id="usuarioTarea">
 
-<button onclick="subirContenidoVIP()">
-🚀 Publicar contenido
-</button>
+                    <option value="sol">Sol</option>
+                    <option value="pao">Paola</option>
+                    <option value="angy">Angy</option>
+                    <option value="nao">Naomi</option>
+                    <option value="paty">Paty</option>
+                    <option value="lety">Lety</option>
+                    <option value="luis">Luis</option>
+                    <option value="samm">Sammy</option>
+                    <option value="ofe">Ofe</option>
 
-</div>
+                </select>
 
-<!-- 🗑️ ADMINISTRAR CONTENIDO -->
-<div class="card">
+                <input
+                    type="text"
+                    id="nuevaTarea"
+                    placeholder="Escribe una tarea">
 
-<h2>🗑️ Administrar contenido VIP</h2>
+                <button
+                    class="btn-tarea"
+                    onclick="agregarTarea()">
 
-<div id="listaContenidoVIP">
+                    Agregar tarea
 
-⏳ Cargando contenido...
+                </button>
 
-</div>
+            </div>
 
-</div>
 
-        <div class="admin-box" style="margin-top:20px;">
-    <h3>💬 Encuestas de clientes</h3>
+            <div class="admin-box">
 
-    <button onclick="toggleEncuestas()" id="btnEncuestas">
-        Ver encuestas 👁️
-    </button>
+                <h3>
+                    🔔 Enviar notificaciones
+                </h3>
 
-    <div id="listaEncuestas" style="display:none; margin-top:10px;">
-        Cargando...
-    </div>
-</div>
+                <select id="usuarioNoti">
 
-        <div class="admin-box">
-            <h3>📋 Asignar tareas</h3>
+                    <option value="sol">Sol</option>
+                    <option value="pao">Paola</option>
+                    <option value="angy">Angy</option>
+                    <option value="nao">Naomi</option>
+                    <option value="paty">Paty</option>
+                    <option value="lety">Lety</option>
+                    <option value="samm">Sammy</option>
+                    <option value="ofe">Ofe</option>
 
-            <select id="usuarioTarea">
-                <option value="sol">Sol</option>
-                <option value="pao">Paola</option>
-                <option value="angy">Angy</option>
-                <option value="nao">Naomi</option>
-                <option value="paty">Paty</option>
-                <option value="lety">Lety</option>
-                <option value="luis">Luis</option>
-                <option value="samm">Sammy</option>
-                <option value="ofe">Ofe</option>
-            </select>
+                </select>
 
-            <input type="text" id="nuevaTarea" placeholder="Escribe una tarea">
-            <button class="btn-tarea" onclick="agregarTarea()">Agregar tarea</button>
+                <input
+                    type="text"
+                    id="nuevaNoti"
+                    placeholder="Escribe una notificación">
+
+                <button
+                    class="btn-noti"
+                    onclick="agregarNotificacion()">
+
+                    Enviar notificación
+
+                </button>
+
+            </div>
+
         </div>
 
-        <div class="admin-box">
-            <h3>🔔 Enviar notificaciones</h3>
 
-           <select id="usuarioNoti">
-                <option value="sol">Sol</option>
-                <option value="pao">Paola</option>
-                <option value="angy">Angy</option>
-                <option value="nao">Naomi</option>
-                <option value="paty">Paty</option>
-                <option value="lety">Lety</option>
-                <option value="samm">Sammy</option>
-                <option value="ofe">Ofe</option>
-            </select>
+        <div class="card">
 
-            <input type="text" id="nuevaNoti" placeholder="Escribe una notificación">
-            <button class="btn-noti" onclick="agregarNotificacion()">Enviar notificación</button>
+            <div class="admin-box">
+
+                <h3>
+                    👤 Registrar Nuevo Empleado
+                </h3>
+
+                <input
+                    type="text"
+                    id="regUser"
+                    placeholder="Usuario (ej: ana)">
+
+                <input
+                    type="text"
+                    id="regNombre"
+                    placeholder="Nombre Completo">
+
+                <input
+                    type="password"
+                    id="regPass"
+                    placeholder="Contraseña">
+
+                <input
+                    type="text"
+                    id="regPuesto"
+                    placeholder="Puesto">
+
+                <input
+                    type="text"
+                    id="regTelefono"
+                    placeholder="Teléfono">
+
+                <input
+                    type="text"
+                    id="regHorario"
+                    placeholder="Horario (10:00-7:00)"
+                    value="10:00-7:00">
+
+                <input
+                    type="text"
+                    id="regArea"
+                    placeholder="Área (Ventas, Programación, etc.)">
+
+                <input
+                    type="text"
+                    id="regID"
+                    placeholder="ID (SOT00X)">
+
+                <button
+                    style="background:linear-gradient(135deg,#31a968,#49c77a);"
+                    onclick="registrarEmpleadoBD()">
+
+                    💾 Guardar en Base de Datos
+
+                </button>
+
+            </div>
+
         </div>
 
     </div>
-    <div class="admin-box" style="margin-top:20px; border: 2px solid #ff4da6; padding: 15px; border-radius: 15px;">
-    <h3>👤 Registrar Nuevo Empleado</h3>
-    <input type="text" id="regUser" placeholder="Usuario (ej: ana)">
-    <input type="text" id="regNombre" placeholder="Nombre Completo">
-    <input type="password" id="regPass" placeholder="Contraseña">
-    <input type="text" id="regPuesto" placeholder="Puesto">
-    <input type="text" id="regTelefono" placeholder="Teléfono">
-    <input type="text" id="regHorario" placeholder="Horario (10:00-7:00)" value="10:00-7:00">
-    <input type="text" id="regArea" placeholder="Área (Ventas, Programación, etc.)">
-    <input type="text" id="regID" placeholder="ID (SOT00X)">
-    
-    <button style="background: #4caf50;" onclick="registrarEmpleadoBD()">💾 Guardar en Base de Datos</button>
-</div>
 
 </div>
-
-
-
-
-
-
 
 
 <div class="card">
-    <h2>📅 Calendario de asistencia</h2>
+
+    <h2>
+        📅 Calendario de asistencia
+    </h2>
+
     <div id="calendario"></div>
+
 </div>
+
 
 <br>
 
 
-
-
 <div class="card">
-    <h2>📢 Subir anuncio</h2>
 
-    <input type="text" id="tituloAnuncio" placeholder="Título">
-    <input type="text" id="descAnuncio" placeholder="Descripción">
-    <input type="file" id="imgAnuncio" accept="image/*">
+    <h2>
+        📢 Subir anuncio
+    </h2>
 
-    <button onclick="subirAnuncio()">Subir anuncio</button>
+    <input
+        type="text"
+        id="tituloAnuncio"
+        placeholder="Título">
+
+    <input
+        type="text"
+        id="descAnuncio"
+        placeholder="Descripción">
+
+    <input
+        type="file"
+        id="imgAnuncio"
+        accept="image/*">
+
+    <button onclick="subirAnuncio()">
+        📤 Subir anuncio
+    </button>
+
 </div>
 
+
 <div class="card">
-    <h2>🗑️ Eliminar anuncios</h2>
+
+    <h2>
+        🗑️ Eliminar anuncios
+    </h2>
+
     <div id="listaAnuncios"></div>
+
 </div>
 
 
-
 <div class="card">
-    <h2>🛍️ Subir producto o accesorio</h2>
 
-    <input type="text" id="nombreProd" placeholder="Nombre del producto">
-    <input type="text" id="descProd" placeholder="Descripción">
-    <input type="number" id="precioProd" placeholder="Precio">
-   <input type="file" id="imgProd" accept="image/*">
+    <h2>
+        🛍️ Subir producto o accesorio
+    </h2>
+
+    <input
+        type="text"
+        id="nombreProd"
+        placeholder="Nombre del producto">
+
+    <input
+        type="text"
+        id="descProd"
+        placeholder="Descripción">
+
+    <input
+        type="number"
+        id="precioProd"
+        placeholder="Precio">
+
+    <input
+        type="file"
+        id="imgProd"
+        accept="image/*">
 
     <select id="tipoProd">
-        <option value="producto">Producto</option>
-        <option value="accesorio">Accesorio</option>
+
+        <option value="producto">
+            Producto
+        </option>
+
+        <option value="accesorio">
+            Accesorio
+        </option>
+
     </select>
 
-    <button onclick="subirProducto()">Subir</button>
+    <button onclick="subirProducto()">
+        📤 Subir
+    </button>
+
 </div>
 
+
 <div class="card">
-    <h2>🗑️ Eliminar productos</h2>
-    <button id="btnMostrarProductos" onclick="toggleListaProductos()">Mostrar lista de productos</button>
-    <div id="contenedorListaProductos" style="display: none; margin-top: 15px;">
+
+    <h2>
+        🗑️ Eliminar productos
+    </h2>
+
+    <button
+        id="btnMostrarProductos"
+        onclick="toggleListaProductos()">
+
+        Mostrar lista de productos
+
+    </button>
+
+    <div
+        id="contenedorListaProductos"
+        style="display:none;margin-top:15px;">
+
         <div id="listaProductos"></div>
+
     </div>
-</div>
 
-<div class="card" id="editarBox" style="display:none;">
-    <h2>✏️ Editar producto</h2>
-
-    <input id="editNombre" placeholder="Nombre">
-    <input id="editDesc" placeholder="Descripción">
-    <input id="editPrecio" type="number" placeholder="Precio">
-
-    <button onclick="guardarEdicion()">Guardar cambios</button>
 </div>
 
 
+<div class="card"
+id="editarBox"
+style="display:none;">
 
+    <h2>
+        ✏️ Editar producto
+    </h2>
+
+    <input
+        id="editNombre"
+        placeholder="Nombre">
+
+    <input
+        id="editDesc"
+        placeholder="Descripción">
+
+    <input
+        id="editPrecio"
+        type="number"
+        placeholder="Precio">
+
+    <button onclick="guardarEdicion()">
+        💾 Guardar cambios
+    </button>
+
+</div>
 
 
 <div class="card">
-    <h2>👤 Información del empleado</h2>
+
+    <h2>
+        👤 Información del empleado
+    </h2>
+
     <p id="nombre"></p>
     <p id="puesto"></p>
     <p id="usuario"></p>
@@ -491,1220 +1507,2690 @@ Diamond
     <p id="area"></p>
     <p id="estado"></p>
     <p id="id"></p>
-  
+
 </div>
+
 
 <div class="card">
-    <h2>🏪 Información de la Empresa</h2>
-    <p>📍 Minatitlán, Veracruz</p>
-    <p>📦 Envíos nacionales</p>
-    <p>📲 WhatsApp: 922 217 4646</p>
+
+    <h2>
+        🏪 Información de la Empresa
+    </h2>
+
+    <p>
+        📍 Minatitlán, Veracruz
+    </p>
+
+    <p>
+        📦 Envíos nacionales
+    </p>
+
+    <p>
+        📲 WhatsApp: 922 217 4646
+    </p>
+
 </div>
 
-<button onclick="logout()">Cerrar sesión</button>
+
+<button onclick="logout()">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    Cerrar sesión
+</button>
 
 </div>
+
 
 <script src="https://unpkg.com/html5-qrcode"></script>
+
 <script>
-    // Función para mostrar/ocultar lista de productos
-    function toggleListaProductos() {
-        const lista = document.getElementById('contenedorListaProductos');
-        const boton = document.getElementById('btnMostrarProductos');
-        if (lista.style.display === 'none') {
-            lista.style.display = 'block';
-            boton.textContent = 'Ocultar lista de productos';
-        } else {
-            lista.style.display = 'none';
-            boton.textContent = 'Mostrar lista de productos';
-        }
+
+function toggleListaProductos(){
+
+    const lista=
+        document.getElementById(
+            "contenedorListaProductos"
+        );
+
+    const boton=
+        document.getElementById(
+            "btnMostrarProductos"
+        );
+
+    if(lista.style.display==="none"){
+
+        lista.style.display="block";
+
+        boton.textContent=
+            "Ocultar lista de productos";
+
+    }else{
+
+        lista.style.display="none";
+
+        boton.textContent=
+            "Mostrar lista de productos";
     }
+
+}
+
 </script>
+
 
 <script type="module">
 
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+
+import {
+    getMessaging,
+    getToken,
+    onMessage
+}
+from "https://www.gstatic.com/firebasejs/12.11.0/firebase-messaging.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    deleteDoc,
+    doc,
+    updateDoc,
+    setDoc,
+    getDoc,
+    query,
+    orderBy
+}
+from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
 
-    // 🔥 FUNCIÓN PARA DAR DE ALTA EMPLEADOS
-window.registrarEmpleadoBD = async () => {
-    // Verificamos quién intenta registrar (Protección extra)
-    let admin = JSON.parse(sessionStorage.getItem("empleado"));
-    if (admin.user !== "samm" && admin.user !== "ofe") {
-        return alert("❌ No tienes permisos para esta acción");
+const firebaseConfig={
+
+    apiKey:
+    "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
+
+    authDomain:
+    "trujillo-digital-hub.firebaseapp.com",
+
+    projectId:
+    "trujillo-digital-hub",
+
+    storageBucket:
+    "trujillo-digital-hub.firebasestorage.app",
+
+    messagingSenderId:
+    "162799375782",
+
+    appId:
+    "1:162799375782:web:2be9127bfeaa613fd6ab67"
+
+};
+
+
+const app=
+    initializeApp(firebaseConfig);
+
+const messaging=
+    getMessaging(app);
+
+const db=
+    getFirestore(app);
+
+
+Notification.requestPermission()
+.then(async permission=>{
+
+    if(permission==="granted"){
+
+        console.log("✅ Permisos OK");
+
+        try{
+
+            const registration=
+                await navigator.serviceWorker.ready;
+
+            const token=
+                await getToken(
+                    messaging,
+                    {
+                        vapidKey:
+                        "BNXdDBrsHmv88YjzUWpIR9_fRETeDqHHaedktV0pNIUd06UGkV6itW5sNMGieMwV0Upol46FOvNibgQmQc93iIA",
+
+                        serviceWorkerRegistration:
+                        registration
+                    }
+                );
+
+            console.log("🔥 TOKEN:");
+            console.log(token);
+
+        }catch(error){
+
+            console.error(
+                "Error obteniendo token:",
+                error
+            );
+
+        }
+
     }
 
-    const user = document.getElementById("regUser").value.toLowerCase().trim();
-    const nombre = document.getElementById("regNombre").value.trim();
-    const pass = document.getElementById("regPass").value.trim();
-    const puesto = document.getElementById("regPuesto").value.trim();
-    const telefono = document.getElementById("regTelefono").value.trim();
-    const horario = document.getElementById("regHorario").value.trim();
-    const area = document.getElementById("regArea").value.trim();
-    const idEmp = document.getElementById("regID").value.trim();
+});
 
-    if (!user || !nombre || !pass) {
-        return alert("❌ Usuario, Nombre y Contraseña son obligatorios");
+
+let datosAsistencia=[];
+let historialVisible=false;
+
+
+document.addEventListener(
+"DOMContentLoaded",
+async()=>{
+
+    let emp=
+        JSON.parse(
+            sessionStorage.getItem("empleado")
+        );
+
+
+    if(!emp){
+
+        window.location.href=
+            "acceso.html";
+
+        return;
+
     }
 
-    try {
-        // Importante: Usamos setDoc para definir nosotros el ID (que será el usuario)
-        await setDoc(doc(db, "empleados", user), {
-            nombre: nombre,
-            pass: pass,
-            puesto: puesto,
-            telefono: telefono,
-            horario: horario,
-            area: area,
-            estado: "Activo", // Por defecto activo
-            id: idEmp
+
+    const estadoAsistencia=
+        document.getElementById(
+            "estadoAsistencia"
+        );
+
+
+    if(estadoAsistencia){
+
+        let fecha=
+            obtenerFechaHoy();
+
+        const ref=
+            doc(
+                db,
+                "asistencia",
+                emp.user+"_"+fecha
+            );
+
+        const snap=
+            await getDoc(ref);
+
+
+        if(!snap.exists()){
+
+            estadoAsistencia.innerText=
+                "❌ Sin registro hoy";
+
+        }else{
+
+            let data=
+                snap.data();
+
+            let entrada=
+                data.entrada
+                ? data.entrada
+                    .toDate()
+                    .toLocaleTimeString()
+                : "—";
+
+            let salida=
+                data.salida
+                ? data.salida
+                    .toDate()
+                    .toLocaleTimeString()
+                : "—";
+
+
+            estadoAsistencia.innerHTML=`
+
+                🟢 <b>Entrada:</b>
+                ${entrada}
+
+                <br>
+
+                🔴 <b>Salida:</b>
+                ${salida}
+
+            `;
+
+        }
+
+    }
+
+
+    document
+    .querySelectorAll("#nombre")
+    .forEach(e=>
+        e.innerText=
+        "Nombre: "+emp.nombre
+    );
+
+
+    document
+    .querySelectorAll("#puesto")
+    .forEach(e=>
+        e.innerText=
+        "Puesto: "+emp.puesto
+    );
+
+
+    document.getElementById("usuario").innerText=
+        "Usuario: "+emp.user;
+
+    document.getElementById("telefono").innerText=
+        "Teléfono: "+emp.telefono;
+
+    document.getElementById("horario").innerText=
+        "Horario: "+emp.horario;
+
+    document.getElementById("area").innerText=
+        "Área: "+emp.area;
+
+    document.getElementById("estado").innerText=
+        "Estado: "+emp.estado;
+
+    document.getElementById("id").innerText=
+        "ID: "+emp.id;
+
+
+    if(
+        emp.user==="ofe" ||
+        emp.user==="samm"
+    ){
+
+        let panel=
+            document.getElementById(
+                "adminPanel"
+            );
+
+        if(panel)
+            panel.style.display=
+                "block";
+
+    }
+
+
+    if(
+        emp.user==="ofe" ||
+        emp.user==="samm"
+    ){
+
+        let asistenciaAdmin=
+            document.getElementById(
+                "asistenciaAdmin"
+            );
+
+        if(asistenciaAdmin)
+            asistenciaAdmin.style.display=
+                "block";
+
+    }
+
+
+    if(
+        emp.user==="ofe" ||
+        emp.user==="samm"
+    ){
+
+        const snap=
+            await getDocs(
+                collection(
+                    db,
+                    "asistencia"
+                )
+            );
+
+
+        datosAsistencia=[];
+
+
+        snap.forEach(docSnap=>{
+
+            let data=
+                docSnap.data();
+
+            data.usuario=
+                data.usuario?.toLowerCase();
+
+            data.id=
+                docSnap.id;
+
+            datosAsistencia.push(
+                data
+            );
+
         });
 
-        alert(`✅ Empleado ${nombre} registrado con éxito`);
-        
-        // Limpiar campos
-        document.querySelectorAll(".admin-box input").forEach(i => i.value = "");
-    } catch (error) {
-        console.error("Error al registrar:", error);
-        alert("❌ Error al guardar en Firebase");
+
+        mostrarAsistencia("todos");
+
     }
-};
-const empleados = [
-    { user: "ofe", nombre: "Ofe", telefono: "9221640747" },
-    { user: "samm", nombre: "Samm", telefono: "9222081087" },
-     { user: "sol", nombre: "Sol", telefono: "9222136931" },
-      { user: "pao", nombre: "Pao", telefono: "9221589784" },
-       { user: "angy", nombre: "Angy", telefono: "9221251906" },
-         { user: "nao", nombre: "Nao", telefono: "9221721390" },
-            { user: "paty", nombre: "Paty", telefono: "9222038139" },
-               { user: "lety", nombre: "Lety", telefono: "9221307100" },
-                  { user: "luis", nombre: "Luis", telefono: "9222098471" },
-                     
+
+
+    let lista=
+        document.getElementById(
+            "tareas"
+        );
+
+    let notificaciones=
+        document.getElementById(
+            "notificaciones"
+        );
+
+
+    const tareasSnap=
+        await getDocs(
+            collection(
+                db,
+                "tareas"
+            )
+        );
+
+
+    lista.innerHTML="";
+
+    let tieneTareas=false;
+
+
+    tareasSnap.forEach(docSnap=>{
+
+        let data=
+            docSnap.data();
+
+
+        if(
+            data.usuario===
+            emp.user
+        ){
+
+            let li=
+                document.createElement(
+                    "li"
+                );
+
+            li.textContent=
+                "✔ "+
+                data.texto+
+                " ("+
+                data.creadoPor+
+                ")";
+
+            lista.appendChild(li);
+
+            tieneTareas=true;
+
+        }
+
+    });
+
+
+    if(!tieneTareas)
+        lista.innerHTML=
+            "<li>Sin tareas</li>";
+
+
+    const notiSnap=
+        await getDocs(
+            collection(
+                db,
+                "notificaciones"
+            )
+        );
+
+
+    notificaciones.innerHTML="";
+
+    let tieneNoti=false;
+
+
+    notiSnap.forEach(docSnap=>{
+
+        let data=
+            docSnap.data();
+
+
+        if(
+            data.usuario===
+            emp.user
+        ){
+
+            let li=
+                document.createElement(
+                    "li"
+                );
+
+            li.textContent=
+                "🔔 "+
+                data.texto+
+                " ("+
+                data.creadoPor+
+                ")";
+
+            notificaciones.appendChild(li);
+
+            tieneNoti=true;
+
+        }
+
+    });
+
+
+    if(!tieneNoti)
+        notificaciones.innerHTML=
+            "<li>Sin notificaciones</li>";
+
+
+    const listaProductos=
+        document.getElementById(
+            "listaProductos"
+        );
+
+
+    const productosSnap=
+        await getDocs(
+            collection(
+                db,
+                "productos"
+            )
+        );
+
+
+    listaProductos.innerHTML="";
+
+
+    productosSnap.forEach(
+        docSnap=>{
+
+            let data=
+                docSnap.data();
+
+            let id=
+                docSnap.id;
+
+
+            let div=
+                document.createElement(
+                    "div"
+                );
+
+
+            let info=
+                document.createElement(
+                    "div"
+                );
+
+            info.innerHTML=`
+                <strong>
+                    ${data.nombre}
+                </strong>
+
+                <br>
+
+                <span>
+                    $${data.precio}
+                </span>
+
+                <br>
+
+                <small>
+                    Código:
+                    ${data.codigo||"N/A"}
+                </small>
+            `;
+
+
+            let btnEditar=
+                document.createElement(
+                    "button"
+                );
+
+            btnEditar.textContent=
+                "✏️ Editar";
+
+            btnEditar.onclick=()=>
+                editarProducto(
+                    id,
+                    data
+                );
+
+
+            let btnEliminar=
+                document.createElement(
+                    "button"
+                );
+
+            btnEliminar.textContent=
+                "🗑️ Eliminar";
+
+            btnEliminar.onclick=()=>
+                eliminarProducto(id);
+
+
+            div.appendChild(info);
+
+            div.appendChild(
+                btnEditar
+            );
+
+            div.appendChild(
+                btnEliminar
+            );
+
+
+            listaProductos.appendChild(
+                div
+            );
+
+        }
+    );
+
+
+    cargarVIP();
+
+    cargarContenidoVIPAdmin();
+
+
+    window.subirProducto=
+    async()=>{
+
+        let nombre=
+            document.getElementById(
+                "nombreProd"
+            ).value.trim();
+
+        let descripcion=
+            document.getElementById(
+                "descProd"
+            ).value.trim();
+
+        let precio=
+            document.getElementById(
+                "precioProd"
+            ).value;
+
+        let file=
+            document.getElementById(
+                "imgProd"
+            ).files[0];
+
+        let tipo=
+            document.getElementById(
+                "tipoProd"
+            ).value;
+
+
+        if(
+            !nombre ||
+            !precio ||
+            !file
+        ){
+
+            return alert(
+                "❌ Completa los campos"
+            );
+
+        }
+
+
+        try{
+
+            const formData=
+                new FormData();
+
+            formData.append(
+                "image",
+                file
+            );
+
+
+            const response=
+                await fetch(
+                    "https://api.imgbb.com/1/upload?key=e5fca8fd3a72f235075cfa08e1370ee3",
+                    {
+                        method:"POST",
+                        body:formData
+                    }
+                );
+
+
+            const data=
+                await response.json();
+
+            const imageUrl=
+                data.data.url;
+
+
+            await addDoc(
+                collection(
+                    db,
+                    "productos"
+                ),
+                {
+                    nombre,
+                    descripcion,
+                    precio,
+                    imagen:imageUrl,
+                    tipo,
+                    creadoPor:emp.user,
+                    fecha:new Date()
+                }
+            );
+
+
+            alert(
+                "✅ Producto subido"
+            );
+
+            location.reload();
+
+
+        }catch(error){
+
+            console.error(error);
+
+            alert(
+                "❌ Error al subir"
+            );
+
+        }
+
+    };
+
+
+    window.eliminarProducto=
+    async(id)=>{
+
+        if(
+            !confirm(
+                "¿Eliminar producto?"
+            )
+        )
+            return;
+
+
+        await deleteDoc(
+            doc(
+                db,
+                "productos",
+                id
+            )
+        );
+
+
+        alert(
+            "🗑️ Eliminado"
+        );
+
+        location.reload();
+
+    };
+
+
+    window.agregarTarea=
+    async()=>{
+
+        let user=
+            document.getElementById(
+                "usuarioTarea"
+            ).value;
+
+        let tarea=
+            document.getElementById(
+                "nuevaTarea"
+            ).value.trim();
+
+
+        if(!tarea)
+            return alert(
+                "Escribe una tarea"
+            );
+
+
+        await addDoc(
+            collection(
+                db,
+                "tareas"
+            ),
+            {
+                usuario:user,
+                texto:tarea,
+                creadoPor:emp.user
+            }
+        );
+
+
+        let empleado=
+            empleados.find(
+                e=>e.user===user
+            );
+
+
+        if(empleado){
+
+            let mensaje=
+                `Hola ${empleado.nombre}, tienes una nueva tarea en Shop Ofe Trujillo`;
+
+            let url=
+                `https://wa.me/52${empleado.telefono}?text=${encodeURIComponent(mensaje)}`;
+
+            window.location.href=
+                url;
+
+        }
+
+
+        alert(
+            "✅ Tarea enviada"
+        );
+
+    };
+
+
+    window.agregarNotificacion=
+    async()=>{
+
+        let user=
+            document.getElementById(
+                "usuarioNoti"
+            ).value;
+
+        let noti=
+            document.getElementById(
+                "nuevaNoti"
+            ).value.trim();
+
+
+        if(!noti)
+            return alert(
+                "Escribe una notificación"
+            );
+
+
+        await addDoc(
+            collection(
+                db,
+                "notificaciones"
+            ),
+            {
+                usuario:user,
+                texto:noti,
+                creadoPor:emp.user
+            }
+        );
+
+
+        let empleado=
+            empleados.find(
+                e=>e.user===user
+            );
+
+
+        if(empleado){
+
+            let mensaje=
+                `Hola ${empleado.nombre}, tienes una notificación en Shop Ofe Trujillo`;
+
+            let url=
+                `https://wa.me/52${empleado.telefono}?text=${encodeURIComponent(mensaje)}`;
+
+            window.location.href=
+                url;
+
+        }
+
+
+        alert(
+            "🔔 Notificación enviada"
+        );
+
+    };
+
+
+    cargarRanking();
+
+
+    const filtroEmpleado=
+        document.getElementById(
+            "filtroEmpleado"
+        );
+
+
+    if(filtroEmpleado){
+
+        filtroEmpleado.addEventListener(
+            "change",
+            e=>{
+                mostrarAsistencia(
+                    e.target.value.toLowerCase()
+                );
+            }
+        );
+
+    }
+
+
+    window.subirAnuncio=
+    async()=>{
+
+        let titulo=
+            document.getElementById(
+                "tituloAnuncio"
+            ).value.trim();
+
+        let descripcion=
+            document.getElementById(
+                "descAnuncio"
+            ).value.trim();
+
+        let file=
+            document.getElementById(
+                "imgAnuncio"
+            ).files[0];
+
+
+        if(
+            !titulo ||
+            !file
+        ){
+
+            return alert(
+                "❌ Completa los campos"
+            );
+
+        }
+
+
+        try{
+
+            const formData=
+                new FormData();
+
+            formData.append(
+                "image",
+                file
+            );
+
+
+            const response=
+                await fetch(
+                    "https://api.imgbb.com/1/upload?key=e5fca8fd3a72f235075cfa08e1370ee3",
+                    {
+                        method:"POST",
+                        body:formData
+                    }
+                );
+
+
+            const data=
+                await response.json();
+
+            const imageUrl=
+                data.data.url;
+
+
+            await addDoc(
+                collection(
+                    db,
+                    "anuncios"
+                ),
+                {
+                    titulo,
+                    descripcion,
+                    imagen:imageUrl,
+                    creadoPor:emp.user,
+                    fecha:new Date()
+                }
+            );
+
+
+            alert(
+                "✅ Anuncio subido"
+            );
+
+            location.reload();
+
+
+        }catch(error){
+
+            console.error(error);
+
+            alert(
+                "❌ Error al subir anuncio"
+            );
+
+        }
+
+    };
+
+
+    const listaAnuncios=
+        document.getElementById(
+            "listaAnuncios"
+        );
+
+
+    if(listaAnuncios){
+
+        const anunciosSnap=
+            await getDocs(
+                collection(
+                    db,
+                    "anuncios"
+                )
+            );
+
+
+        listaAnuncios.innerHTML="";
+
+
+        anunciosSnap.forEach(
+            docSnap=>{
+
+                let data=
+                    docSnap.data();
+
+                let id=
+                    docSnap.id;
+
+
+                let div=
+                    document.createElement(
+                        "div"
+                    );
+
+
+                let info=
+                    document.createElement(
+                        "span"
+                    );
+
+                info.innerHTML=
+                    `<strong>${data.titulo}</strong>`;
+
+
+                let button=
+                    document.createElement(
+                        "button"
+                    );
+
+                button.textContent=
+                    "🗑️ Eliminar";
+
+                button.onclick=()=>
+                    eliminarAnuncio(id);
+
+
+                div.appendChild(info);
+
+                div.appendChild(button);
+
+                listaAnuncios.appendChild(div);
+
+            }
+        );
+
+    }
+
+
+    window.eliminarAnuncio=
+    async(id)=>{
+
+        if(
+            !confirm(
+                "¿Eliminar anuncio?"
+            )
+        )
+            return;
+
+
+        await deleteDoc(
+            doc(
+                db,
+                "anuncios",
+                id
+            )
+        );
+
+
+        alert(
+            "🗑️ Anuncio eliminado"
+        );
+
+        location.reload();
+
+    };
+
+
+    let productoEditando=null;
+
+
+    window.editarProducto=
+    (id,data)=>{
+
+        productoEditando=id;
+
+
+        document.getElementById(
+            "editarBox"
+        ).style.display=
+            "block";
+
+
+        document.getElementById(
+            "editNombre"
+        ).value=
+            data.nombre;
+
+
+        document.getElementById(
+            "editDesc"
+        ).value=
+            data.descripcion||"";
+
+
+        document.getElementById(
+            "editPrecio"
+        ).value=
+            data.precio;
+
+
+        document.getElementById(
+            "editarBox"
+        ).scrollIntoView({
+            behavior:"smooth",
+            block:"center"
+        });
+
+    };
+
+
+    window.guardarEdicion=
+    async()=>{
+
+        let nombre=
+            document.getElementById(
+                "editNombre"
+            ).value.trim();
+
+        let descripcion=
+            document.getElementById(
+                "editDesc"
+            ).value.trim();
+
+        let precio=
+            document.getElementById(
+                "editPrecio"
+            ).value;
+
+
+        if(
+            !nombre ||
+            !precio
+        ){
+
+            return alert(
+                "❌ Completa los campos"
+            );
+
+        }
+
+
+        await updateDoc(
+            doc(
+                db,
+                "productos",
+                productoEditando
+            ),
+            {
+                nombre,
+                descripcion,
+                precio
+            }
+        );
+
+
+        alert(
+            "✅ Producto actualizado"
+        );
+
+        location.reload();
+
+    };
+
+
+    cargarCalendario();
+
+
+    window.registrarEntrada=
+    async()=>{
+
+        let ahora=
+            new Date();
+
+        let hora=
+            ahora.getHours();
+
+        let minutos=
+            ahora.getMinutes();
+
+
+        if(
+            hora<9 ||
+            (
+                hora===9 &&
+                minutos<50
+            )
+        ){
+
+            alert(
+                "❌ No puedes registrar entrada antes de las 9:50 AM"
+            );
+
+            return;
+
+        }
+
+
+        let emp=
+            JSON.parse(
+                sessionStorage.getItem(
+                    "empleado"
+                )
+            );
+
+
+        let fecha=
+            obtenerFechaHoy();
+
+
+        const ref=
+            doc(
+                db,
+                "asistencia",
+                emp.user+"_"+fecha
+            );
+
+
+        const snap=
+            await getDoc(ref);
+
+
+        if(snap.exists()){
+
+            alert(
+                "⚠️ Ya registraste entrada"
+            );
+
+            return;
+
+        }
+
+
+        try{
+
+            navigator.geolocation.getCurrentPosition(
+
+                async pos=>{
+
+                    const ubicacion={
+                        lat:
+                            pos.coords.latitude,
+
+                        lng:
+                            pos.coords.longitude
+                    };
+
+
+                    await setDoc(
+                        ref,
+                        {
+                            usuario:emp.user,
+                            nombre:emp.nombre,
+                            entrada:ahora,
+                            salida:null,
+                            ubicacionEntrada:
+                                ubicacion
+                        }
+                    );
+
+
+                    alert(
+                        "✅ Entrada registrada con ubicación"
+                    );
+
+                    location.reload();
+
+                },
+
+                error=>{
+
+                    alert(
+                        "❌ No se pudo obtener ubicación"
+                    );
+
+                    console.error(error);
+
+                }
+
+            );
+
+
+        }catch(error){
+
+            console.error(error);
+
+        }
+
+    };
+
+
+    window.registrarSalida=
+    async()=>{
+
+        let emp=
+            JSON.parse(
+                sessionStorage.getItem(
+                    "empleado"
+                )
+            );
+
+
+        let fecha=
+            obtenerFechaHoy();
+
+
+        const ref=
+            doc(
+                db,
+                "asistencia",
+                emp.user+"_"+fecha
+            );
+
+
+        const snap=
+            await getDoc(ref);
+
+
+        if(!snap.exists()){
+
+            alert(
+                "❌ Primero registra entrada"
+            );
+
+            return;
+
+        }
+
+
+        let data=
+            snap.data();
+
+
+        if(data.salida){
+
+            alert(
+                "⚠️ Ya registraste tu salida"
+            );
+
+            return;
+
+        }
+
+
+        let entrada=
+            data.entrada?.toDate
+            ? data.entrada.toDate()
+            : new Date(data.entrada);
+
+
+        let salida=
+            new Date();
+
+
+        let horas=
+            (
+                (salida-entrada)/
+                1000/
+                60/
+                60
+            );
+
+
+        const guardarSalida=
+        async(ubicacion=null)=>{
+
+            await setDoc(
+                ref,
+                {
+                    ...data,
+                    salida:salida,
+                    horasTrabajadas:
+                        horas.toFixed(2),
+                    ubicacionSalida:
+                        ubicacion
+                }
+            );
+
+
+            alert(
+                "✅ Salida registrada"
+            );
+
+            location.reload();
+
+        };
+
+
+        if(
+            navigator.geolocation
+        ){
+
+            navigator.geolocation.getCurrentPosition(
+
+                async pos=>{
+
+                    const ubicacion={
+                        lat:
+                            pos.coords.latitude,
+
+                        lng:
+                            pos.coords.longitude
+                    };
+
+
+                    await guardarSalida(
+                        ubicacion
+                    );
+
+                },
+
+                async error=>{
+
+                    console.warn(
+                        "Sin ubicación:",
+                        error
+                    );
+
+                    await guardarSalida(
+                        null
+                    );
+
+                }
+
+            );
+
+        }else{
+
+            await guardarSalida(
+                null
+            );
+
+        }
+
+    };
+
+
+    if(
+        emp.user==="ofe" ||
+        emp.user==="samm"
+    ){
+
+        cargarEncuestas();
+
+    }
+
+
+    const select=
+        document.getElementById(
+            "filtroEmpleado"
+        );
+
+
+    if(select){
+
+        select.value=
+            "ofe";
+
+    }
+
+});
+
+
+const empleados=[
+
+    {
+        user:"ofe",
+        nombre:"Ofe",
+        telefono:"9221640747"
+    },
+
+    {
+        user:"samm",
+        nombre:"Samm",
+        telefono:"9222081087"
+    },
+
+    {
+        user:"sol",
+        nombre:"Sol",
+        telefono:"9222136931"
+    },
+
+    {
+        user:"pao",
+        nombre:"Pao",
+        telefono:"9221589784"
+    },
+
+    {
+        user:"angy",
+        nombre:"Angy",
+        telefono:"9221251906"
+    },
+
+    {
+        user:"nao",
+        nombre:"Nao",
+        telefono:"9221721390"
+    },
+
+    {
+        user:"paty",
+        nombre:"Paty",
+        telefono:"9222038139"
+    },
+
+    {
+        user:"lety",
+        nombre:"Lety",
+        telefono:"9221307100"
+    },
+
+    {
+        user:"luis",
+        nombre:"Luis",
+        telefono:"9222098471"
+    }
+
 ];
 
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import {
-  getMessaging,
-  getToken,
-  onMessage,
-} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-messaging.js";
-import { 
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc,
-  updateDoc,
-  setDoc,
-  getDoc,
-  query,
-  orderBy
-} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+window.logout=()=>{
 
-// 🔥 CONFIG
-const firebaseConfig = {
-  apiKey: "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
-  authDomain: "trujillo-digital-hub.firebaseapp.com",
-  projectId: "trujillo-digital-hub",
-  storageBucket: "trujillo-digital-hub.firebasestorage.app",
-  messagingSenderId: "162799375782",
-  appId: "1:162799375782:web:2be9127bfeaa613fd6ab67"
-};
+    sessionStorage.clear();
 
-const app = initializeApp(firebaseConfig);
-const messaging = getMessaging(app);
-const db = getFirestore(app);
-// 🔥 PEDIR PERMISOS DE NOTIFICACIONES
-Notification.requestPermission().then(async (permission) => {
+    window.location.href=
+        "acceso.html";
 
-  if (permission === "granted") {
-
-    console.log("✅ Permisos OK");
-
-    const registration = await navigator.serviceWorker.ready;
-
-    const token = await getToken(messaging, {
-      vapidKey: "BNXdDBrsHmv88YjzUWpIR9_fRETeDqHHaedktV0pNIUd06UGkV6itW5sNMGieMwV0Upol46FOvNibgQmQc93iIA",
-      serviceWorkerRegistration: registration
-    });
-
-    console.log("🔥 TOKEN:");
-    console.log(token);
-
-  } else {
-
-    console.log("❌ Sin permisos");
-
-  }
-
-});
-let datosAsistencia = [];
-let historialVisible = false;
-
-document.addEventListener("DOMContentLoaded", async () => {
-
-    let emp = JSON.parse(sessionStorage.getItem("empleado"));
-
-    // ⏰ MOSTRAR ASISTENCIA
-const estadoAsistencia = document.getElementById("estadoAsistencia");
-
-if (estadoAsistencia) {
-
-    let fecha = obtenerFechaHoy();
-    const ref = doc(db, "asistencia", emp.user + "_" + fecha);
-    const snap = await getDoc(ref);
-
-    if (!snap.exists()) {
-        estadoAsistencia.innerText = "❌ Sin registro hoy";
-    } else {
-        let data = snap.data();
-
-        let entrada = data.entrada
-            ? data.entrada.toDate().toLocaleTimeString()
-            : "—";
-
-        let salida = data.salida
-            ? data.salida.toDate().toLocaleTimeString()
-            : "—";
-
-        estadoAsistencia.innerHTML = `
-🟢 <b>Entrada:</b> ${entrada} <br>
-🔴 <b>Salida:</b> ${salida}
-`;
-    }
-}
-
-    if (!emp) {
-        window.location.href = "acceso.html";
-        return;
-    }
-
-    // 👤 PERFIL
-    document.querySelectorAll("#nombre").forEach(e => e.innerText = "Nombre: " + emp.nombre);
-document.querySelectorAll("#puesto").forEach(e => e.innerText = "Puesto: " + emp.puesto);
-    document.getElementById("usuario").innerText = "Usuario: " + emp.user;
-    document.getElementById("telefono").innerText = "Teléfono: " + emp.telefono;
-    document.getElementById("horario").innerText = "Horario: " + emp.horario;
-    document.getElementById("area").innerText = "Área: " + emp.area;
-    document.getElementById("estado").innerText = "Estado: " + emp.estado;
-    document.getElementById("id").innerText = "ID: " + emp.id;
-
-    // 🔐 MOSTRAR PANEL ADMIN
-if (emp.user === "ofe" || emp.user === "samm") {
-    let panel = document.getElementById("adminPanel");
-    if (panel) panel.style.display = "block";
-}
-
-if (emp.user === "ofe" || emp.user === "samm") {
-    let asistenciaAdmin = document.getElementById("asistenciaAdmin");
-    if (asistenciaAdmin) asistenciaAdmin.style.display = "block";
-}
-
-// 🔥 CARGAR ASISTENCIA (AQUÍ VA)
-if (emp.user === "ofe" || emp.user === "samm") {
-
-    const snap = await getDocs(collection(db, "asistencia"));
-
-    datosAsistencia = [];
-
-    snap.forEach(docSnap => {
-
-        let data = docSnap.data();
-
-        data.usuario = data.usuario?.toLowerCase();
-        data.id = docSnap.id;
-
-        datosAsistencia.push(data);
-    });
-
-    mostrarAsistencia("todos");
-}
-    let lista = document.getElementById("tareas");
-    let notificaciones = document.getElementById("notificaciones");
-
-    // 🔥 TAREAS
-    const tareasSnap = await getDocs(collection(db, "tareas"));
-
-    lista.innerHTML = "";
-    let tieneTareas = false;
-
-    tareasSnap.forEach(docSnap => {
-        let data = docSnap.data();
-
-        if (data.usuario === emp.user) {
-            let li = document.createElement("li");
-            li.textContent = "✔ " + data.texto + " (" + data.creadoPor + ")";
-            lista.appendChild(li);
-            tieneTareas = true;
-        }
-    });
-
-    if (!tieneTareas) lista.innerHTML = "<li>Sin tareas</li>";
-
-    // 🔔 NOTIFICACIONES
-    const notiSnap = await getDocs(collection(db, "notificaciones"));
-
-    notificaciones.innerHTML = "";
-    let tieneNoti = false;
-
-    notiSnap.forEach(docSnap => {
-        let data = docSnap.data();
-
-        if (data.usuario === emp.user) {
-            let li = document.createElement("li");
-            li.textContent = "🔔 " + data.texto + " (" + data.creadoPor + ")";
-            notificaciones.appendChild(li);
-            tieneNoti = true;
-        }
-    });
-
-    if (!tieneNoti) notificaciones.innerHTML = "<li>Sin notificaciones</li>";
-
-    // 🔥 MOSTRAR PRODUCTOS
-    const listaProductos = document.getElementById("listaProductos");
-
-    const productosSnap = await getDocs(collection(db, "productos"));
-
-    listaProductos.innerHTML = "";
-
-    productosSnap.forEach(docSnap => {
-
-    let data = docSnap.data();
-    let id = docSnap.id;
-
-    let div = document.createElement("div");
-    div.style.borderBottom = "1px solid #ccc";
-    div.style.padding = "10px";
-
-    div.innerHTML = `
-<b>${data.nombre}</b> - $${data.precio}
-<br>
-Código: ${data.codigo || "N/A"}
-<br>
-`;
-
-    // ✏️ EDITAR
-    let btnEditar = document.createElement("button");
-    btnEditar.textContent = "✏️ Editar";
-    btnEditar.onclick = () => {
-        editarProducto(id, data);
-    };
-
-    // 🗑️ ELIMINAR
-    let btnEliminar = document.createElement("button");
-    btnEliminar.textContent = "🗑️ Eliminar";
-    btnEliminar.onclick = () => eliminarProducto(id);
-
-    div.appendChild(btnEditar);
-    div.appendChild(btnEliminar);
-
-    listaProductos.appendChild(div);
-});
-// 🔥 CARGAR SOLICITUDES VIP
-cargarVIP();
-cargarContenidoVIPAdmin();
-    // 🔥 SUBIR PRODUCTO
-    window.subirProducto = async () => {
-
-        let nombre = document.getElementById("nombreProd").value;
-        let descripcion = document.getElementById("descProd").value;
-        let precio = document.getElementById("precioProd").value;
-        let file = document.getElementById("imgProd").files[0];
-        let tipo = document.getElementById("tipoProd").value;
-
-        if (!nombre || !precio || !file) {
-            return alert("❌ Completa los campos");
-        }
-
-        try {
-
-            const formData = new FormData();
-            formData.append("image", file);
-
-            const response = await fetch("https://api.imgbb.com/1/upload?key=e5fca8fd3a72f235075cfa08e1370ee3", {
-                method: "POST",
-                body: formData
-            });
-
-            const data = await response.json();
-
-            const imageUrl = data.data.url;
-
-        
-
-            await addDoc(collection(db, "productos"), {
-                nombre,
-                descripcion,
-                precio,
-                imagen: imageUrl,
-                tipo,
-                
-                creadoPor: emp.user,
-                fecha: new Date()
-            });
-
-            alert("✅ Producto subido");
-            location.reload();
-
-        } catch (error) {
-            console.error(error);
-            alert("❌ Error al subir");
-        }
-    };
-
-    // 🔥 ELIMINAR PRODUCTO
-    window.eliminarProducto = async (id) => {
-
-        if (!confirm("¿Eliminar producto?")) return;
-
-        await deleteDoc(doc(db, "productos", id));
-
-        alert("🗑️ Eliminado");
-        location.reload();
-    };
-
-   window.agregarTarea = async () => {
-
-    let user = document.getElementById("usuarioTarea").value;
-    let tarea = document.getElementById("nuevaTarea").value;
-
-    if (!tarea) return alert("Escribe una tarea");
-
-    // 🔥 GUARDAR EN FIREBASE
-    await addDoc(collection(db, "tareas"), {
-        usuario: user,
-        texto: tarea,
-        creadoPor: emp.user
-    });
-
-    // 🔥 BUSCAR EMPLEADO (SIN FIREBASE)
-    let empleado = empleados.find(e => e.user === user);
-
-    if (empleado) {
-
-        let mensaje = `Hola ${empleado.nombre}, tienes una nueva tarea en Shop Ofe Trujillo`;
-
-        let url = `https://wa.me/52${empleado.telefono}?text=${encodeURIComponent(mensaje)}`;
-
-        window.location.href = url;
-    }
-
-    alert("✅ Tarea enviada");
-};
-window.agregarNotificacion = async () => {
-
-    let user = document.getElementById("usuarioNoti").value;
-    let noti = document.getElementById("nuevaNoti").value;
-
-    if (!noti) return alert("Escribe una notificación");
-
-    // 🔥 GUARDAR EN FIREBASE
-    await addDoc(collection(db, "notificaciones"), {
-        usuario: user,
-        texto: noti,
-        creadoPor: emp.user
-    });
-
-    // 🔥 BUSCAR EMPLEADO (SIN FIREBASE)
-    let empleado = empleados.find(e => e.user === user);
-
-    if (empleado) {
-
-        let mensaje = `Hola ${empleado.nombre}, tienes una notificación en Shop Ofe Trujillo`;
-
-        let url = `https://wa.me/52${empleado.telefono}?text=${encodeURIComponent(mensaje)}`;
-
-        window.location.href = url;
-    }
-
-    alert("🔔 Notificación enviada");
-
-
-};
-cargarRanking();
-
-document.getElementById("filtroEmpleado").addEventListener("change", (e) => {
-    mostrarAsistencia(e.target.value.toLowerCase());
-});
-
-// 🔥 SUBIR ANUNCIO
-window.subirAnuncio = async () => {
-
-    let titulo = document.getElementById("tituloAnuncio").value;
-    let descripcion = document.getElementById("descAnuncio").value;
-    let file = document.getElementById("imgAnuncio").files[0];
-
-    if (!titulo || !file) {
-        return alert("❌ Completa los campos");
-    }
-
-    try {
-
-        const formData = new FormData();
-        formData.append("image", file);
-
-        const response = await fetch("https://api.imgbb.com/1/upload?key=e5fca8fd3a72f235075cfa08e1370ee3", {
-            method: "POST",
-            body: formData
-        });
-
-        const data = await response.json();
-        const imageUrl = data.data.url;
-
-        await addDoc(collection(db, "anuncios"), {
-            titulo,
-            descripcion,
-            imagen: imageUrl,
-            creadoPor: emp.user,
-            fecha: new Date()
-        });
-
-        alert("✅ Anuncio subido");
-        location.reload();
-
-    } catch (error) {
-        console.error(error);
-        alert("❌ Error al subir anuncio");
-    }
-};
-
-// 🔥 MOSTRAR ANUNCIOS
-const listaAnuncios = document.getElementById("listaAnuncios");
-
-if (listaAnuncios) {
-
-    const anunciosSnap = await getDocs(collection(db, "anuncios"));
-
-    listaAnuncios.innerHTML = "";
-
-    anunciosSnap.forEach(docSnap => {
-
-        let data = docSnap.data();
-        let id = docSnap.id;
-
-        let div = document.createElement("div");
-        div.style.borderBottom = "1px solid #ccc";
-        div.style.padding = "10px";
-
-        div.innerHTML = `
-            <b>${data.titulo}</b>
-            <br>
-            <button onclick="eliminarAnuncio('${id}')">🗑️ Eliminar</button>
-        `;
-
-        listaAnuncios.appendChild(div);
-    });
-
-}
-
-// 🔥 ELIMINAR ANUNCIO
-window.eliminarAnuncio = async (id) => {
-
-    if (!confirm("¿Eliminar anuncio?")) return;
-
-    await deleteDoc(doc(db, "anuncios", id));
-
-    alert("🗑️ Anuncio eliminado");
-
-    location.reload();
-};
-
-// ✏️ EDITAR
-let productoEditando = null;
-
-window.editarProducto = (id, data) => {
-    productoEditando = id;
-
-    document.getElementById("editarBox").style.display = "block";
-    document.getElementById("editNombre").value = data.nombre;
-    document.getElementById("editDesc").value = data.descripcion || "";
-    document.getElementById("editPrecio").value = data.precio;
-};
-
-// 💾 GUARDAR
-window.guardarEdicion = async () => {
-
-    let nombre = document.getElementById("editNombre").value;
-    let descripcion = document.getElementById("editDesc").value;
-    let precio = document.getElementById("editPrecio").value;
-
-    if (!nombre || !precio) {
-        return alert("❌ Completa los campos");
-    }
-
-    await updateDoc(doc(db, "productos", productoEditando), {
-        nombre,
-        descripcion,
-        precio
-    });
-
-    alert("✅ Producto actualizado");
-    location.reload();
 };
 
 
-function obtenerFechaHoy() {
-    return new Date().toISOString().split("T")[0];
-}
+function obtenerFechaHoy(){
 
-// 🟢 ENTRADA CON REGLA 9:50 AM
-// 🟢 ENTRADA CON REGLA 9:50 AM
-window.registrarEntrada = async () => {
-    let ahora = new Date();
-    let hora = ahora.getHours();
-    let minutos = ahora.getMinutes();
+    const fecha=
+        new Date();
 
-    // 🛑 Bloqueo antes de las 9:50 AM
-    if (hora < 9 || (hora === 9 && minutos < 50)) {
-        alert("❌ No puedes registrar entrada antes de las 9:50 AM");
-        return;
-    }
+    const year=
+        fecha.getFullYear();
 
-    let emp = JSON.parse(sessionStorage.getItem("empleado"));
-    let fecha = obtenerFechaHoy();
+    const month=
+        String(
+            fecha.getMonth()+1
+        ).padStart(2,"0");
 
-    const ref = doc(db, "asistencia", emp.user + "_" + fecha);
-    const snap = await getDoc(ref);
+    const day=
+        String(
+            fecha.getDate()
+        ).padStart(2,"0");
 
-    if (snap.exists()) {
-        alert("⚠️ Ya registraste entrada");
-        return;
-    }
-
-    try {
-        navigator.geolocation.getCurrentPosition(async (pos) => {
-            const ubicacion = {
-                lat: pos.coords.latitude,
-                lng: pos.coords.longitude
-            };
-
-            await setDoc(ref, {
-                usuario: emp.user,
-                nombre: emp.nombre,
-                entrada: ahora,
-                salida: null,
-                ubicacionEntrada: ubicacion 
-            });
-
-            alert("✅ Entrada registrada con ubicación");
-            location.reload();
-
-        }, (error) => {
-            alert("❌ No se pudo obtener ubicación");
-            console.error(error);
-        });
-
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-cargarCalendario();
-
-// 🔴 SALIDA
-window.registrarSalida = async () => {
-
-    let emp = JSON.parse(sessionStorage.getItem("empleado"));
-    let fecha = obtenerFechaHoy();
-
-    const ref = doc(db, "asistencia", emp.user + "_" + fecha);
-    const snap = await getDoc(ref);
-
-    if (!snap.exists()) {
-        alert("❌ Primero registra entrada");
-        return;
-    }
-
-    let data = snap.data();
-
-    // 🔥 BLOQUEO DOBLE SALIDA
-    if (data.salida) {
-        alert("⚠️ Ya registraste tu salida");
-        return;
-    }
-
-    // 🔥 CALCULAR HORAS (ANTES DE UBICACIÓN)
-    let entrada = data.entrada?.toDate ? data.entrada.toDate() : new Date(data.entrada);
-    let salida = new Date();
-
-    let horas = (salida - entrada) / 1000 / 60 / 60;
-
-    // 🔥 FUNCIÓN PARA GUARDAR (con o sin ubicación)
-    const guardarSalida = async (ubicacion = null) => {
-
-        await setDoc(ref, {
-            ...data,
-            salida: salida,
-            horasTrabajadas: horas.toFixed(2),
-            ubicacionSalida: ubicacion
-        });
-
-        alert("✅ Salida registrada");
-        location.reload();
-    };
-
-    // 🔥 INTENTAR OBTENER UBICACIÓN
-    if (navigator.geolocation) {
-
-        navigator.geolocation.getCurrentPosition(
-
-            async (pos) => {
-                const ubicacion = {
-                    lat: pos.coords.latitude,
-                    lng: pos.coords.longitude
-                };
-
-                await guardarSalida(ubicacion);
-            },
-
-            async (error) => {
-                console.warn("Sin ubicación:", error);
-
-                // 👉 SI FALLA GPS, IGUAL GUARDA
-                await guardarSalida(null);
-            }
-
-        );
-
-    } else {
-        // 👉 SI NO HAY GEOLOCALIZACIÓN
-        await guardarSalida(null);
-    }
-};
-
-// 🔥 AUTO RESET DIARIO
-function obtenerFechaHoy() {
-    const fecha = new Date();
-
-    const year = fecha.getFullYear();
-    const month = String(fecha.getMonth() + 1).padStart(2, '0');
-    const day = String(fecha.getDate()).padStart(2, '0');
 
     return `${year}-${month}-${day}`;
+
 }
 
-if (emp.user === "ofe" || emp.user === "samm") {
-    cargarEncuestas();
-}
 
-const select = document.getElementById("filtroEmpleado");
+function mostrarAsistencia(filtro){
 
-if (select) {
-    select.value = "todos"; // valor inicial
-    
-}
-});
+    const contenedor=
+        document.getElementById(
+            "tablaAsistencia"
+        );
 
 
-// 🔐 LOGOUT
-window.logout = () => {
-    sessionStorage.clear();
-    window.location.href = "acceso.html";
-};
-
-function mostrarAsistencia(filtro) {
-
-    const contenedor = document.getElementById("tablaAsistencia");
-    contenedor.innerHTML = "";
-
-    // 🔥 SI NO SELECCIONA → NO MOSTRAR NADA
-    if (!filtro) return;
-
-    datosAsistencia.forEach(data => {
-
-        if (data.usuario !== filtro.toLowerCase()) return;
-
-        let entrada = data.entrada
-            ? data.entrada.toDate().toLocaleString()
-            : "—";
-
-        let salida = data.salida
-            ? data.salida.toDate().toLocaleString()
-            : "—";
-
-        let horas = data.horasTrabajadas || "—";
-
-        let div = document.createElement("div");
-        div.style.borderBottom = "1px solid #ccc";
-        div.style.padding = "10px";
-
-        div.innerHTML = `
-            📅 ${data.id.split("_")[1]} <br>
-            👤 ${data.usuario} <br>
-            🟢 Entrada: ${entrada} <br>
-            🔴 Salida: ${salida} <br>
-            ⏱️ Horas: ${horas}
-        `;
-
-        contenedor.appendChild(div);
-    });
-}
-
-// 🔥 FILTRO
-window.filtrarAsistencia = () => {
-
-    let select = document.getElementById("filtroEmpleado");
-    let valor = select.value.toLowerCase();
-
-    console.log("Filtrando:", valor); // 🔥 para debug
-
-    mostrarAsistencia(valor);
-};
-// 🔥 HISTORIAL CORREGIDO
-window.verHistorial = async () => {
-
-    let emp = JSON.parse(sessionStorage.getItem("empleado"));
-    const box = document.getElementById("historialBox");
-
-    // 🔥 TOGGLE (abrir/cerrar)
-    if (historialVisible) {
-        box.innerHTML = "";
-        historialVisible = false;
+    if(!contenedor)
         return;
-    }
 
-    box.innerHTML = "<h3>📅 Historial</h3>";
 
-    // 🔥 AQUÍ CAMBIA TODO → CONSULTA FIREBASE
-    const snap = await getDocs(collection(db, "asistencia"));
+    contenedor.innerHTML="";
 
-    snap.forEach(docSnap => {
 
-        let data = docSnap.data();
+    if(!filtro)
+        return;
 
-        // 🔥 SOLO SU HISTORIAL
-        if (data.usuario !== emp.user) return;
 
-        let fecha = docSnap.id.split("_")[1];
+    datosAsistencia.forEach(
+        data=>{
 
-        let entrada = data.entrada
-            ? data.entrada.toDate().toLocaleTimeString()
-            : "—";
+            if(
+                data.usuario!==
+                filtro.toLowerCase()
+            )
+                return;
 
-        let salida = data.salida
-            ? data.salida.toDate().toLocaleTimeString()
-            : "—";
 
-        let horas = data.horasTrabajadas || "—";
+            let entrada=
+                data.entrada
+                ? data.entrada
+                    .toDate()
+                    .toLocaleString()
+                : "—";
 
-        box.innerHTML += `
-<hr>
-📅 ${fecha}<br>
-🟢 ${entrada}<br>
-🔴 ${salida}<br>
-⏱️ ${horas} hrs
-`;
-    });
 
-    historialVisible = true;
-};
+            let salida=
+                data.salida
+                ? data.salida
+                    .toDate()
+                    .toLocaleString()
+                : "—";
 
-window.cargarCalendario = async () => {
 
-    let emp = JSON.parse(sessionStorage.getItem("empleado"));
-    const contenedor = document.getElementById("calendario");
+            let horas=
+                data.horasTrabajadas||
+                "—";
 
-    contenedor.innerHTML = "";
 
-    let hoy = new Date();
-    let year = hoy.getFullYear();
-    let month = hoy.getMonth();
+            let div=
+                document.createElement(
+                    "div"
+                );
 
-    let diasMes = new Date(year, month + 1, 0).getDate();
 
-    // 🔥 traer asistencia
-    const snap = await getDocs(collection(db, "asistencia"));
+            div.innerHTML=`
 
-    let asistencias = {};
+                📅 <b>
+                    ${data.id.split("_")[1]}
+                </b>
 
-    snap.forEach(docSnap => {
-        let data = docSnap.data();
+                <br>
 
-        if (data.usuario === emp.user) {
-            let fecha = docSnap.id.split("_")[1]; // yyyy-mm-dd
-            asistencias[fecha] = data;
-        }
-    });
+                👤 ${data.usuario}
 
-    // 🔥 pintar días
-    for (let dia = 1; dia <= diasMes; dia++) {
+                <br>
 
-        let fecha = `${year}-${String(month+1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
+                🟢 Entrada:
+                ${entrada}
 
-        let div = document.createElement("div");
-        div.classList.add("dia");
-        div.innerText = dia;
+                <br>
 
-        if (asistencias[fecha]) {
+                🔴 Salida:
+                ${salida}
 
-            if (asistencias[fecha].entrada) {
-                div.classList.add("asistio");
-            }
+                <br>
 
-        } else {
-            div.classList.add("falta");
-        }
+                ⏱️ Horas:
+                ${horas}
 
-        contenedor.appendChild(div);
-    }
-};
-
-async function cargarRanking() {
-    const cont = document.getElementById("ranking");
-    cont.innerHTML = "⏳ Cargando ranking...";
-
-    let empleadosData = {};
-    const lista = ["ofe","samm","sol","pao","angy","nao","paty","lety","luis"];
-
-    lista.forEach(u => {
-        empleadosData[u] = { puntos: 0, asistencias: 0, retardos: 0, faltas: 0, totalDias: 0 };
-    });
-
-    try {
-        const snap = await getDocs(collection(db, "asistencia"));
-        let inicioSemana = obtenerInicioSemana();
-
-        snap.forEach(doc => {
-            let a = doc.data();
-            let user = (a.usuario || "").toLowerCase();
-            if(!empleadosData[user]) return;
-
-            let fechaE = a.entrada?.toDate();
-            let fechaS = a.salida?.toDate ? a.salida.toDate() : (a.salida ? new Date(a.salida) : null);
-            if(!fechaE) return;
-
-            // FILTRAR SOLO ESTA SEMANA
-            if (fechaE < inicioSemana) return;
-
-            let dia = fechaE.getDay();
-
-            // 🔥 REGLA DE SALIDA MÁXIMA 7:15 PM (Martes a Viernes)
-            if (dia >= 2 && dia <= 5 && fechaS) {
-                let horaSalida = fechaS.getHours();
-                let minSalida = fechaS.getMinutes();
-                let totalMinutos = (horaSalida * 60) + minSalida;
-                let limiteMinutos = (19 * 60) + 15; // 7:15 PM
-
-                // Si sale DESPUÉS de las 7:15 (19:16 en adelante), no se cuenta el día
-                if (totalMinutos > limiteMinutos) return; 
-            }
-
-            // SOLO LUNES A VIERNES PARA EL CONTEO
-            if(dia === 0 || dia === 6) return;
-
-            empleadosData[user].totalDias++;
-            let horas = parseFloat(a.horasTrabajadas || 0);
-
-            // SUMAR HORAS REALES
-            empleadosData[user].puntos += horas;
-
-            if(horas >= 8) empleadosData[user].asistencias++;
-            else if(horas > 0) empleadosData[user].retardos++;
-            else empleadosData[user].faltas++;
-        });
-
-        let ranking = Object.keys(empleadosData).map(user => {
-            let emp = empleadosData[user];
-            return { user, ...emp };
-        });
-
-        ranking.sort((a,b) => b.puntos - a.puntos);
-        cont.innerHTML = "";
-
-        ranking.forEach((emp, i) => {
-            if(emp.totalDias === 0) return; 
-            let medal = (i === 0) ? "🥇" : (i === 1) ? "🥈" : (i === 2) ? "🥉" : "";
-            let div = document.createElement("div");
-            div.className = "venta";
-            div.innerHTML = `
-                ${medal} ${emp.user.toUpperCase()}
-                <span>⏱️ ${emp.puntos.toFixed(1)} hrs</span>
-                <span>📊 ${emp.asistencias} días completos</span>
             `;
-            cont.appendChild(div);
-        });
 
-    } catch(error){
-        console.error(error);
-        cont.innerHTML = "❌ Error cargando ranking";
-    }
+
+            contenedor.appendChild(
+                div
+            );
+
+        }
+    );
+
 }
 
-cargarRanking();
 
-// MENU GLOBAL
-window.toggleMenu = function () {
-    document.querySelector("header nav").classList.toggle("active");
+window.filtrarAsistencia=()=>{
+
+    let select=
+        document.getElementById(
+            "filtroEmpleado"
+        );
+
+    let valor=
+        select.value.toLowerCase();
+
+
+    mostrarAsistencia(
+        valor
+    );
+
 };
 
-function obtenerInicioSemana() {
-    let hoy = new Date();
-    let dia = hoy.getDay(); // 0=domingo, 1=lunes...
 
-    let diff = hoy.getDate() - dia + (dia === 0 ? -6 : 1); // lunes
+window.verHistorial=
+async()=>{
 
-    let lunes = new Date(hoy.setDate(diff));
-    lunes.setHours(0,0,0,0);
+    let emp=
+        JSON.parse(
+            sessionStorage.getItem(
+                "empleado"
+            )
+        );
 
-    return lunes;
-}
-async function cargarEncuestas() {
-    const cont = document.getElementById("listaEncuestas");
 
-    const snap = await getDocs(collection(db, "encuestas"));
+    const box=
+        document.getElementById(
+            "historialBox"
+        );
 
-    let encuestas = [];
 
-    snap.forEach(docSnap => {
-        encuestas.push(docSnap.data());
-    });
+    if(historialVisible){
 
-    // 🔥 ORDENAR POR FECHA (más recientes primero)
-    encuestas.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+        box.innerHTML="";
 
-    cont.innerHTML = "";
+        historialVisible=false;
 
-    encuestas.forEach(e => {
-
-        let fecha = e.fecha?.toDate 
-            ? e.fecha.toDate().toLocaleString()
-            : new Date(e.fecha).toLocaleString();
-
-        cont.innerHTML += `
-            <div style="border-bottom:1px solid #eee; padding:10px;">
-                <b>${e.nombre}</b><br>
-                ⭐ ${e.calificacion}/5 <br>
-                💬 ${e.comentario || "Sin comentario"} <br>
-                <small style="color:#999;">📅 ${fecha}</small>
-            </div>
-        `;
-    });
-
-    if (encuestas.length === 0) {
-        cont.innerHTML = "<p>No hay encuestas aún</p>";
-    }
-}
-let encuestasVisibles = false;
-
-window.toggleEncuestas = async function() {
-    const cont = document.getElementById("listaEncuestas");
-    const btn = document.getElementById("btnEncuestas");
-
-    if (encuestasVisibles) {
-        cont.style.display = "none";
-        btn.textContent = "Ver encuestas 👁️";
-        encuestasVisibles = false;
         return;
-    }
-
-    cont.style.display = "block";
-    btn.textContent = "Ocultar encuestas 🙈";
-    encuestasVisibles = true;
-
-    await cargarEncuestas();
-}
-// 💎 CARGAR SUSCRIPTORAS
-async function cargarVIP(){
-
-    const cont = document.getElementById("listaVIP");
-
-    if(!cont) return;
-
-    cont.innerHTML = "⏳ Cargando...";
-const snap = await getDocs(collection(db,"vip_clientas"));
-
-    cont.innerHTML = "";
-
-    snap.forEach(docSnap=>{
-
-        let data = docSnap.data();
-
-        // SOLO PENDIENTES
-        if(data.aprobada) return;
-
-        let div = document.createElement("div");
-
-        div.style.background = "white";
-        div.style.padding = "15px";
-        div.style.marginBottom = "10px";
-        div.style.borderRadius = "15px";
-        div.style.boxShadow = "0 5px 10px rgba(0,0,0,.1)";
-
-        div.innerHTML = `
-
-        💖 ${data.email}
-
-        <br><br>
-
-        <button onclick="aprobarVIP('${docSnap.id}')">
-        ✅ Aprobar
-        </button>
-
-        `;
-
-        cont.appendChild(div);
-
-    });
-
-}
-
-// ✅ APROBAR
-// 🔥 SUBIR CONTENIDO VIP
-window.subirContenidoVIP = async()=>{
-
-    let titulo =
-    document.getElementById("tituloVIP").value;
-
-    let imagen =
-    document.getElementById("imagenVIP").value;
-
-    let descripcion =
-    document.getElementById("descripcionVIP").value;
-
-    let fecha =
-    document.getElementById("fechaVIP").value;
-
-    let nivel =
-    document.getElementById("nivelVIP").value;
-
-    if(!titulo || !imagen || !descripcion){
-
-        return alert("❌ Completa todos los campos");
 
     }
+
+
+    box.innerHTML=
+        "<h3>📅 Historial</h3>";
+
+
+    const snap=
+        await getDocs(
+            collection(
+                db,
+                "asistencia"
+            )
+        );
+
+
+    snap.forEach(
+        docSnap=>{
+
+            let data=
+                docSnap.data();
+
+
+            if(
+                data.usuario!==
+                emp.user
+            )
+                return;
+
+
+            let fecha=
+                docSnap.id.split("_")[1];
+
+
+            let entrada=
+                data.entrada
+                ? data.entrada
+                    .toDate()
+                    .toLocaleTimeString()
+                : "—";
+
+
+            let salida=
+                data.salida
+                ? data.salida
+                    .toDate()
+                    .toLocaleTimeString()
+                : "—";
+
+
+            let horas=
+                data.horasTrabajadas||
+                "—";
+
+
+            box.innerHTML+=`
+
+                <hr>
+
+                📅 ${fecha}
+
+                <br>
+
+                🟢 ${entrada}
+
+                <br>
+
+                🔴 ${salida}
+
+                <br>
+
+                ⏱️ ${horas} hrs
+
+            `;
+
+        }
+    );
+
+
+    historialVisible=true;
+
+};
+
+
+window.cargarCalendario=
+async()=>{
+
+    let emp=
+        JSON.parse(
+            sessionStorage.getItem(
+                "empleado"
+            )
+        );
+
+
+    const contenedor=
+        document.getElementById(
+            "calendario"
+        );
+
+
+    if(!contenedor)
+        return;
+
+
+    contenedor.innerHTML="";
+
+
+    let hoy=
+        new Date();
+
+    let year=
+        hoy.getFullYear();
+
+    let month=
+        hoy.getMonth();
+
+
+    let diasMes=
+        new Date(
+            year,
+            month+1,
+            0
+        ).getDate();
+
+
+    const snap=
+        await getDocs(
+            collection(
+                db,
+                "asistencia"
+            )
+        );
+
+
+    let asistencias={};
+
+
+    snap.forEach(
+        docSnap=>{
+
+            let data=
+                docSnap.data();
+
+
+            if(
+                data.usuario===
+                emp.user
+            ){
+
+                let fecha=
+                    docSnap.id.split("_")[1];
+
+                asistencias[fecha]=
+                    data;
+
+            }
+
+        }
+    );
+
+
+    for(
+        let dia=1;
+        dia<=diasMes;
+        dia++
+    ){
+
+        let fecha=
+            `${year}-${String(month+1).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
+
+
+        let div=
+            document.createElement(
+                "div"
+            );
+
+
+        div.classList.add(
+            "dia"
+        );
+
+
+        div.innerText=
+            dia;
+
+
+        if(
+            asistencias[fecha]
+        ){
+
+            if(
+                asistencias[fecha]
+                .entrada
+            ){
+
+                div.classList.add(
+                    "asistio"
+                );
+
+            }
+
+        }else{
+
+            div.classList.add(
+                "falta"
+            );
+
+        }
+
+
+        contenedor.appendChild(
+            div
+        );
+
+    }
+
+};
+
+
+async function cargarRanking(){
+
+    const cont=
+        document.getElementById(
+            "ranking"
+        );
+
+
+    cont.innerHTML=
+        "⏳ Cargando ranking...";
+
+
+    let empleadosData={};
+
+    const lista=[
+        "ofe",
+        "samm",
+        "sol",
+        "pao",
+        "angy",
+        "nao",
+        "paty",
+        "lety",
+        "luis"
+    ];
+
+
+    lista.forEach(
+        u=>{
+
+            empleadosData[u]={
+                puntos:0,
+                asistencias:0,
+                retardos:0,
+                faltas:0,
+                totalDias:0
+            };
+
+        }
+    );
+
 
     try{
 
-        await addDoc(collection(db,"vip_contenido"),{
+        const snap=
+            await getDocs(
+                collection(
+                    db,
+                    "asistencia"
+                )
+            );
 
-            titulo,
-            imagen,
-            descripcion,
-            fecha,
-            nivel,
 
-            activo:true,
+        let inicioSemana=
+            obtenerInicioSemana();
 
-            creado:new Date()
 
-        });
+        snap.forEach(
+            docSnap=>{
 
-        alert("💖 Contenido VIP publicado");
+                let a=
+                    docSnap.data();
 
-        // 🔥 LIMPIAR
-        document.getElementById("tituloVIP").value = "";
-        document.getElementById("imagenVIP").value = "";
-        document.getElementById("descripcionVIP").value = "";
-        document.getElementById("fechaVIP").value = "";
+                let user=
+                    (a.usuario||"")
+                    .toLowerCase();
+
+
+                if(
+                    !empleadosData[user]
+                )
+                    return;
+
+
+                let fechaE=
+                    a.entrada?.toDate();
+
+
+                let fechaS=
+                    a.salida?.toDate
+                    ? a.salida.toDate()
+                    : (
+                        a.salida
+                        ? new Date(a.salida)
+                        : null
+                    );
+
+
+                if(!fechaE)
+                    return;
+
+
+                if(
+                    fechaE<
+                    inicioSemana
+                )
+                    return;
+
+
+                let dia=
+                    fechaE.getDay();
+
+
+                if(
+                    dia>=2 &&
+                    dia<=5 &&
+                    fechaS
+                ){
+
+                    let horaSalida=
+                        fechaS.getHours();
+
+                    let minSalida=
+                        fechaS.getMinutes();
+
+                    let totalMinutos=
+                        (
+                            horaSalida*60
+                        )+
+                        minSalida;
+
+                    let limiteMinutos=
+                        (19*60)+15;
+
+
+                    if(
+                        totalMinutos>
+                        limiteMinutos
+                    )
+                        return;
+
+                }
+
+
+                if(
+                    dia===0||
+                    dia===6
+                )
+                    return;
+
+
+                empleadosData[user]
+                    .totalDias++;
+
+
+                let horas=
+                    parseFloat(
+                        a.horasTrabajadas||0
+                    );
+
+
+                empleadosData[user]
+                    .puntos+=horas;
+
+
+                if(horas>=8)
+                    empleadosData[user]
+                        .asistencias++;
+
+                else if(horas>0)
+                    empleadosData[user]
+                        .retardos++;
+
+                else
+                    empleadosData[user]
+                        .faltas++;
+
+            }
+        );
+
+
+        let ranking=
+            Object.keys(
+                empleadosData
+            ).map(
+                user=>{
+
+                    let emp=
+                        empleadosData[user];
+
+                    return {
+                        user,
+                        ...emp
+                    };
+
+                }
+            );
+
+
+        ranking.sort(
+            (a,b)=>
+                b.puntos-a.puntos
+        );
+
+
+        cont.innerHTML="";
+
+
+        ranking.forEach(
+            (emp,i)=>{
+
+                if(
+                    emp.totalDias===0
+                )
+                    return;
+
+
+                let medal=
+                    i===0
+                    ? "🥇"
+                    : i===1
+                    ? "🥈"
+                    : i===2
+                    ? "🥉"
+                    : "";
+
+
+                let div=
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className=
+                    i===0
+                    ? "venta oro"
+                    : i===1
+                    ? "venta plata"
+                    : i===2
+                    ? "venta bronce"
+                    : "venta normal";
+
+
+                div.innerHTML=`
+
+                    <strong>
+                        ${medal}
+                        ${emp.user.toUpperCase()}
+                    </strong>
+
+                    <span>
+                        ⏱️
+                        ${emp.puntos.toFixed(1)}
+                        hrs
+                    </span>
+
+                    <span>
+                        📊
+                        ${emp.asistencias}
+                        días completos
+                    </span>
+
+                `;
+
+
+                cont.appendChild(
+                    div
+                );
+
+            }
+        );
+
 
     }catch(error){
 
         console.error(error);
 
-        alert("❌ Error al publicar");
+        cont.innerHTML=
+            "❌ Error cargando ranking";
+
+    }
+
+}
+
+
+function obtenerInicioSemana(){
+
+    let hoy=
+        new Date();
+
+    let dia=
+        hoy.getDay();
+
+
+    let diff=
+        hoy.getDate()-
+        dia+
+        (
+            dia===0
+            ? -6
+            : 1
+        );
+
+
+    let lunes=
+        new Date(
+            hoy.setDate(diff)
+        );
+
+
+    lunes.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    return lunes;
+
+}
+
+
+async function cargarEncuestas(){
+
+    const cont=
+        document.getElementById(
+            "listaEncuestas"
+        );
+
+
+    if(!cont)
+        return;
+
+
+    const snap=
+        await getDocs(
+            collection(
+                db,
+                "encuestas"
+            )
+        );
+
+
+    let encuestas=[];
+
+
+    snap.forEach(
+        docSnap=>{
+
+            encuestas.push(
+                docSnap.data()
+            );
+
+        }
+    );
+
+
+    encuestas.sort(
+        (a,b)=>
+            new Date(b.fecha)-
+            new Date(a.fecha)
+    );
+
+
+    cont.innerHTML="";
+
+
+    encuestas.forEach(
+        e=>{
+
+            let fecha=
+                e.fecha?.toDate
+                ? e.fecha
+                    .toDate()
+                    .toLocaleString()
+                : new Date(
+                    e.fecha
+                ).toLocaleString();
+
+
+            cont.innerHTML+=`
+
+                <div>
+
+                    <b>
+                        ${e.nombre}
+                    </b>
+
+                    <br>
+
+                    ⭐
+                    ${e.calificacion}/5
+
+                    <br>
+
+                    💬
+                    ${e.comentario||
+                    "Sin comentario"}
+
+                    <br>
+
+                    <small>
+                        📅 ${fecha}
+                    </small>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    if(encuestas.length===0){
+
+        cont.innerHTML=
+            "<p>No hay encuestas aún</p>";
+
+    }
+
+}
+
+
+let encuestasVisibles=false;
+
+
+window.toggleEncuestas=
+async function(){
+
+    const cont=
+        document.getElementById(
+            "listaEncuestas"
+        );
+
+    const btn=
+        document.getElementById(
+            "btnEncuestas"
+        );
+
+
+    if(encuestasVisibles){
+
+        cont.style.display=
+            "none";
+
+        btn.textContent=
+            "Ver encuestas 👁️";
+
+        encuestasVisibles=false;
+
+        return;
+
+    }
+
+
+    cont.style.display=
+        "block";
+
+    btn.textContent=
+        "Ocultar encuestas 🙈";
+
+    encuestasVisibles=true;
+
+
+    await cargarEncuestas();
+
+};
+
+
+async function cargarVIP(){
+
+    const cont=
+        document.getElementById(
+            "listaVIP"
+        );
+
+
+    if(!cont)
+        return;
+
+
+    cont.innerHTML=
+        "⏳ Cargando...";
+
+
+    const snap=
+        await getDocs(
+            collection(
+                db,
+                "vip_clientas"
+            )
+        );
+
+
+    cont.innerHTML="";
+
+
+    snap.forEach(
+        docSnap=>{
+
+            let data=
+                docSnap.data();
+
+
+            if(data.aprobada)
+                return;
+
+
+            let div=
+                document.createElement(
+                    "div"
+                );
+
+
+            div.innerHTML=`
+
+                💖
+                ${data.email}
+
+                <br><br>
+
+                <button
+                    onclick="aprobarVIP('${docSnap.id}')">
+
+                    ✅ Aprobar
+
+                </button>
+
+            `;
+
+
+            cont.appendChild(
+                div
+            );
+
+        }
+    );
+
+}
+
+
+window.subirContenidoVIP=
+async()=>{
+
+    let titulo=
+        document.getElementById(
+            "tituloVIP"
+        ).value;
+
+    let imagen=
+        document.getElementById(
+            "imagenVIP"
+        ).value;
+
+    let descripcion=
+        document.getElementById(
+            "descripcionVIP"
+        ).value;
+
+    let fecha=
+        document.getElementById(
+            "fechaVIP"
+        ).value;
+
+    let nivel=
+        document.getElementById(
+            "nivelVIP"
+        ).value;
+
+
+    if(
+        !titulo||
+        !imagen||
+        !descripcion
+    ){
+
+        return alert(
+            "❌ Completa todos los campos"
+        );
+
+    }
+
+
+    try{
+
+        await addDoc(
+            collection(
+                db,
+                "vip_contenido"
+            ),
+            {
+                titulo,
+                imagen,
+                descripcion,
+                fecha,
+                nivel,
+                activo:true,
+                creado:new Date()
+            }
+        );
+
+
+        alert(
+            "💖 Contenido VIP publicado"
+        );
+
+
+        document.getElementById(
+            "tituloVIP"
+        ).value="";
+
+        document.getElementById(
+            "imagenVIP"
+        ).value="";
+
+        document.getElementById(
+            "descripcionVIP"
+        ).value="";
+
+        document.getElementById(
+            "fechaVIP"
+        ).value="";
+
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "❌ Error al publicar"
+        );
 
     }
 
 };
-// 🔥 CARGAR CONTENIDO VIP
+
+
 async function cargarContenidoVIPAdmin(){
 
-    const box =
-    document.getElementById("listaContenidoVIP");
+    const box=
+        document.getElementById(
+            "listaContenidoVIP"
+        );
 
-    if(!box) return;
 
-    box.innerHTML =
-    "⏳ Cargando contenido...";
+    if(!box)
+        return;
 
-    const q = query(
-        collection(db,"vip_contenido"),
-        orderBy("fecha","desc")
-    );
 
-    const snap =
-    await getDocs(q);
+    box.innerHTML=
+        "⏳ Cargando contenido...";
 
-    box.innerHTML = "";
 
-    snap.forEach(docSnap=>{
+    try{
 
-        let c = docSnap.data();
+        const q=
+            query(
+                collection(
+                    db,
+                    "vip_contenido"
+                ),
+                orderBy(
+                    "fecha",
+                    "desc"
+                )
+            );
 
-        box.innerHTML += `
 
-        <div style="
-        background:#fff0f7;
-        padding:15px;
-        border-radius:15px;
-        margin-top:10px;
-        ">
+        const snap=
+            await getDocs(q);
 
-        <img
-        src="${c.imagen}"
-        style="
-        width:100%;
-        border-radius:15px;
-        ">
 
-        <h3>${c.titulo}</h3>
+        box.innerHTML="";
 
-        <p>${c.descripcion}</p>
 
-        <p>
-        💎 ${c.nivel}
-        </p>
+        snap.forEach(
+            docSnap=>{
 
-        <button
-        onclick="eliminarContenidoVIP('${docSnap.id}')"
-        style="
-        background:#ff1744;
-        ">
+                let c=
+                    docSnap.data();
 
-        🗑️ Eliminar
 
-        </button>
+                box.innerHTML+=`
 
-        </div>
+                    <div>
 
-        `;
+                        <img
+                            src="${c.imagen}"
+                            alt="${c.titulo}">
 
-    });
+                        <h3>
+                            ${c.titulo}
+                        </h3>
+
+                        <p>
+                            ${c.descripcion}
+                        </p>
+
+                        <p>
+                            💎 ${c.nivel}
+                        </p>
+
+                        <button
+                            onclick="eliminarContenidoVIP('${docSnap.id}')">
+
+                            🗑️ Eliminar
+
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        box.innerHTML=
+            "❌ No se pudo cargar el contenido VIP.";
+
+    }
 
 }
 
-// 🗑️ ELIMINAR CONTENIDO
-window.eliminarContenidoVIP = async(id)=>{
 
-    if(!confirm("¿Eliminar contenido VIP?")){
+window.eliminarContenidoVIP=
+async(id)=>{
+
+    if(
+        !confirm(
+            "¿Eliminar contenido VIP?"
+        )
+    )
         return;
-    }
 
-    await deleteDoc(doc(db,"vip_contenido",id));
 
-    alert("🗑️ Contenido eliminado");
+    await deleteDoc(
+        doc(
+            db,
+            "vip_contenido",
+            id
+        )
+    );
+
+
+    alert(
+        "🗑️ Contenido eliminado"
+    );
+
 
     cargarContenidoVIPAdmin();
 
 };
 
-// ✅ APROBAR VIP
-window.aprobarVIP = async(id)=>{
 
-    await updateDoc(doc(db,"vip_clientas",id),{
+window.aprobarVIP=
+async(id)=>{
 
-        aprobada:true
+    await updateDoc(
+        doc(
+            db,
+            "vip_clientas",
+            id
+        ),
+        {
+            aprobada:true
+        }
+    );
 
-    });
 
-    alert("💎 Suscriptora aprobada");
+    alert(
+        "💎 Suscriptora aprobada"
+    );
+
 
     cargarVIP();
-cargarContenidoVIPAdmin();
+
+    cargarContenidoVIPAdmin();
+
 };
+
 </script>
 
 </body>
 </html>
-

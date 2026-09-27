@@ -1,171 +1,1190 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Galería | Shop Ofe Trujillo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="style.css">
+    <title>Galería | Shop Ofe Trujillo</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- AGREGA ESTAS 2 LÍNEAS EN TODAS TUS PÁGINAS -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="chatbot.css">
 
+<script src="chatbot.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        :root {
+            --rosa: #ff2f92;
+            --rosa-claro: #ff72b8;
+            --morado: #8e44ad;
+            --oscuro: #15111a;
+            --oscuro-2: #211827;
+            --blanco: #ffffff;
+            --gris: #77727d;
+            --fondo: #faf7fb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            background:
+                radial-gradient(circle at top right, rgba(255, 47, 146, .08), transparent 35%),
+                var(--fondo);
+            color: var(--oscuro);
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(21, 17, 26, .92);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,.08);
+        }
+
+        header .container {
+            width: min(1200px, 92%);
+            margin: auto;
+            min-height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .logo a {
+            color: white;
+            font-family: "Playfair Display", serif;
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .logo a::after {
+            content: ".";
+            color: var(--rosa);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav a {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 11px 14px;
+            border-radius: 12px;
+            transition: .3s;
+        }
+
+        nav a:hover {
+            background: rgba(255, 47, 146, .16);
+            color: #ff6bb1;
+        }
+
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        /* ================= CONTENEDOR ================= */
+
+        .container {
+            width: min(1200px, 92%);
+            margin: auto;
+        }
+
+        /* ================= HERO ================= */
+
+        .gallery-hero {
+            padding: 95px 0 75px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-hero::before {
+            content: "";
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: rgba(255,47,146,.12);
+            filter: blur(80px);
+            border-radius: 50%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,47,146,.1);
+            color: var(--rosa);
+            border: 1px solid rgba(255,47,146,.18);
+            padding: 9px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 22px;
+        }
+
+        .gallery-hero h1 {
+            position: relative;
+            font-family: "Playfair Display", serif;
+            font-size: clamp(42px, 7vw, 76px);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .gallery-hero h1 span {
+            color: var(--rosa);
+        }
+
+        .gallery-hero p {
+            position: relative;
+            max-width: 680px;
+            margin: auto;
+            color: var(--gris);
+            line-height: 1.8;
+            font-size: 17px;
+        }
+
+        /* ================= SECCIONES ================= */
+
+        .gallery-section {
+            padding-bottom: 90px;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 20px;
+            margin: 55px 0 28px;
+        }
+
+        .section-heading h2 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(30px, 4vw, 42px);
+        }
+
+        .section-heading p {
+            color: var(--gris);
+            font-size: 14px;
+        }
+
+        /* ================= ANUNCIOS ================= */
+
+        .anuncios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .anuncio-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(21,17,26,.08);
+            box-shadow: 0 15px 45px rgba(21,17,26,.08);
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+
+        .anuncio-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 25px 60px rgba(21,17,26,.13);
+        }
+
+        /*
+         * LAS IMÁGENES SE MUESTRAN COMPLETAS.
+         * NO SE RECORTAN.
+         */
+        .anuncio-card img {
+            width: 100%;
+            height: auto;
+            max-height: 600px;
+            object-fit: contain;
+            display: block;
+            background: #fff;
+            padding: 10px;
+        }
+
+        .anuncio-info {
+            padding: 22px;
+        }
+
+        .anuncio-info h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 22px;
+            margin-bottom: 9px;
+        }
+
+        .anuncio-info p {
+            color: var(--gris);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* ================= GALERÍA ================= */
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            align-items: start;
+        }
+
+        .gallery-item {
+            position: relative;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(21,17,26,.08);
+            box-shadow: 0 15px 40px rgba(21,17,26,.08);
+            cursor: pointer;
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 25px 60px rgba(21,17,26,.14);
+        }
+
+        /*
+         * IMAGEN COMPLETA SIN RECORTE
+         */
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            max-height: 650px;
+            object-fit: contain;
+            display: block;
+            background: #fff;
+            padding: 10px;
+            transition: transform .4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.015);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: auto 12px 12px 12px;
+            padding: 13px 16px;
+            border-radius: 16px;
+            background: rgba(21,17,26,.78);
+            backdrop-filter: blur(12px);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: .3s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-overlay span {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .gallery-overlay i {
+            color: #ff72b8;
+        }
+
+        /* ================= ESTADO CARGANDO ================= */
+
+        .loading {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--gris);
+        }
+
+        .loading i {
+            color: var(--rosa);
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        /* ================= LIGHTBOX ================= */
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(10, 8, 13, .96);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 96vw;
+            max-height: 92vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            background: white;
+            padding: 8px;
+            border-radius: 16px;
+            box-shadow: 0 30px 100px rgba(0,0,0,.5);
+        }
+
+        .lightbox-close {
+            position: fixed;
+            top: 22px;
+            right: 25px;
+            width: 48px;
+            height: 48px;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,.12);
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            transition: .3s;
+            z-index: 2;
+        }
+
+        .lightbox-close:hover {
+            background: var(--rosa);
+            transform: rotate(90deg);
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: var(--oscuro);
+            color: rgba(255,255,255,.75);
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+        footer strong {
+            color: #ff72b8;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1000px) {
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            nav ul {
+                gap: 2px;
+            }
+
+            nav a {
+                padding: 9px 10px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            header .container {
+                min-height: 70px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            nav {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(21,17,26,.98);
+                backdrop-filter: blur(18px);
+                display: none;
+                padding: 15px;
+                border-bottom: 1px solid rgba(255,255,255,.08);
+            }
+
+            nav.active {
+                display: block;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 5px;
+            }
+
+            nav a {
+                display: block;
+                padding: 14px;
+                text-align: center;
+            }
+
+            .gallery-hero {
+                padding: 70px 0 55px;
+            }
+
+            .gallery-section {
+                padding-bottom: 60px;
+            }
+
+            .section-heading {
+                display: block;
+                margin-top: 40px;
+            }
+
+            .section-heading p {
+                margin-top: 8px;
+            }
+
+            .anuncios {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .anuncio-card img,
+            .gallery-item img {
+                width: 100%;
+                height: auto;
+                max-height: none;
+                object-fit: contain;
+            }
+
+            .gallery-overlay {
+                opacity: 1;
+                transform: none;
+            }
+
+            .lightbox {
+                padding: 10px;
+            }
+
+            .lightbox img {
+                max-width: 98vw;
+                max-height: 88vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .gallery-hero h1 {
+                font-size: 42px;
+            }
+
+            .gallery-hero p {
+                font-size: 15px;
+            }
+
+            .anuncio-info {
+                padding: 18px;
+            }
+
+            .anuncio-info h3 {
+                font-size: 20px;
+            }
+
+            .gallery-item img,
+            .anuncio-card img {
+                padding: 6px;
+            }
+        }
+    </style>
 </head>
 
 <body>
+
 <header>
-       <div class="container">
-    <div class="logo">
-        <a href="#">Shop Ofe Trujillo</a>
-    </div>
+    <div class="container">
 
-    <div class="menu-toggle" onclick="toggleMenu()">
-        <i class="fas fa-bars"></i>
-    </div>
-
-    <nav>
-         <ul>
-             <li><a href="index.html">Inicio</a></li>
-          <li><a href="productos.html">Productos</a></li>
-    
-            <li><a href="index.html#envios">Envíos</a></li>
-            <li><a href="index.html#novedades">Nosotros</a></li>
-             <li><a href="login.html">Clientes</a></li>
-            <li><a href="galeria.html#anuncios">Anuncios</a></li>
-            <li><a href="galeria.html#galeria">Galeria</a></li>
-            <li><a href="index.html#contacto">Contacto</a></li>
-            <li><a href="acceso.html">Acceso</a></li>
-        </ul>
-    </nav>
-</div>
-    </header>
-    
-<section id="anuncios" class="gallery-section container">
-
-<h2> Anuncios recientes</h2>
-<div class="anuncios" id="anunciosRecientes"></div>
-    
-    <h2>Anuncios</h2>
-    <div class="anuncios">
-
-         <div class="anuncio-card">
-        <img src="img/horario nuevo shop ofe.png" alt="anuncio">
-        <div class="anuncio-info">
-            <h3>Horario de atención</h3>
-            <p>Horario actualizado 2026.</p>
+        <div class="logo">
+            <a href="index.html">Shop Ofe Trujillo</a>
         </div>
-    </div>
 
-        <div class="anuncio-card">
-        <img src="img/paginawebshopofe.png" alt="anuncio">
-        <div class="anuncio-info">
-            <h3>Ya contamos con pagina web</h3>
-            <p>Esta pagina web estará siendo actualizada y mejorada.</p>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
         </div>
-    </div>
 
-    <div class="anuncio-card">
-        <img src="img/maq1.jpg" alt="anuncio">
-        <div class="anuncio-info">
-            <h3>¿Por que tu maquillaje no dura?</h3>
-            <p>Checa esta imagen 💖</p>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="index.html#envios">Envíos</a></li>
+                <li><a href="index.html#novedades">Nosotros</a></li>
+                <li><a href="login.html">Clientes</a></li>
+                <li><a href="#anuncios">Anuncios</a></li>
+                <li><a href="#galeria">Galería</a></li>
+                <li><a href="index.html#contacto">Contacto</a></li>
+                <li><a href="acceso.html">Acceso</a></li>
+            </ul>
+        </nav>
+
+    </div>
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="gallery-hero">
+
+    <div class="container">
+
+        <div class="badge">
+            <i class="fa-solid fa-camera"></i>
+            Shop Ofe Trujillo
         </div>
+
+        <h1>
+            Nuestra <span>Galería</span>
+        </h1>
+
+        <p>
+            Descubre nuestros productos, novedades, anuncios y momentos
+            especiales de Shop Ofe Trujillo.
+        </p>
+
     </div>
-
-    <div class="anuncio-card">
-        <img src="img/rec1.jpg" alt="anuncio">
-        <div class="anuncio-info">
-            <h3>Recordatorio</h3>
-            <p>Desmaquillate antes de dormir 🚚</p>
-        </div>
-    </div>
-
-    <div class="anuncio-card">
-        <img src="img/deb.jpg" alt="anuncio">
-        <div class="anuncio-info">
-            <h3>Dios es Bueno</h3>
-            <p>Salmo 100:5: <br> "Porque Jehová es bueno; para siempre es su misericordia, y su verdad por todas las generaciones".</p>
-        </div>
-    </div>
-
-</div>
-
-    <h2>Galería</h2>
-
-<div class="gallery-grid" id="galeria">
-    <img src="img/of1.jpg">
-    <img src="img/eq1.jpg">
-    <img src="img/of2.jpg">
-    <img src="img/of3.jpg">
-    <img src="img/g1.jpg">
-     <img src="img/env1.jpg">
-      <img src="img/en2.jpg">
-    
-</div>
 
 </section>
 
-<!-- LIGHTBOX -->
+
+<!-- ================= CONTENIDO ================= -->
+
+<section class="gallery-section container">
+
+
+    <!-- ================= ANUNCIOS RECIENTES ================= -->
+
+    <div class="section-heading" id="anuncios">
+
+        <div>
+            <h2>Anuncios recientes</h2>
+            <p>Las últimas novedades publicadas en nuestra tienda.</p>
+        </div>
+
+    </div>
+
+    <div class="anuncios" id="anunciosRecientes">
+
+        <div class="loading">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            <p>Cargando anuncios...</p>
+        </div>
+
+    </div>
+
+
+    <!-- ================= ANUNCIOS ================= -->
+
+    <div class="section-heading">
+
+        <div>
+            <h2>Anuncios</h2>
+            <p>Información importante de Shop Ofe Trujillo.</p>
+        </div>
+
+    </div>
+
+    <div class="anuncios">
+
+        <article class="anuncio-card">
+
+            <img
+                src="img/horario nuevo shop ofe.png"
+                alt="Horario de atención Shop Ofe Trujillo"
+                loading="lazy"
+            >
+
+            <div class="anuncio-info">
+
+                <h3>Horario de atención</h3>
+
+                <p>
+                    Consulta nuestro horario actualizado para realizar
+                    tus compras y recibir atención.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="anuncio-card">
+
+            <img
+                src="img/paginawebshopofe.png"
+                alt="Página web Shop Ofe Trujillo"
+                loading="lazy"
+            >
+
+            <div class="anuncio-info">
+
+                <h3>¡Ya contamos con página web!</h3>
+
+                <p>
+                    Nuestra página web seguirá siendo actualizada y
+                    mejorada para ofrecerte una mejor experiencia.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="anuncio-card">
+
+            <img
+                src="img/maq1.jpg"
+                alt="Consejos para maquillaje"
+                loading="lazy"
+            >
+
+            <div class="anuncio-info">
+
+                <h3>¿Por qué tu maquillaje no dura?</h3>
+
+                <p>
+                    Checa esta imagen y descubre algunos consejos
+                    para mejorar la duración de tu maquillaje. 💖
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="anuncio-card">
+
+            <img
+                src="img/rec1.jpg"
+                alt="Recordatorio para desmaquillarse"
+                loading="lazy"
+            >
+
+            <div class="anuncio-info">
+
+                <h3>Recordatorio</h3>
+
+                <p>
+                    No olvides desmaquillarte antes de dormir. 💖
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="anuncio-card">
+
+            <img
+                src="img/deb.jpg"
+                alt="Dios es bueno"
+                loading="lazy"
+            >
+
+            <div class="anuncio-info">
+
+                <h3>Dios es Bueno</h3>
+
+                <p>
+                    Salmo 100:5:
+                    <br><br>
+                    "Porque Jehová es bueno; para siempre es su
+                    misericordia, y su verdad por todas las generaciones".
+                </p>
+
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <!-- ================= GALERÍA ================= -->
+
+    <div class="section-heading" id="galeria">
+
+        <div>
+            <h2>Galería</h2>
+            <p>Momentos y fotografías de Shop Ofe Trujillo.</p>
+        </div>
+
+    </div>
+
+
+    <div class="gallery-grid">
+
+
+        <div class="gallery-item">
+
+            <img
+                src="img/of1.jpg"
+                alt="Shop Ofe Trujillo"
+                loading="lazy"
+            >
+
+            <div class="gallery-overlay">
+                <span>Shop Ofe Trujillo</span>
+                <i class="fa-solid fa-expand"></i>
+            </div>
+
+        </div>
+
+
+        <div class="gallery-item">
+
+            <img
+                src="img/eq1.jpg"
+                alt="Equipo Shop Ofe Trujillo"
+                loading="lazy"
+            >
+
+            <div class="gallery-overlay">
+                <span>Nuestro equipo</span>
+                <i class="fa-solid fa-expand"></i>
+            </div>
+
+        </div>
+
+
+        <div class="gallery-item">
+
+            <img
+                src="img/of2.jpg"
+                alt="Shop Ofe Trujillo"
+                loading="lazy"
+            >
+
+            <div class="gallery-overlay">
+                <span>Shop Ofe</span>
+                <i class="fa-solid fa-expand"></i>
+            </div>
+
+        </div>
+
+
+        <div class="gallery-item">
+
+            <img
+                src="img/of3.jpg"
+                alt="Shop Ofe Trujillo"
+                loading="lazy"
+            >
+
+            <div class="gallery-overlay">
+                <span>Shop Ofe</span>
+                <i class="fa-solid fa-expand"></i>
+            </div>
+
+        </div>
+
+
+        <div class="gallery-item">
+
+            <img
+                src="img/g1.jpg"
+                alt="Galería Shop Ofe Trujillo"
+                loading="lazy"
+            >
+
+            <div class="gallery-overlay">
+                <span>Momentos especiales</span>
+                <i class="fa-solid fa-expand"></i>
+            </div>
+
+        </div>
+
+
+        <div class="gallery-item">
+
+            <img
+                src="img/env1.jpg"
+                alt="Envíos Shop Ofe Trujillo"
+                loading="lazy"
+            >
+
+            <div class="gallery-overlay">
+                <span>Preparando envíos</span>
+                <i class="fa-solid fa-expand"></i>
+            </div>
+
+        </div>
+
+
+        <div class="gallery-item">
+
+            <img
+                src="img/en2.jpg"
+                alt="Envíos nacionales Shop Ofe Trujillo"
+                loading="lazy"
+            >
+
+            <div class="gallery-overlay">
+                <span>Envíos nacionales</span>
+                <i class="fa-solid fa-expand"></i>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= LIGHTBOX ================= -->
 
 <div id="lightbox" class="lightbox">
-    <img id="lightbox-img">
+
+    <button
+        class="lightbox-close"
+        onclick="cerrarLightbox()"
+        aria-label="Cerrar imagen"
+    >
+        <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <img
+        id="lightbox-img"
+        src=""
+        alt="Imagen ampliada"
+    >
+
 </div>
 
+
+<!-- ================= FOOTER ================= -->
+
 <footer>
-    <p style="text-align:center; padding:20px;">© 2026 Shop Ofe Trujillo</p>
+
+    <p>
+        © 2026 <strong>Shop Ofe Trujillo</strong>.
+        Todos los derechos reservados.
+    </p>
+
 </footer>
+
+
+<!-- ================= FIREBASE ================= -->
+
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-import { query, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+    import {
+        initializeApp
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
 
-const firebaseConfig = { 
-  apiKey: "AIzaSyB...",
-  authDomain: "trujillo-digital-hub.firebaseapp.com",
-  projectId: "trujillo-digital-hub"
-};
+    import {
+        getFirestore,
+        collection,
+        getDocs,
+        query,
+        orderBy,
+        limit
+    } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
-const contenedor = document.querySelector(".anuncios");
+    const firebaseConfig = {
 
-const q = query(
-    collection(db, "anuncios"),
-    orderBy("fecha", "desc"),
-    limit(3) // 🔥 SOLO LOS 5 MÁS RECIENTES
-);
-const anunciosSnap = await getDocs(q);
+        apiKey: "AIzaSyBDAOW-qrvxTcJVM4QNWPQvrmbz8wcAQLM",
 
-anunciosSnap.forEach(doc => {
+        authDomain:
+            "trujillo-digital-hub.firebaseapp.com",
 
-    let data = doc.data();
+        projectId:
+            "trujillo-digital-hub",
 
-    let card = `
-    <div class="anuncio-card">
-        <img src="${data.imagen}">
-        <div class="anuncio-info">
-            <h3>${data.titulo}</h3>
-            <p>${data.descripcion}</p>
-        </div>
-    </div>
-    `;
+        storageBucket:
+            "trujillo-digital-hub.firebasestorage.app",
 
-    contenedor.innerHTML += card;
+        messagingSenderId:
+            "162799375782",
 
-    
-});
+        appId:
+            "1:162799375782:web:2be9127bfeaa613fd6ab67"
 
-// 🔥 MENU GLOBAL
-window.toggleMenu = function () {
-    document.querySelector("header nav").classList.toggle("active");
-};
+    };
+
+
+    const app = initializeApp(firebaseConfig);
+
+    const db = getFirestore(app);
+
+
+    /* ================= CARGAR ANUNCIOS ================= */
+
+    async function cargarAnuncios() {
+
+        const contenedor =
+            document.getElementById("anunciosRecientes");
+
+        try {
+
+            const q = query(
+                collection(db, "anuncios"),
+                orderBy("fecha", "desc"),
+                limit(3)
+            );
+
+            const anunciosSnap =
+                await getDocs(q);
+
+
+            if (anunciosSnap.empty) {
+
+                contenedor.innerHTML = `
+                    <div class="loading">
+                        <i class="fa-regular fa-bell-slash"></i>
+                        <p>No hay anuncios recientes.</p>
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            contenedor.innerHTML = "";
+
+
+            anunciosSnap.forEach((doc) => {
+
+                const data = doc.data();
+
+
+                const card =
+                    document.createElement("article");
+
+                card.className = "anuncio-card";
+
+
+                const imagen =
+                    document.createElement("img");
+
+                imagen.src =
+                    data.imagen || "img/horario nuevo shop ofe.png";
+
+                imagen.alt =
+                    data.titulo || "Anuncio Shop Ofe Trujillo";
+
+                imagen.loading = "lazy";
+
+
+                const info =
+                    document.createElement("div");
+
+                info.className = "anuncio-info";
+
+
+                const titulo =
+                    document.createElement("h3");
+
+                titulo.textContent =
+                    data.titulo || "Anuncio";
+
+
+                const descripcion =
+                    document.createElement("p");
+
+                descripcion.textContent =
+                    data.descripcion || "";
+
+
+                info.appendChild(titulo);
+
+                info.appendChild(descripcion);
+
+                card.appendChild(imagen);
+
+                card.appendChild(info);
+
+                contenedor.appendChild(card);
+
+            });
+
+
+        } catch (error) {
+
+            console.error(
+                "Error al cargar anuncios:",
+                error
+            );
+
+
+            contenedor.innerHTML = `
+                <div class="loading">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <p>No se pudieron cargar los anuncios.</p>
+                </div>
+            `;
+
+        }
+
+    }
+
+
+    cargarAnuncios();
+
+
+    /* ================= MENÚ ================= */
+
+    window.toggleMenu = function () {
+
+        const nav =
+            document.querySelector("header nav");
+
+        nav.classList.toggle("active");
+
+    };
+
+
+    /* ================= LIGHTBOX ================= */
+
+    const lightbox =
+        document.getElementById("lightbox");
+
+    const lightboxImg =
+        document.getElementById("lightbox-img");
+
+
+    document.querySelectorAll(
+        ".gallery-item img"
+    ).forEach((imagen) => {
+
+        imagen.addEventListener(
+            "click",
+            () => {
+
+                lightboxImg.src =
+                    imagen.src;
+
+                lightboxImg.alt =
+                    imagen.alt;
+
+                lightbox.classList.add("active");
+
+                document.body.style.overflow =
+                    "hidden";
+
+            }
+        );
+
+    });
+
+
+    window.cerrarLightbox = function () {
+
+        lightbox.classList.remove("active");
+
+        lightboxImg.src = "";
+
+        document.body.style.overflow =
+            "";
+
+    };
+
+
+    lightbox.addEventListener(
+        "click",
+        (event) => {
+
+            if (
+                event.target === lightbox
+            ) {
+
+                cerrarLightbox();
+
+            }
+
+        }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Escape" &&
+                lightbox.classList.contains("active")
+            ) {
+
+                cerrarLightbox();
+
+            }
+
+        }
+    );
+
+
+    /* ================= CERRAR MENÚ AL SELECCIONAR ================= */
+
+    document.querySelectorAll(
+        "header nav a"
+    ).forEach((enlace) => {
+
+        enlace.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelector("header nav")
+                    .classList.remove("active");
+
+            }
+        );
+
+    });
 
 </script>
 
+
 <script src="a.js"></script>
+
 </body>
 </html>

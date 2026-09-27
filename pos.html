@@ -2,128 +2,1262 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Punto de Venta 💰</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#15111a">
+<meta name="description" content="Punto de Venta - Shop Ofe Trujillo">
+
+<title>Punto de Venta 💰 | Shop Ofe Trujillo</title>
+
 <link rel="stylesheet" href="style.css">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
-body {
-    font-family: Arial;
-    background: #f5f5f5;
+:root{
+    --rosa:#ff2f92;
+    --rosa-claro:#ff72b8;
+    --rosa-suave:#fff0f7;
+    --morado:#8e44ad;
+    --morado-2:#b45ad6;
+    --oscuro:#15111a;
+    --oscuro-2:#211827;
+    --blanco:#fff;
+    --gris:#746d78;
+    --fondo:#faf8fa;
+    --borde:rgba(21,17,26,.08);
+    --sombra:0 18px 50px rgba(21,17,26,.08);
+    --sombra-fuerte:0 25px 70px rgba(21,17,26,.15);
 }
 
-.pos-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    height: 100vh;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-/* PRODUCTOS */
-.productos {
-    padding: 20px;
-    overflow-y: auto;
+html{
+    scroll-behavior:smooth;
 }
 
-.producto {
-    background: white;
-    padding: 15px;
-    margin: 10px;
-    border-radius: 10px;
-    cursor: pointer;
+body{
+    min-height:100vh;
+    font-family:"DM Sans",sans-serif;
+    color:var(--oscuro);
+    background:
+        radial-gradient(circle at 5% 10%,rgba(255,47,146,.08),transparent 25%),
+        radial-gradient(circle at 95% 10%,rgba(142,68,173,.08),transparent 25%),
+        var(--fondo);
 }
 
-/* CARRITO */
-.carrito {
-    background: #fff;
-    padding: 20px;
-    border-left: 2px solid #eee;
+/* =========================
+   TOP BAR
+========================= */
+
+.top-bar{
+    height:36px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:linear-gradient(90deg,var(--rosa),var(--morado),var(--rosa));
+    color:#fff;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.4px;
 }
 
-.total {
-    font-size: 24px;
-    margin: 20px 0;
+.top-bar span{
+    white-space:nowrap;
 }
 
-button {
-    width: 100%;
-    padding: 15px;
-    background: #ff4da6;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    margin-top: 10px;
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    min-height:76px;
+    background:rgba(21,17,26,.97);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    box-shadow:0 10px 35px rgba(0,0,0,.14);
+}
+
+.header-inner{
+    width:min(1450px,94%);
+    min-height:76px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    color:#fff;
+    text-decoration:none;
+}
+
+.brand-icon{
+    width:43px;
+    height:43px;
+    display:grid;
+    place-items:center;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--rosa),var(--morado));
+    box-shadow:0 8px 24px rgba(255,47,146,.28);
+    font-size:18px;
+}
+
+.brand-text strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:21px;
+    line-height:1.1;
+}
+
+.brand-text small{
+    color:rgba(255,255,255,.58);
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:1.3px;
+    text-transform:uppercase;
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.header-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    min-height:42px;
+    padding:0 15px;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:12px;
+    color:#fff;
+    background:rgba(255,255,255,.07);
+    font-family:inherit;
+    font-size:12px;
+    font-weight:800;
+    cursor:pointer;
+    text-decoration:none;
+    transition:.25s ease;
+}
+
+.header-btn:hover{
+    transform:translateY(-2px);
+    background:rgba(255,255,255,.13);
+}
+
+.header-btn.primary{
+    border:0;
+    background:linear-gradient(135deg,var(--rosa),var(--morado));
+    box-shadow:0 8px 22px rgba(255,47,146,.22);
+}
+
+/* =========================
+   MAIN POS
+========================= */
+
+.pos-container{
+    width:min(1450px,94%);
+    height:calc(100vh - 112px);
+    min-height:650px;
+    margin:18px auto;
+    display:grid;
+    grid-template-columns:minmax(0,1.8fr) minmax(360px,.8fr);
+    gap:18px;
+}
+
+/* =========================
+   PRODUCTS
+========================= */
+
+.productos-panel{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    border:1px solid var(--borde);
+    border-radius:25px;
+    background:rgba(255,255,255,.92);
+    box-shadow:var(--sombra);
+}
+
+.panel-header{
+    padding:22px 24px 17px;
+    border-bottom:1px solid var(--borde);
+    background:rgba(255,255,255,.96);
+}
+
+.panel-header-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.panel-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.panel-title-icon{
+    width:44px;
+    height:44px;
+    display:grid;
+    place-items:center;
+    border-radius:13px;
+    color:#fff;
+    background:linear-gradient(135deg,var(--rosa),var(--morado));
+    box-shadow:0 8px 20px rgba(255,47,146,.2);
+}
+
+.panel-title h1{
+    font-family:"Playfair Display",serif;
+    font-size:25px;
+    line-height:1.15;
+}
+
+.panel-title p{
+    color:var(--gris);
+    font-size:11px;
+    margin-top:2px;
+}
+
+.product-search{
+    width:280px;
+    max-width:100%;
+    height:43px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:0 13px;
+    border:1px solid var(--borde);
+    border-radius:12px;
+    background:#faf8fa;
+}
+
+.product-search i{
+    color:var(--rosa);
+}
+
+.product-search input{
+    width:100%;
+    border:0;
+    outline:0;
+    background:transparent;
+    font-family:inherit;
+    font-size:13px;
+}
+
+.productos{
+    flex:1;
+    overflow-y:auto;
+    padding:18px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+    align-content:start;
+    gap:14px;
+}
+
+.producto{
+    position:relative;
+    min-width:0;
+    padding:16px;
+    border:1px solid var(--borde);
+    border-radius:19px;
+    background:#fff;
+    cursor:pointer;
+    box-shadow:0 8px 25px rgba(21,17,26,.05);
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+}
+
+.producto:hover{
+    transform:translateY(-5px);
+    border-color:rgba(255,47,146,.25);
+    box-shadow:0 17px 35px rgba(21,17,26,.11);
+}
+
+.producto-img{
+    width:100%;
+    height:155px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:13px;
+    overflow:hidden;
+    border-radius:14px;
+    background:linear-gradient(135deg,#fff0f7,#f7f0fa);
+}
+
+.producto-img img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    padding:10px;
+}
+
+.producto-info{
+    min-width:0;
+}
+
+.producto-nombre{
+    overflow:hidden;
+    color:var(--oscuro);
+    font-size:14px;
+    font-weight:800;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.producto-descripcion{
+    margin-top:3px;
+    color:var(--gris);
+    font-size:11px;
+    line-height:1.4;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+}
+
+.producto-precio{
+    margin-top:10px;
+    color:var(--rosa);
+    font-size:19px;
+    font-weight:900;
+}
+
+.producto-add{
+    position:absolute;
+    right:13px;
+    bottom:13px;
+    width:34px;
+    height:34px;
+    display:grid;
+    place-items:center;
+    border-radius:10px;
+    color:#fff;
+    background:linear-gradient(135deg,var(--rosa),var(--morado));
+    box-shadow:0 7px 16px rgba(255,47,146,.22);
+}
+
+/* =========================
+   CART
+========================= */
+
+.carrito-panel{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    border:1px solid var(--borde);
+    border-radius:25px;
+    background:#fff;
+    box-shadow:var(--sombra-fuerte);
+}
+
+.carrito-header{
+    padding:22px 22px 18px;
+    color:#fff;
+    background:
+        radial-gradient(circle at 100% 0,rgba(255,255,255,.12),transparent 30%),
+        linear-gradient(135deg,var(--oscuro),#32152f 55%,var(--morado));
+}
+
+.carrito-header-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.carrito-header h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:"Playfair Display",serif;
+    font-size:24px;
+}
+
+.venta-badge{
+    padding:6px 10px;
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:20px;
+    color:rgba(255,255,255,.8);
+    background:rgba(255,255,255,.08);
+    font-size:10px;
+    font-weight:800;
+}
+
+.carrito-header p{
+    margin-top:5px;
+    color:rgba(255,255,255,.6);
+    font-size:11px;
+}
+
+.carrito-body{
+    flex:1;
+    overflow-y:auto;
+    padding:17px;
+}
+
+.carrito-vacio{
+    padding:40px 15px;
+    text-align:center;
+    color:var(--gris);
+}
+
+.carrito-vacio-icon{
+    width:62px;
+    height:62px;
+    margin:0 auto 12px;
+    display:grid;
+    place-items:center;
+    border-radius:19px;
+    color:var(--rosa);
+    background:var(--rosa-suave);
+    font-size:25px;
+}
+
+.carrito-vacio strong{
+    display:block;
+    color:var(--oscuro);
+    font-size:14px;
+}
+
+.carrito-vacio span{
+    display:block;
+    margin-top:3px;
+    font-size:11px;
+}
+
+/* Compatible with listaCarrito */
+
+#listaCarrito{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+#listaCarrito li{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:12px;
+    margin-bottom:8px;
+    border:1px solid var(--borde);
+    border-radius:13px;
+    background:#fcfafc;
+    font-size:12px;
+}
+
+#listaCarrito li button{
+    width:auto;
+    min-width:30px;
+    height:30px;
+    margin:0;
+    padding:0 8px;
+    border-radius:8px;
+    background:#fff0f5;
+    color:#d71972;
+    font-size:12px;
+}
+
+.cart-divider{
+    height:1px;
+    margin:5px 0 15px;
+    background:var(--borde);
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-group{
+    margin-bottom:11px;
+}
+
+.form-label{
+    display:block;
+    margin-bottom:5px;
+    color:#514b55;
+    font-size:10px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.6px;
+}
+
+input,
+select{
+    width:100%;
+    height:43px;
+    padding:0 12px;
+    border:1px solid #e7e1e7;
+    outline:none;
+    border-radius:11px;
+    color:var(--oscuro);
+    background:#fff;
+    font-family:inherit;
+    font-size:13px;
+    transition:.2s ease;
+}
+
+input:focus,
+select:focus{
+    border-color:var(--rosa);
+    box-shadow:0 0 0 4px rgba(255,47,146,.08);
+}
+
+.client-box{
+    margin:13px 0;
+    padding:14px;
+    border:1px solid rgba(255,47,146,.18);
+    border-radius:15px;
+    background:linear-gradient(135deg,#fff4f9,#fff);
+}
+
+.client-label{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    margin-bottom:7px;
+    color:var(--rosa);
+    font-size:10px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
+
+#statusCliente{
+    min-height:18px;
+    margin-top:6px;
+    color:#6d6871;
+    font-size:11px;
+    line-height:1.4;
+}
+
+/* =========================
+   TOTAL
+========================= */
+
+.total-card{
+    margin:5px 0 13px;
+    padding:16px;
+    border-radius:17px;
+    color:#fff;
+    background:linear-gradient(135deg,var(--rosa),var(--morado));
+    box-shadow:0 12px 25px rgba(255,47,146,.2);
+}
+
+.total-label{
+    color:rgba(255,255,255,.72);
+    font-size:10px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.total{
+    margin:0;
+    font-size:30px;
+    line-height:1.15;
+    font-weight:900;
+}
+
+.total-prefix{
+    font-size:17px;
+    margin-right:2px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
+    width:100%;
+    min-height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-top:9px;
+    padding:11px 15px;
+    border:0;
+    border-radius:11px;
+    color:#fff;
+    background:linear-gradient(135deg,var(--rosa),var(--morado));
+    font-family:inherit;
+    font-size:12px;
+    font-weight:900;
+    cursor:pointer;
+    box-shadow:0 9px 20px rgba(255,47,146,.17);
+    transition:.25s ease;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 13px 25px rgba(255,47,146,.23);
+}
+
+.btn:active{
+    transform:translateY(0);
+}
+
+.btn-secondary{
+    color:var(--oscuro);
+    background:#f7f4f7;
+    box-shadow:none;
+}
+
+.btn-secondary:hover{
+    background:#eee9ee;
+    box-shadow:none;
+}
+
+.gasto-section{
+    margin-top:17px;
+    padding-top:17px;
+    border-top:1px solid var(--borde);
+}
+
+.gasto-section h3{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:10px;
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+}
+
+.gasto-section h3 i{
+    color:var(--rosa);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1150px){
+
+    .pos-container{
+        grid-template-columns:minmax(0,1.45fr) minmax(330px,.8fr);
+    }
+
+    .productos{
+        grid-template-columns:repeat(auto-fill,minmax(165px,1fr));
+    }
+
+    .producto-img{
+        height:135px;
+    }
+
+    .header-actions .header-btn span{
+        display:none;
+    }
+
+    .header-btn{
+        width:42px;
+        padding:0;
+    }
+}
+
+@media(max-width:900px){
+
+    .pos-container{
+        height:auto;
+        min-height:0;
+        grid-template-columns:1fr;
+    }
+
+    .productos-panel{
+        min-height:600px;
+    }
+
+    .carrito-panel{
+        min-height:650px;
+    }
+
+    .carrito-body{
+        overflow:visible;
+    }
+
+    .header-actions{
+        margin-left:auto;
+    }
+}
+
+@media(max-width:650px){
+
+    .top-bar{
+        height:31px;
+        font-size:9px;
+        padding:0 10px;
+    }
+
+    .header,
+    .header-inner{
+        min-height:66px;
+    }
+
+    .header-inner{
+        width:92%;
+    }
+
+    .brand-text strong{
+        font-size:18px;
+    }
+
+    .brand-text small{
+        font-size:7px;
+    }
+
+    .brand-icon{
+        width:38px;
+        height:38px;
+        border-radius:12px;
+        font-size:16px;
+    }
+
+    .header-actions{
+        gap:5px;
+    }
+
+    .header-btn{
+        min-width:38px;
+        width:38px;
+        height:38px;
+        min-height:38px;
+        border-radius:10px;
+    }
+
+    .pos-container{
+        width:94%;
+        margin:10px auto 25px;
+        gap:12px;
+    }
+
+    .productos-panel,
+    .carrito-panel{
+        border-radius:20px;
+    }
+
+    .panel-header{
+        padding:17px 15px 13px;
+    }
+
+    .panel-header-top{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .panel-title h1{
+        font-size:21px;
+    }
+
+    .product-search{
+        width:100%;
+    }
+
+    .productos{
+        padding:12px;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:9px;
+    }
+
+    .producto{
+        padding:10px;
+        border-radius:14px;
+    }
+
+    .producto-img{
+        height:125px;
+        border-radius:11px;
+    }
+
+    .producto-nombre{
+        font-size:12px;
+    }
+
+    .producto-descripcion{
+        font-size:10px;
+    }
+
+    .producto-precio{
+        font-size:16px;
+        margin-top:7px;
+    }
+
+    .producto-add{
+        width:29px;
+        height:29px;
+        right:8px;
+        bottom:8px;
+        font-size:10px;
+    }
+
+    .carrito-header{
+        padding:18px 15px;
+    }
+
+    .carrito-header h2{
+        font-size:21px;
+    }
+
+    .carrito-body{
+        padding:13px;
+    }
+
+    .total{
+        font-size:27px;
+    }
+}
+
+@media(max-width:390px){
+
+    .brand-text small{
+        display:none;
+    }
+
+    .brand-text strong{
+        font-size:16px;
+    }
+
+    .productos{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .producto-img{
+        height:105px;
+    }
+
+    .producto{
+        padding:8px;
+    }
+
+    .producto-nombre{
+        font-size:11px;
+    }
+
+    .producto-precio{
+        font-size:14px;
+    }
+
+    .header-btn{
+        width:35px;
+        min-width:35px;
+        height:35px;
+        min-height:35px;
+    }
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+*{
+    scrollbar-width:thin;
+    scrollbar-color:rgba(255,47,146,.45) transparent;
+}
+
+::-webkit-scrollbar{
+    width:7px;
+    height:7px;
+}
+
+::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+::-webkit-scrollbar-thumb{
+    border-radius:10px;
+    background:linear-gradient(var(--rosa),var(--morado));
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🔙 BOTÓN PANEL -->
-<button onclick="window.location='corte.html'">
-        💼 Corte de Caja
-    </button>
-
-    <button onclick="window.location='reportes.html'">
-        📊 Ver Reportes
-    </button>
-
-
-<div class="pos-container">
-
-    <!-- PRODUCTOS -->
-    <div class="productos" id="productos"></div>
-
-    <!-- CARRITO -->
-    <div class="carrito">
-        <h2>🛒 Venta</h2>
-        <ul id="listaCarrito"></ul>
-
-        <p class="total">Total: $<span id="total">0</span></p>
-
-       <select id="metodoPago">
-    <option>Efectivo</option>
-    <option>Transferencia</option>
-    <option>Tarjeta</option> <!-- 🔥 NUEVO -->
-</select>
-
-
-
-        <!-- 💵 CAMBIO -->
-<br>
-        <input type="text" id="cliente" placeholder="Nombre del cliente"><br>
-        <input type="number" id="extra" placeholder="Dinero extra" oninput="render()">
-       
-<br><br>
-        <div style="background: #fff0f5; padding: 10px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #ff4da6;">
-    <label style="font-size: 12px; color: #ff4da6; font-weight: bold;">💎 Código de Clienta (SOT-C)</label>
-    <input type="text" id="codigoCliente" placeholder="Ej: 852364" oninput="buscarClienta()">
-    <p id="statusCliente" style="font-size: 12px; margin: 5px 0; color: #555;">Venta general</p>
+<div class="top-bar">
+    <span>💖 SHOP OFE TRUJILLO · PUNTO DE VENTA · 💰 REGISTRA TUS VENTAS DE FORMA RÁPIDA Y SEGURA</span>
 </div>
 
+<header class="header">
 
+    <div class="header-inner">
 
+        <a href="index.html" class="brand">
+            <span class="brand-icon">
+                <i class="fas fa-heart"></i>
+            </span>
 
+            <span class="brand-text">
+                <strong>Shop Ofe Trujillo</strong>
+                <small>Punto de Venta</small>
+            </span>
+        </a>
 
-        <!-- 💳 COBRAR -->
-        <button onclick="cobrar()">💳 Cobrar</button>
+        <div class="header-actions">
 
-       
-<br>
-        <h3>💸 Registrar gasto</h3>
+            <a href="corte.html" class="header-btn primary">
+                <i class="fas fa-cash-register"></i>
+                <span>Corte de Caja</span>
+            </a>
 
-<input type="text" id="descGasto" placeholder="Descripción del gasto">
-<input type="number" id="montoGasto" placeholder="Monto">
+            <a href="reportes.html" class="header-btn">
+                <i class="fas fa-chart-column"></i>
+                <span>Reportes</span>
+            </a>
 
-<button onclick="registrarGasto()">Guardar gasto</button>
+        </div>
 
     </div>
 
-    
+</header>
 
-</div>
+<main class="pos-container">
+
+    <!-- =========================
+         PRODUCTOS
+    ========================== -->
+
+    <section class="productos-panel">
+
+        <div class="panel-header">
+
+            <div class="panel-header-top">
+
+                <div class="panel-title">
+
+                    <div class="panel-title-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+
+                    <div>
+                        <h1>Productos</h1>
+                        <p>Selecciona un producto para agregarlo a la venta</p>
+                    </div>
+
+                </div>
+
+                <div class="product-search">
+
+                    <i class="fas fa-search"></i>
+
+                    <input
+                        type="search"
+                        id="buscarProducto"
+                        placeholder="Buscar producto..."
+                        autocomplete="off">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="productos" id="productos">
+
+            <!-- POS.JS CARGA LOS PRODUCTOS AQUÍ -->
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CARRITO
+    ========================== -->
+
+    <aside class="carrito-panel">
+
+        <div class="carrito-header">
+
+            <div class="carrito-header-row">
+
+                <h2>
+                    <i class="fas fa-cart-shopping"></i>
+                    Venta
+                </h2>
+
+                <span class="venta-badge">
+                    NUEVA VENTA
+                </span>
+
+            </div>
+
+            <p>Revisa los productos antes de cobrar</p>
+
+        </div>
+
+
+        <div class="carrito-body">
+
+            <div id="carritoVacio" class="carrito-vacio">
+
+                <div class="carrito-vacio-icon">
+                    <i class="fas fa-cart-plus"></i>
+                </div>
+
+                <strong>Tu carrito está vacío</strong>
+
+                <span>Selecciona un producto para comenzar</span>
+
+            </div>
+
+            <ul id="listaCarrito"></ul>
+
+            <div class="cart-divider"></div>
+
+
+            <!-- TOTAL -->
+
+            <div class="total-card">
+
+                <div class="total-label">
+                    Total de la venta
+                </div>
+
+                <p class="total">
+                    <span class="total-prefix">$</span>
+                    <span id="total">0</span>
+                </p>
+
+            </div>
+
+
+            <!-- MÉTODO DE PAGO -->
+
+            <div class="form-group">
+
+                <label class="form-label" for="metodoPago">
+                    <i class="fas fa-wallet"></i>
+                    Método de pago
+                </label>
+
+                <select id="metodoPago">
+
+                    <option value="Efectivo">
+                        Efectivo
+                    </option>
+
+                    <option value="Transferencia">
+                        Transferencia
+                    </option>
+
+                    <option value="Tarjeta">
+                        Tarjeta
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- CLIENTE -->
+
+            <div class="form-group">
+
+                <label class="form-label" for="cliente">
+                    <i class="fas fa-user"></i>
+                    Cliente
+                </label>
+
+                <input
+                    type="text"
+                    id="cliente"
+                    placeholder="Nombre del cliente"
+                    autocomplete="off">
+
+            </div>
+
+
+            <!-- EXTRA -->
+
+            <div class="form-group">
+
+                <label class="form-label" for="extra">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Dinero recibido / extra
+                </label>
+
+                <input
+                    type="number"
+                    id="extra"
+                    placeholder="Ej. 500"
+                    min="0"
+                    step="0.01"
+                    oninput="render()">
+
+            </div>
+
+
+            <!-- CLIENTA -->
+
+            <div class="client-box">
+
+                <div class="client-label">
+
+                    <i class="fas fa-gem"></i>
+
+                    Código de Clienta
+                    <span>(SOT-C)</span>
+
+                </div>
+
+                <input
+                    type="text"
+                    id="codigoCliente"
+                    placeholder="Ej: 852364"
+                    autocomplete="off"
+                    oninput="buscarClienta()">
+
+                <p id="statusCliente">
+                    Venta general
+                </p>
+
+            </div>
+
+
+            <!-- COBRAR -->
+
+            <button
+                type="button"
+                class="btn"
+                onclick="cobrar()">
+
+                <i class="fas fa-credit-card"></i>
+                Cobrar venta
+
+            </button>
+
+
+            <!-- GASTOS -->
+
+            <div class="gasto-section">
+
+                <h3>
+                    <i class="fas fa-money-bill-transfer"></i>
+                    Registrar gasto
+                </h3>
+
+                <div class="form-group">
+
+                    <label class="form-label" for="descGasto">
+                        Descripción
+                    </label>
+
+                    <input
+                        type="text"
+                        id="descGasto"
+                        placeholder="Descripción del gasto">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label class="form-label" for="montoGasto">
+                        Monto
+                    </label>
+
+                    <input
+                        type="number"
+                        id="montoGasto"
+                        placeholder="Monto"
+                        min="0"
+                        step="0.01">
+
+                </div>
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick="registrarGasto()">
+
+                    <i class="fas fa-save"></i>
+                    Guardar gasto
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+</main>
+
 
 <script type="module" src="pos.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const buscar = document.getElementById("buscarProducto");
+
+    if (!buscar) return;
+
+    buscar.addEventListener("input", function(){
+
+        const texto = this.value
+            .toLowerCase()
+            .trim();
+
+        document
+            .querySelectorAll("#productos .producto")
+            .forEach(producto => {
+
+                const contenido =
+                    producto.textContent.toLowerCase();
+
+                producto.style.display =
+                    contenido.includes(texto)
+                        ? ""
+                        : "none";
+
+            });
+
+    });
+
+});
+</script>
 
 </body>
 </html>
